@@ -1,0 +1,13 @@
+{
+  "private":{
+    "MAIL_URL": "smtp://contacto@dimemex.site:Contacto2020@pam.asoshared.com:26",
+    "SENDER_EMAILS":{
+      "CONTACT": "contacto@dimemex.site",
+      "SUPPORT": "cobranza@dimemex.site",
+      "SALES": "enrique@dimemex.site"
+    },
+    "REFRESH_PERMISSIONS": false, 
+    "REFRESH_STATIC_PROFILES": false
+  }
+
+}

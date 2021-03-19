@@ -1,0 +1,8 @@
+Base de datos Mongo MongoDB
+Script para agregar atributos a usuarios.
+
+db.getCollection('users').update({status:{$exists:false}}, { $set:{status:{online:false}}},{multi:true})
+
+Actualizacion de una columna mas  en Messages
+db.getCollection('messages').update({read: {$exists: false}},{$set:{read: false}},{multi: true})
+

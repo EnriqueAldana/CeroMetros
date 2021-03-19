@@ -1,0 +1,34 @@
+{
+  "name": "zmeters",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "run:mac": "meteor --settings ./settings/settings-development.json",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "bcrypt": "^5.0.0",
+    "firebase-admin": "^9.5.0",
+    "jquery": "^3.6.0",
+    "meteor-node-stubs": "^1.0.1",
+    "mimetypes": "^0.1.1",
+    "simpl-schema": "^1.10.2",
+    "vue": "^2.6.12",
+    "vue-meteor-tracker": "^2.0.0-beta.5",
+    "vue-router": "^3.5.1",
+    "vuedraggable": "^2.24.3",
+    "vuetify": "^2.4.6",
+    "vuex": "^3.6.2",
+    "vuex-persist": "^3.1.3"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.js",
+      "server": "server/main.js"
+    },
+    "testModule": "tests/main.js"
+  }
+}

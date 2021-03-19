@@ -1,0 +1,39 @@
+Identar codigo,
+OPTION + COMMAND + L
+
+Arrancar la aplicacion
+
+Manejo de coleccionest
+La coleccion de Usuarios se crea mediante los paquetes de Account, por eso lo manejamois con Meteor.users, etc.
+La coleccion de Roles se crea mediante loa paquetes alanning:roles
+De ahi en mas las colecciones las haremos atraves de MongoDB.
+
+API de Roles se crehttps://meteor-community-packages.github.io/meteor-roles/classes/Roles.html
+
+Objeto Profiles
+{
+    "_id" : "PGtbeczPuyYK3YxQs",
+    "name" : "admin",
+    "description" : "Administrador",
+    "permissions" : [
+        "users-view",
+        "users-create",
+        "users-edit",
+        "users-delete",
+        "users-admin",
+        "users-super-admin"
+    ]
+}
+
+TECLAS
+Recarga la pagina limpiando el cache.
+Shieft + Command + R
+
+Importar archivos
+Ctl + barra espacio
+
+TODO
+1.- Al refrescar permisos mediante la bandera , hay una excepcion que indoca que el permiso ya existe. La solucion es borrar todos los registros de la BD.
+OK 2.- Al crear usuario el coreeo de inicio no corresponde con la plantilla
+OK 3.- El nombre del archivo de la foto del usuario no se genera su numero random
+

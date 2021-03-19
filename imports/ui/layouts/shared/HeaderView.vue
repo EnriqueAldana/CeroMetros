@@ -1,6 +1,6 @@
 <template>
     <v-app-bar app dark dense src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
-        <v-toolbar-title>Zero Meters System</v-toolbar-title>
+        <v-toolbar-title>Sistema Cero Metros</v-toolbar-title>
         <v-spacer></v-spacer>
         <user-logged></user-logged>
       <template v-slot:extension>

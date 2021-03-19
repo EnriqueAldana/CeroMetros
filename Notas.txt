@@ -37,3 +37,11 @@ TODO
 OK 2.- Al crear usuario el coreeo de inicio no corresponde con la plantilla
 OK 3.- El nombre del archivo de la foto del usuario no se genera su numero random
 
+Acciones para regenerar el ambiente de desarrollo
+1.- Detener el servidor de Meteor.
+2.- Ejecutr el comando Meteor reset
+3.- eliminar carpeta node_modules
+4.- eliminar carpeta .cache
+5.- volver a ejecutar comando yarn install si se usa yarn o npm install si se usa npm
+6.- Arrancar Meteor .
+

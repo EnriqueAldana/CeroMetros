@@ -1,0 +1,11 @@
+CLonar un repositorio inicialmente
+git clone urlDelRepositorioAClonar
+git clone https://github.com/EnriqueAldana/CeroMetros.git
+
+Para desmontar cambios antes de hacer commit
+git reset -- .
+
+archivo git reset --RutaYNombreDelArchivo
+
+
+

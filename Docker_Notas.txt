@@ -1,3 +1,7 @@
+Para crear una imagen
+
+
+
 Para acceder dentro de una imagen con SSH
 
 docker exec -ti nombre_imagen sh
@@ -10,3 +14,7 @@ docker-compose up -d nombre_imagen
 
 Para Listar Imegenes corriendo
 docker ps
+
+
+
+

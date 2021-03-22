@@ -1,0 +1,9 @@
+https://ssh.cloud.google.com/projects/cerometros/zones/us-central1-a/instances/cerometros-app?useAdminProxy=true&authuser=0&hl=es_419&projectNumber=733295277056
+
+git config --global user.mail "jealdana@gmail.com"
+git config --global user.name "Enrique Aldana "
+
+Para desmontar cambios
+
+git reset --PathYNombreDeArchivo
+

@@ -25,8 +25,8 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGOINITDB_ROOT_USERNAME: root
-      MONGOINITDB_ROOT_PASSWORD: CeroM3tros
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: CeroM3tros
     volumes:
       - $PWD/data:/data/db
       - $PWD/database:/opt/database

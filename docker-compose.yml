@@ -26,7 +26,7 @@ services:
       - 27017:27017
     environment:
       MONGOINITDB_ROOT_USERNAME: root
-      MONGOINITDB_ROOT_PASSWORD: CeroM3tros$
+      MONGOINITDB_ROOT_PASSWORD: CeroM3tros
     volumes:
       - $PWD/data:/data/db
       - $PWD/database:/opt/database
@@ -34,4 +34,4 @@ services:
       - cerometros-net
 
 networks:
-      - cerometros-net
+      cerometros-net:

@@ -1,0 +1,12 @@
+Para acceder dentro de una imagen con SSH
+
+docker exec -ti nombre_imagen sh
+
+Para listar imagenes
+docker images
+
+Para ejecutar un COMPOUSE
+docker-compose up -d nombre_imagen
+
+Para Listar Imegenes corriendo
+docker ps

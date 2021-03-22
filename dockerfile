@@ -2,12 +2,12 @@
 FROM geoffreybooth/meteor-base:2.0
 
 # Copy app package.json and package-lock.json into container
-COPY ./app/package*.json $APP_SOURCE_FOLDER/
+COPY ./package*.json $APP_SOURCE_FOLDER/
 
 RUN bash $SCRIPTS_FOLDER/build-app-npm-dependencies.sh
 
 # Copy app source into container
-COPY ./app $APP_SOURCE_FOLDER/
+COPY . $APP_SOURCE_FOLDER/
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
@@ -47,7 +47,8 @@ RUN apk --no-cache add \
 	ca-certificates \
     && update-ca-certificates
 
-RUN TZ America/Mexico_City
+RUN apk --no-cache add --update tzdata
+ENV TZ America/Mexico_City
 RUN rm -rf /var/cache/apk/*
 
 # Copy in entrypoint with the built and installed dependencies from the previous image

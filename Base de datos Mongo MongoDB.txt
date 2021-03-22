@@ -9,3 +9,11 @@ db.getCollection('messages').update({read: {$exists: false}},{$set:{read: false}
 REESTABLECER BASE DE datos
 mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
 mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGOINITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
+
+CONTRASEÑAS
+
+Usuario root
+Contraseña : SAbJOATs5Mm  // Esta es la contrasela que se usa 
+            CeroM3tros  // Esta es la contraseña que se fijo cuando la imagen fue creada por primera vez.
+                        // para reiniciar la contraseña se debe borrar el directorio data/db solo que se perderan todos los datos
+            

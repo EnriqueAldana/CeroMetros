@@ -1,10 +1,16 @@
+Para creaar una imagen
+docker-compose build
+
+Para iniciar una instancia de una imagen
+docker-compose up -d  mongo
+
 Para crear una imagen
 
 
 
 Para acceder dentro de una imagen con SSH
 
-docker exec -ti nombre_imagen sh
+docker exec -ti nombre_imagen bash
 
 Para listar imagenes
 docker images

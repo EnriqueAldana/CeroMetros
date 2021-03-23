@@ -24,5 +24,9 @@ Para Listar Imegenes corriendo
 docker ps
 
 
+CONSTRUIR SOLO UNA IMAGEN DEL DOCKER_COMPOSE que requiere permisos de administrador
+
+sudo docker-compose build crontab
+
 
 

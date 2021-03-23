@@ -56,13 +56,14 @@ services:
     build: 
       context: .
       dockerfile: cron-dockerfile
-      image: crontab
-      privileged: : true
-      depends_on: 
-        mongo
-      volumes: 
-        - ./backups:/opt/backups
-      networks:
+    image: crontab
+    privileged: true
+    restart: always
+    depends_on: 
+      - mongo
+    volumes: 
+      - ./backups:/opt/backups
+    networks:
       - cerometros-net 
 
 networks:

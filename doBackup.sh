@@ -1,0 +1,1 @@
+mongodump --host mongo -u root -p CeroM3tros --authenticationDatabase admin --db zmeters --out /opt/backups/backup-$(date +"%Y%m%d_%H%M%S")

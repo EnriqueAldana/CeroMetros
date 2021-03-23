@@ -1,0 +1,6 @@
+Agregar el paquete 
+meteor add force-ssl
+
+para redireccionar de http a https
+
+

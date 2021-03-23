@@ -29,4 +29,7 @@ CONSTRUIR SOLO UNA IMAGEN DEL DOCKER_COMPOSE que requiere permisos de administra
 sudo docker-compose build crontab
 
 
+Eliminar imagenes huerfanas, ejecutar ambas instrucciones.
+docker rm $(docker ps -f status=exited -q)
+docker rmi $(docker images -f dangling=true -q)
 

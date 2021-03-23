@@ -1,5 +1,7 @@
 Para creaar una imagen
 docker-compose build
+sudo docker-compose build
+
 
 Para iniciar una instancia de una imagen
 docker-compose up -d  mongo

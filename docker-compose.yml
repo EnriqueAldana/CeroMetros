@@ -16,6 +16,24 @@ services:
     networks:
       - cerometros-net
   
+  ssl-proxy:
+    container_name: ssl-proxy
+    image: justsml/ssl-proxy:latest
+    environment:
+    - HTTP_PORT=443
+    - SERVER_NAME=cerometros.dimemex.site
+    - UPSTREAM_TARGET=app:80
+    - CERT_PUBLIC_PATH=/certs/fullchain.pem
+    - CERT_PRIVATE_PATH=/certs/privkey.pem
+    volumes:
+    - /certs:/certs:ro
+    depends_on:
+      - app
+    ports:
+      - 443:443
+    networks:
+      - cerometros-net
+  
   mongo:
     container_name: mongo
     command:

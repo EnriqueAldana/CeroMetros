@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add socialize:user-presence
+  /usr/local/bin/node /usr/local/bin/Yarn add vue-sass
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands
@@ -14,17 +14,17 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: socialize:user-presence: Invalid protocol: socialize:
-      at Request.module.exports.Request.init (/usr/local/lib/node_modules/yarn/lib/cli.js:140931:31)
-      at new Request (/usr/local/lib/node_modules/yarn/lib/cli.js:140604:8)
-      at request (/usr/local/lib/node_modules/yarn/lib/cli.js:136804:10)
-      at RequestManager.execute (/usr/local/lib/node_modules/yarn/lib/cli.js:67040:15)
-      at RequestManager.shiftQueue (/usr/local/lib/node_modules/yarn/lib/cli.js:67078:10)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:66747:13
-      at new Promise (<anonymous>)
-      at new F (/usr/local/lib/node_modules/yarn/lib/cli.js:5301:28)
-      at RequestManager.request (/usr/local/lib/node_modules/yarn/lib/cli.js:66745:19)
-      at NpmRegistry.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:31704:42)
+  Error: https://registry.yarnpkg.com/vue-sass: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140662:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141634:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141556:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (internal/streams/readable.js:1327:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
 
 npm manifest: 
   {
@@ -38,10 +38,10 @@ npm manifest:
       "visualize": "meteor --production --extra-packages bundle-visualizer"
     },
     "dependencies": {
-      "@babel/runtime": "^7.12.18",
+      "@babel/runtime": "^7.13.10",
       "bcrypt": "^5.0.0",
       "firebase-admin": "^9.5.0",
-      "jquery": "^3.5.1",
+      "jquery": "^3.6.0",
       "meteor-node-stubs": "^1.0.1",
       "mimetypes": "^0.1.1",
       "simpl-schema": "^1.10.2",
@@ -49,7 +49,7 @@ npm manifest:
       "vue-meteor-tracker": "^2.0.0-beta.5",
       "vue-router": "^3.5.1",
       "vuedraggable": "^2.24.3",
-      "vuetify": "^2.4.4",
+      "vuetify": "^2.4.6",
       "vuex": "^3.6.2",
       "vuex-persist": "^3.1.3"
     },
@@ -70,10 +70,10 @@ Lockfile:
   # yarn lockfile v1
   
   
-  "@babel/runtime@^7.12.18":
-    version "7.12.18"
-    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.18.tgz#af137bd7e7d9705a412b3caaf991fe6aaa97831b"
-    integrity sha512-BogPQ7ciE6SYAUPtlm9tWbgI9+2AgqSam6QivMgXgAT+fKbgppaj4ZX15MHeLC1PVF5sNk70huBu20XxWOs8Cg==
+  "@babel/runtime@^7.13.10":
+    version "7.13.10"
+    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.13.10.tgz#47d42a57b6095f4468da440388fdbad8bebf0d7d"
+    integrity sha512-4QPkjJq6Ns3V/RgpEahRk+AGfL0eO6RHHtTWoNNr5mO49G6B5+X6d6THgWEAvTrznU5xYpbAlVKRYcsCgh/Akw==
     dependencies:
       regenerator-runtime "^0.13.4"
   
@@ -1091,10 +1091,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
     integrity sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
   
-  jquery@^3.5.1:
-    version "3.5.1"
-    resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
-    integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+  jquery@^3.6.0:
+    version "3.6.0"
+    resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
+    integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
   
   json-bigint@^1.0.0:
     version "1.0.0"
@@ -1981,10 +1981,10 @@ Lockfile:
     dependencies:
       sortablejs "1.10.2"
   
-  vuetify@^2.4.4:
-    version "2.4.4"
-    resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.4.4.tgz#529de23b6b0c65ccfd43fe11f0f3a8a0333e68e6"
-    integrity sha512-/4+xX9XbcwXBjrtptDxm5S4NXVaVGF8UJ3U7Nk20fl4aM84PGgGyqVCfi8hVa8t1gd+2Wz4FCztbR7JgJcBIQQ==
+  vuetify@^2.4.6:
+    version "2.4.6"
+    resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.4.6.tgz#127b37bd36c7a63f61615e0cd6f97e8b203e7a07"
+    integrity sha512-oqAWKAin07ip/QuT/p4bL1LegE3MYPbfojrOcj80RATZDSnJyco2PZD8QuIzd0RhYfdAuSTkY8elvHsLu90RuQ==
   
   vuex-persist@^3.1.3:
     version "3.1.3"

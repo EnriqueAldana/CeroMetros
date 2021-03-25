@@ -6,11 +6,11 @@
             </div>
             <router-view name="sectionView"> </router-view>
             <div class="text-center">
-                <img src="/img/Powered.png" alt="Powered by Antware" id="poweredLogo" height="35px" />
+                <img src="/img/Powered.png" alt="Powered by IngeCompu" id="poweredLogo" height="35px" />
             </div>
         </v-col>
         <v-col xs="12" sm="4" md="8" class="right-side d-flex flex-column justify-center">
-              <div class="display-3 font-weight-medium mr-10 text-right white--text">
+              <div class="display-3 font-weight-medium mr-10 text-left white--text">
                   Sistema Cero Metros
               </div>
         </v-col>
@@ -30,7 +30,7 @@
     }
 
     .right-side{
-        background-image: url("/img/meteor.jpg");
+        background-image: url("/img/ZeroMts_Product.png");
         background-size: cover;
         height: 100vh;
         position: relative;

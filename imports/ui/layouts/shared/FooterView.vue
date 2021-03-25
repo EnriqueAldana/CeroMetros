@@ -2,7 +2,7 @@
   <v-footer padless>
     <v-col class="d-flex justify-center" cols="12">
             <span class="white--text">
-                Powered by Ingeniería en Computo
+                Implementado por Ingeniería en Computo
             </span>
     </v-col>
   </v-footer>

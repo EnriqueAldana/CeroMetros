@@ -20,8 +20,8 @@ if(!process.env.LOGO_IMAGE_PATH){
     process.env.LOGO_IMAGE_PATH="";
     console.warn("La ruta a la imagen del LOGO no ha sido configurado -Variable de entorno LOGO_IMAGEPATH- , por lo que no se visualizará.");
 }
-if(!process.env.PRODUCT_IMAGE__PATH){
-    process.env.PRODUCT_IMAGE__PATH="";
+if(!process.env.PRODUCT_IMAGE_PATH){
+    process.env.PRODUCT_IMAGE_PATH="";
     console.warn("La ruta a la imagen del producto que lo identificano ha sido configurado -Variable de entorno PRODUCT_IMAGE__PATH - , por lo que no se visualizará.");
 }
 console.info(" Configuracion del sistema de correo");
@@ -37,8 +37,8 @@ const emailResetPassword = 'email_reset_password.html';
 const emailVerifyEmail = 'email_verify_email.html';
 //const productSrc = 'http://localhost:3000/img/vue-meteor.png';
 //const logoSrc = 'http://localhost:3000/img/Logo.png';
-const productSrc = process.env.PRODUCT_IMAGE__PATH;
-const logoSrc =process.env.LOGO_PATH;
+const productSrc = process.env.PRODUCT_IMAGE_PATH;
+const logoSrc =process.env.LOGO_IMAGE_PATH;
 Accounts.emailTemplates.siteName = name;
 Accounts.emailTemplates.from = from;
 const emailTemplates = Accounts.emailTemplates;

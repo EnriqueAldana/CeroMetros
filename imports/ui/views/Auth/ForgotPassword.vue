@@ -30,6 +30,7 @@
                 // la funcion forgotPassword, se encarga de enviar el correo fijado para tal efecto.
                 Accounts.forgotPassword(this.user,(error,response) => {
                   if(error){
+                      console.log('Error al enviar el correo ' + this.user.email,error.error);
                       this.$alert.showAlertSimple('error','Error al mandar el correo');
                   }else{
                       this.$alert.showAlertSimple('success','El correo ha sido enviado con exito.' +

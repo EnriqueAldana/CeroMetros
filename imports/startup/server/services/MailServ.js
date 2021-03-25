@@ -1,14 +1,35 @@
-if(Meteor.isDevelopment){
-    if(Meteor.settings.private?.SENDER_EMAILS){
-        process.env.EMAIL_SERVICES= Meteor.settings.private.SENDER_EMAILS.CONTACT;
+/*
+*  Validar que la variable de entorno MAIL_URL este fijada
+*/
+if(!process.env.MAIL_URL){
+    if(Meteor.settings.private?.MAIL_URL){
+        process.env.MAIL_URL= Meteor.settings.private.MAIL_URL;
     }else{
-        console.warn("El servicio de envio de correos no ha sido configurado , por lo que no se enviarán correos.");
+        console.warn("El servicio de envio de correos no ha sido configurado -Variable de entorno MAIL_URL indefinida- , por lo que no se enviarán correos.");
+    }   
+}
+if (!process.env.SENDER_EMAIL){
+    if(Meteor.settings.private?.SENDER_EMAILS){
+        process.env.SENDER_EMAIL= Meteor.settings.private.SENDER_EMAILS.CONTACT;
+    }else{
+        console.warn("El servicio de envio de correos no ha sido configurado -Variable de entorno SENDER_EMAIL no definida- , por lo que no se enviarán correos.");
     }
 }
 
+if(!process.env.LOGO_IMAGE_PATH){
+    process.env.LOGO_IMAGE_PATH="";
+    console.warn("La ruta a la imagen del LOGO no ha sido configurado -Variable de entorno LOGO_IMAGEPATH- , por lo que no se visualizará.");
+}
+if(!process.env.PRODUCT_IMAGE__PATH){
+    process.env.PRODUCT_IMAGE__PATH="";
+    console.warn("La ruta a la imagen del producto que lo identificano ha sido configurado -Variable de entorno PRODUCT_IMAGE__PATH - , por lo que no se visualizará.");
+}
+console.info(" Configuracion del sistema de correo");
+console.info(" Email URL ",process.env.MAIL_URL);
+console.info(" Email sender",process.env.SENDER_EMAIL);
 
-const name = 'Sistema ZMeters';
-const email = `<${process.env.EMAIL_SERVICES}>`;
+const name = 'Sistema CeroMetros';
+const email = `<${process.env.SENDER_EMAIL}>`;
 const from = `${ name } ${ email}`;
 
 const emailEnrollAccount = 'email_enroll_account.html';
@@ -16,8 +37,8 @@ const emailResetPassword = 'email_reset_password.html';
 const emailVerifyEmail = 'email_verify_email.html';
 //const productSrc = 'http://localhost:3000/img/vue-meteor.png';
 //const logoSrc = 'http://localhost:3000/img/Logo.png';
-const productSrc = 'https://firebasestorage.googleapis.com/v0/b/zmeters.appspot.com/o/ZeroMts_Product.png?alt=media';
-const logoSrc ='https://firebasestorage.googleapis.com/v0/b/zmeters.appspot.com/o/Logo.png?alt=media';
+const productSrc = process.env.PRODUCT_IMAGE__PATH;
+const logoSrc =process.env.LOGO_PATH;
 Accounts.emailTemplates.siteName = name;
 Accounts.emailTemplates.from = from;
 const emailTemplates = Accounts.emailTemplates;
@@ -77,10 +98,4 @@ emailTemplates.verifyEmail = {
     }
 };
 
-if(Meteor.isDevelopment){
-    if(Meteor.settings.private?.MAIL_URL){
-        process.env.MAIL_URL= Meteor.settings.private.MAIL_URL;
-    }else{
-        console.warn("El servicio de envio de correos no ha sido configurado , por lo que no se enviarán correos.");
-    }
-}
+

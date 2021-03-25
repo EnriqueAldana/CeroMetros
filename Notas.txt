@@ -2,6 +2,20 @@ Identar codigo,
 OPTION + COMMAND + L
 
 Arrancar la aplicacion
+1.- Fijar la variable de entorno en el shell
+export MONGO_URL=mongodb://localhost:27017/zmeters
+export MAIL_URL=smtp://contacto@dimemex.site:Contacto2020@pam.asoshared.com:26
+export SENDER_EMAIL=jealdana@gmail.com
+export PRODUCT_IMAGE__PATH="URL_PATH en http"
+export LOGO_PATH="URL_PAT en http"
+
+2.- Ejecutar en el shell de manera de cargar el archivo de configuracion :
+—settings ./settings/settings-development.json
+
+yarn run:mac
+
+
+
 
 Manejo de coleccionest
 La coleccion de Usuarios se crea mediante los paquetes de Account, por eso lo manejamois con Meteor.users, etc.

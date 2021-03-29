@@ -15,6 +15,11 @@ import '../../api/Messages/Message';
 import '../../api/Messages/MessagesCtl';
 import '../../api/Messages/MessagePubs';
 import '../../api/Messages/MessageSeeder';
+import '../../api/Companies/Company';
+import '../../api/Companies/CompanyCtl';
+import '../../api/Companies/CompanyPubs';
+import '../../api/Companies/CompanyServ';
+
 
 // Ejemplos de creacion de metodos o End Points
 import {ValidatedMethod} from 'meteor/mdg:validated-method';

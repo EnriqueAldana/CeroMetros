@@ -53,7 +53,7 @@
           <v-card-title>Todos los permisos</v-card-title>
           <v-card-text>
             <v-text-field v-model="searchPermission" placeholder="Buscar. . ."
-                          id="inputSearchPermission" name="profileName2">
+                          id="inputSearchPermission" name="profileName">
             </v-text-field>
           </v-card-text>
           <v-sheet id="scrolling-techniques-3" class="overflow-y-auto" max-height="500">
@@ -172,6 +172,7 @@ export default {
       })
     },
     filteredPermissions(){
+      console.log("Todos los permisos",this.allPermissions);
       return this.allPermissions.filter(permission=>{
         return permission.publicName.toLowerCase().includes(this.searchPermission.toLowerCase());
       })

@@ -59,3 +59,7 @@ Acciones para regenerar el ambiente de desarrollo
 5.- volver a ejecutar comando yarn install si se usa yarn o npm install si se usa npm
 6.- Arrancar Meteor .
 
+
+
+Procesar estilos
+https://vue-loader.vuejs.org/guide/pre-processors.html#sass

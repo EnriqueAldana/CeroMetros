@@ -58,7 +58,7 @@ new ValidatedMethod({
             ]);
 
         }catch ( exception){
-            console.error('message.save', exception);
+            console.error('message.read', exception);
             throw new Meteor.Error('403', 'La informacion introducida no es valida');
         }
     },
@@ -73,7 +73,7 @@ new ValidatedMethod({
             }, {multi: true});
         
         }catch ( exception){
-            console.error('message.save', exception);
+            console.error('message.read', exception);
             throw new Meteor.Error('500', 'Ha ocurrido un error al marcar los mensajes como leidos');
         }
         return responseMessage;

@@ -33,6 +33,55 @@ const Permissions={
     CHAT: {
         CREATE: { VALUE: 'message-create', TEXT: 'Enviar mensaje de chat'},
         LIST: { VALUE: 'message-view', TEXT: 'Ver mensajes de chat'}
+    },
+    COMPANIES:{
+        LIST:{VALUE:'companies-view',TEXT:'Listar compañias'},
+        CREATE:{VALUE:'companies-create',TEXT:'Crear compañias'},
+        UPDATE:{VALUE:'companies-edit',TEXT:'Editar compañias'},
+        DELETE:{VALUE:'companies-delete',TEXT:'Borrar compañias'}
+
+    },
+    PRODUCTIONLINES:{
+        LIST:{VALUE:'productionlines-view',TEXT:'Listar linea de produccion'},
+        CREATE:{VALUE:'productionlines-create',TEXT:'Crear linea de produccion'},
+        UPDATE:{VALUE:'productionlines-edit',TEXT:'Editar linea de produccion'},
+        DELETE:{VALUE:'productionlines-delete',TEXT:'Borrar linea de produccion'}
+
+    },
+    PRODUCTIONORDERS:{
+        LIST:{VALUE:'productionorders-view',TEXT:'Listar orden de produccion'},
+        CREATE:{VALUE:'productionorders-create',TEXT:'Crear ordenes de produccion'},
+        UPDATE:{VALUE:'productionorders-edit',TEXT:'Editar orden de produccion'},
+        DELETE:{VALUE:'productionorders-delete',TEXT:'Borrar orden de produccion'}
+
+    },
+    PRODUCTS:{
+        LIST:{VALUE:'products-view',TEXT:'Listar productos'},
+        CREATE:{VALUE:'products-create',TEXT:'Crear productos'},
+        UPDATE:{VALUE:'products-edit',TEXT:'Editar producto'},
+        DELETE:{VALUE:'products-delete',TEXT:'Borrar producto'}
+
+    },
+    PROVIDERSTATIONS:{
+        LIST:{VALUE:'providerstations-view',TEXT:'Listar estaciones de suministro'},
+        CREATE:{VALUE:'providerstations-create',TEXT:'Crear estacion de suministro'},
+        UPDATE:{VALUE:'providerstations-edit',TEXT:'Editar estacion de suministro'},
+        DELETE:{VALUE:'providerstations-delete',TEXT:'Borrar estacion de suministro'}
+
+    },
+    WAREHOUSES:{
+        LIST:{VALUE:'warehouses-view',TEXT:'Listar almacenes'},
+        CREATE:{VALUE:'warehouses-create',TEXT:'Crear almacen'},
+        UPDATE:{VALUE:'warehouses-edit',TEXT:'Editar almacen'},
+        DELETE:{VALUE:'warehouses-delete',TEXT:'Borrar almacen'}
+
+    },
+    WORKSTATIONS:{
+        LIST:{VALUE:'workstations-view',TEXT:'Listar estaciones de trabajo'},
+        CREATE:{VALUE:'workstations-create',TEXT:'Crear estacion de trabajo'},
+        UPDATE:{VALUE:'workstations-edit',TEXT:'Editar estacion de trabajo'},
+        DELETE:{VALUE:'workstations-delete',TEXT:'Borrar estacion de trabajo'}
+
     }
 
 };
@@ -42,6 +91,7 @@ export const permissionsArray= Object.keys(Permissions).reduce((accumulator, sys
     const modulePermissions= Object.keys(systemModuleObject).map(permission=> systemModuleObject[permission]);
     return accumulator.concat(modulePermissions);
 },[]);
+
 /*
 Devuelve esto:
 
@@ -56,18 +106,21 @@ Devuelve esto:
 
  */
 if(Meteor.settings.private && Meteor.settings.private.REFRESH_PERMISSIONS){
-    console.log('Updating permissions...');
+    console.log(' Updating permissions...');
     const currentRoles= Roles.getAllRoles().fetch();
     for(let permission of permissionsArray){
-        if(!currentRoles.find(_role=> _role==permission.VALUE)){
+        let exists= currentRoles.find(_role=> _role._id==permission.VALUE)
+        if(!exists){
             Roles.createRole(permission.VALUE);
+        }else{
+            Meteor.roles.update(permission.VALUE, {
+                $set:{
+                    publicName:permission.TEXT
+    
+                }
+            });
         }
-        Meteor.roles.update(permission.VALUE, {
-            $set:{
-                publicName:permission.TEXT
-
-            }
-        });
+        
     }
 }else{
     console.log('Not Updating permissions...');

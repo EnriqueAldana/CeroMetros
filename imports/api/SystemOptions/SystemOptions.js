@@ -16,9 +16,43 @@ export default [
                 routeName:'home.profiles'
             },
             {
+                title:'Empresas',
+                permission: Permissions.COMPANIES.LIST.VALUE,
+                routeName:'home.companies'
+            },
+            {
                 title:'Chat',
                 permission: Permissions.CHAT.LIST.VALUE,
                 routeName:'home.chat'
-            }
-
+            },
+            {
+                title:'Lineas Produccion',
+                permission: Permissions.PRODUCTIONLINES.LIST.VALUE,
+                routeName:'home.productionlines'
+            },
+            {
+                title:'Ordenes Produccion',
+                permission: Permissions.PRODUCTIONORDERS.LIST.VALUE,
+                routeName:'home.productionorders'
+            },
+            {
+                title:'Productos',
+                permission: Permissions.PRODUCTS.LIST.VALUE,
+                routeName:'home.products'
+            },
+            {
+                title:'Est Suministro',
+                permission: Permissions.PROVIDERSTATIONS.LIST.VALUE,
+                routeName:'home.providerstation'
+            },
+            {
+                title:'Almacenes',
+                permission: Permissions.WAREHOUSES.LIST.VALUE,
+                routeName:'home.warehouses'
+            },
+            {
+                title:'Estaciones Trabajo',
+                permission: Permissions.WORKSTATIONS.LIST.VALUE,
+                routeName:'home.workstations'
+            }    
     ]

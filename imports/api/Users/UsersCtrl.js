@@ -125,8 +125,6 @@ new ValidatedMethod({
 
     },
     async run({idUser}){
-        console.log('user.remove');
-        console.log('idUser', idUser);
         const responseMessage = new ResponseMessage;
 
         try{

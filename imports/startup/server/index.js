@@ -19,6 +19,10 @@ import '../../api/Companies/Company';
 import '../../api/Companies/CompanyCtl';
 import '../../api/Companies/CompanyPubs';
 import '../../api/Companies/CompanyServ';
+import '../../api/Workstations/WorkStation';
+import '../../api/Workstations/WorkStationCtl';
+import '../../api/Workstations/WorkStationPubs';
+import '../../api/Workstations/WorkStationServ';
 
 
 // Ejemplos de creacion de metodos o End Points

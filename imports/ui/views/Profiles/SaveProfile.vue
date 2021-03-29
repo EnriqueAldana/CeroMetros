@@ -53,7 +53,7 @@
           <v-card-title>Todos los permisos</v-card-title>
           <v-card-text>
             <v-text-field v-model="searchPermission" placeholder="Buscar. . ."
-                          id="inputSearchPermission" name="profileName">
+                          id="inputSearchPermission" name="profileName2">
             </v-text-field>
           </v-card-text>
           <v-sheet id="scrolling-techniques-3" class="overflow-y-auto" max-height="500">
@@ -120,7 +120,6 @@ export default {
     onChangeDragList(event , propData) {
       if(event.hasOwnProperty('removed')){
         this[propData] = this[propData].filter(permission => permission._id != event.removed.element._id);
-
       }else if(event.hasOwnProperty('added')){
         this[propData].splice(event.added.newIndex,0, event.added.element);
       }
@@ -144,11 +143,13 @@ export default {
           if (error){
             this.$alert.showAlertSimple('error',error.reason,response);
           } else {
+            console.log("Lista de todos los permisos ", response.data);
             this.allPermissions = response.data;
           }
       });
     },
     initPermissions(idProfile){
+      console.log("Entrando a initPermissions");
       Meteor.call('permissions.listByIdProfile',{"idProfile":idProfile},(error,response)=>{
         if (error){
           this.$alert.showAlertSimple('error',error.reason,response);
@@ -172,15 +173,13 @@ export default {
       })
     },
     filteredPermissions(){
-      console.log("Todos los permisos",this.allPermissions);
       return this.allPermissions.filter(permission=>{
         return permission.publicName.toLowerCase().includes(this.searchPermission.toLowerCase());
-      })
+      });
     },
   }
 }
 </script>
 
 <style scoped>
-
 </style>

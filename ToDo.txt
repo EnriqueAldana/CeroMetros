@@ -5,5 +5,6 @@ conosiderar poner indices a workstation y lineas de produccion
 31 Marzo 2021
 2.- Arrastrar Estaciones en Linea Produccion  OK
 3.- Guardar estaciones en linea de produccion  OK
-4.- Validar que no se pueda borrar una estacion si esta INCLUIDA a una linea de produccion.
-5.- Pendiente mostrar las estaciones de trabajo de cada linea en su lista de lineas de produccion
+4.- Validar que no se pueda borrar una estacion si esta INCLUIDA a una linea de produccion. OK
+5.- Pendiente mostrar las estaciones de trabajo de cada linea en su lista de lineas de produccion. OK
+

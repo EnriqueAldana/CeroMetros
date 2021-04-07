@@ -17,3 +17,9 @@ Contraseña : SAbJOATs5Mm  // Esta es la contrasela que se usa
             CeroM3tros  // Esta es la contraseña que se fijo cuando la imagen fue creada por primera vez.
                         // para reiniciar la contraseña se debe borrar el directorio data/db solo que se perderan todos los datos
             
+
+
+DETALLES
+asi mismo, hay otras cosilla que cambian del mongo nativo al mongo de meteor, 
+por ejemplo, la parte de sort y limit. En Mongo nativo se maneja como: .find({}).sort({campo:1}).limit(4) 
+y en Mongo de Meteor se maneja con el segundo parametro: .find({},{sort:[campo:1],limit:4})

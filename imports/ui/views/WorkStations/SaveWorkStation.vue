@@ -22,6 +22,12 @@
                   </v-text-field>
                   <v-text-field v-model="workstation.location" id="inputLocation" type="text" name="location" label="Ubicacion">
                   </v-text-field>
+                  <v-select v-model="workstation.productionline" id="inputProductionLine" name="name"
+                            :items="productionlines"
+                            item-text="name" item-value="_id" return-object
+                            label="Linea de produccion">
+                  </v-select>
+
                 </v-col>
               </v-row>
             </v-form>
@@ -33,7 +39,7 @@
 </template>
 
 <script>
-
+import {ProductionLineRepository} from "../../../api/ProductionLines/ProductionLine";
 export default {
   name: "SaveWorkStation",
   data() {
@@ -42,7 +48,12 @@ export default {
         _id: null,
         name: null,
         name_full: null,
-        location:null
+        location:null,
+        productionline: {
+          _id:null,
+          name: null,
+          description:null
+        }
       },
       dataView: {
         title: '',
@@ -62,13 +73,15 @@ export default {
         _id: tempWorkstation._id,
         name: tempWorkstation.name,
         name_full: tempWorkstation.name_full,
-        location: tempWorkstation.location
+        location: tempWorkstation.location,
+        productionline: tempWorkstation.productionline
       };
     }
   },
   methods: {
     saveWorkStation() {
       this.$loader.activate('Guardando estacion de trabajo...');
+
       Meteor.call('workstation.save',this.workstation,(error,response) => {
         this.$loader.deactivate();
         if(error){
@@ -79,6 +92,14 @@ export default {
         }
       });
 
+    }
+  },
+  meteor:{
+    $subscribe: {
+        'productionlines.list': []
+    },
+    productionlines(){
+     return ProductionLineRepository.find({},{fields:{_id:1,name:1,description:1}}).fetch();
     }
   }
 }

@@ -13,11 +13,17 @@ new ValidatedMethod({
      beforeHooks: [AuthGuard.checkPermission],
     validate(workstation){
         try {
+            console.info('workstation ' , workstation);
             check(workstation,{
                 _id: Match.OneOf(String, null),
                 name: String,
                 name_full: String,
                 location: String,
+                productionline: {
+                    _id:Match.OneOf(String, null),
+                    name: Match.OneOf(String, null),
+                    description:Match.OneOf(String, null)
+                }
             });
 
         }catch ( exception){
@@ -25,26 +31,35 @@ new ValidatedMethod({
             throw new Meteor.Error('403', 'La informacion introducida no es valida');
         }
         // Validar que no haya estaciones de trabajo con el mismo nombre   
-        WorkStationServ.validateWorkstationName(workstation.name);
+        
+        WorkStationServ.validateWorkstationName(workstation.name,workstation._id);
     },
     run(workstation){
         const responseMessage = new ResponseMessage(); 
         try {
             if(workstation._id !== null){
+                WorkStationServ.validateWorkstationChangeProductionLine(workstation);
                 WorkstationRepository.update(workstation._id,{
                     $set: {
                     name: workstation.name,
                     name_full: workstation.name_full,
-                    location: workstation.location
+                    location: workstation.location,
+                    productionline: workstation.productionline
                     }
                 });
+                
+
                 responseMessage.create('Se actualizó la estacion de trabajo exitosamente');
             }else{
                 WorkstationRepository.insert({
                     name: workstation.name,
                     name_full: workstation.name_full,
-                    location: workstation.location
+                    location: workstation.location,
+                    productionline: workstation.productionline
                 });
+
+                // ToDo actualizar la Linea de produccion
+
                 responseMessage.create('Se insertó la estacion de trabajo exitosamente');
             }
         }catch ( exception){
@@ -69,10 +84,8 @@ new ValidatedMethod({
             throw new Meteor.Error('403', 'Ocurrio un error al eliminar la estacion de trabajo');
         }
         // validar que no sea posible eliminar una estacion si hay una linea utilizandolo.
-        // TODO
-        //const workstationWithProductionLine = CompanyServ.validateWorkstationName(idCompany);
-        const workstationWithProductionLine =0;
-        if (workstationWithProductionLine.length > 0){
+        const workstationWithProductionLine = WorkStationServ.validateWorkstationBusy(idWorkstation);
+        if (workstationWithProductionLine > 0){
             throw new Meteor.Error('403','No es posible elimiar la estacion de trabajo',
                 'Hay al menos una linea de produccion utilizandola');
         }
@@ -83,7 +96,7 @@ new ValidatedMethod({
             WorkstationRepository.remove(idWorkstation);
                 responseMessage.create('Estacion de trabajo eliminada exitosamente');
         }catch (exception) {
-            console.error('profile.delete', exception);
+            console.error('workstation.delete', exception);
             throw new Meteor.Error('500', 'Ocurrio un error al eliminar la estacion de trabajo');
         }
 

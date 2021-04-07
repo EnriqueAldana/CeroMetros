@@ -23,6 +23,10 @@ import '../../api/Workstations/WorkStation';
 import '../../api/Workstations/WorkStationCtl';
 import '../../api/Workstations/WorkStationPubs';
 import '../../api/Workstations/WorkStationServ';
+import '../../api/ProductionLines/ProductionLine';
+import '../../api/ProductionLines/ProductionLineCtl';
+import '../../api/ProductionLines/ProductionLinesPubs';
+import '../../api/ProductionLines/ProductionLinesServ';
 
 
 // Ejemplos de creacion de metodos o End Points

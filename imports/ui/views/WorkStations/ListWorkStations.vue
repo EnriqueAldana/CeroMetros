@@ -46,6 +46,10 @@
                 <v-text-field v-model="headersFilter.location" type="text"
                               label="Ubicacion"></v-text-field>
               </td>
+              <td>
+                <v-text-field v-model="headersFilter.productionline" type="text"
+                              label="Linea de produccion"></v-text-field>
+              </td>
             </tr>
           </template>
         </v-data-table>
@@ -71,6 +75,7 @@ export default {
                   name: '',
                   name_full: '',
                   location: '',
+                  productionline: ''
           },workstationTemp: {
               preposition: 'la',
               typeElement: ' estacion de trabajo ',
@@ -127,6 +132,13 @@ export default {
                   return value != null && typeof value === 'string' &&
                       value.toString().toLocaleLowerCase()
                           .indexOf(this.headersFilter.location.toLocaleLowerCase()) !== -1;
+                }
+              },
+              {
+                value: 'productionline.name', text: 'Linea de produccion', sortable: true, filter: value => {
+                  return value != null && typeof value === 'string' &&
+                      value.toString().toLocaleLowerCase()
+                          .indexOf(this.headersFilter.productionline.toLocaleLowerCase()) !== -1;
                 }
               },
               {value: 'action', text: 'Opciones', sortable: false}

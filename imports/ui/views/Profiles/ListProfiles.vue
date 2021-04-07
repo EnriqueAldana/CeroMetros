@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col xs="12" sm="8" md="6" lg="5" xl="5">
+      <v-col xs="16" sm="16" md="14" lg="12" xl="9">
         <div class="d-flex flex-row-reverse mb-5">
           <v-tooltip bottom>
             <template v-slot:activator="{on}">

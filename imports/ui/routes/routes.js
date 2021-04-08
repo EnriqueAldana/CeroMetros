@@ -12,6 +12,7 @@ import productsAnditemsRoutes from "./productsAnditemsRoutes";
 import providerStationsRoutes from "./providerStationsRoutes";
 import warehousesRoutes from "./warehousesRoutes";
 import workStationsRoutes from "./workStationsRoutes";
+import providerRoutes from "./providerRoutes"
 
 export default [
     {
@@ -53,6 +54,7 @@ export default [
             providerStationsRoutes,
             warehousesRoutes,
             workStationsRoutes,
+            providerRoutes
         ]
     }
 ]

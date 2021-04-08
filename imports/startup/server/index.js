@@ -27,11 +27,19 @@ import '../../api/ProductionLines/ProductionLine';
 import '../../api/ProductionLines/ProductionLineCtl';
 import '../../api/ProductionLines/ProductionLinesPubs';
 import '../../api/ProductionLines/ProductionLinesServ';
+import '../../api/ProductionLines/ProductionLineSeeder';
 import '../../api/Warehouses/Warehouse';
 import '../../api/Warehouses/WarehouseCtl';
 import '../../api/Warehouses/WarehousePubs';
 import '../../api/Warehouses/WarehouseSeeder';
 import '../../api/Warehouses/WarehouseServ';
+import '../../api/Providers/Provider';
+import '../../api/Providers/ProviderCtl';
+import '../../api/Providers/ProviderPubs';
+import '../../api/Providers/ProviderSeeder';
+import '../../api/Providers/ProviderServ';
+
+
 
 // Ejemplos de creacion de metodos o End Points
 import {ValidatedMethod} from 'meteor/mdg:validated-method';

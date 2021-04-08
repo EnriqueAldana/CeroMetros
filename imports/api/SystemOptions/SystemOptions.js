@@ -51,6 +51,11 @@ export default [
                 routeName:'home.warehouses'
             },
             {
+                title:'Proveedores',
+                permission: Permissions.PROVIDERS.LIST.VALUE,
+                routeName:'home.providers'
+            },
+            {
                 title:'Estaciones Trabajo',
                 permission: Permissions.WORKSTATIONS.LIST.VALUE,
                 routeName:'home.workstations'

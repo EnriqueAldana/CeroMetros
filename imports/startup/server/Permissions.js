@@ -82,7 +82,14 @@ const Permissions={
         UPDATE:{VALUE:'workstations-edit',TEXT:'Editar estacion de trabajo'},
         DELETE:{VALUE:'workstations-delete',TEXT:'Borrar estacion de trabajo'}
 
-    }
+    },
+    PROVIDERS:{
+        LIST:{VALUE:'providers-view',TEXT:'Listar proveedores'},
+        CREATE:{VALUE:'providers-create',TEXT:'Crear proveedore'},
+        UPDATE:{VALUE:'providers-edit',TEXT:'Editar proveedore'},
+        DELETE:{VALUE:'providers-delete',TEXT:'Borrar proveedore'}
+
+    },
 
 };
 

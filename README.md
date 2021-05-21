@@ -36,7 +36,7 @@ Note: For Windows Systems verify that mongo is configured as environment system 
 1. Open a terminal in the project root
 2. Restore the database with:
 ```shell
-mongorestore --db curso-meteor ./database/curso-meteor
+mongorestore --db curso-meteor ./database/zmeters/
 ```
 
 **The following commands are only for support:**

@@ -8,11 +8,12 @@ import chatRoutes from "./chatRoutes";
 import companyRoutes from "./companyRoutes";
 import productionLinesRoutes from "./productionLinesRoutes";
 import productionOrdersRoutes from "./productionOrdersRoutes";
-import productsAnditemsRoutes from "./productsAnditemsRoutes";
 import providerStationsRoutes from "./providerStationsRoutes";
 import warehousesRoutes from "./warehousesRoutes";
 import workStationsRoutes from "./workStationsRoutes";
-import providerRoutes from "./providerRoutes"
+import providerRoutes from "./providerRoutes";
+import productsRoutes from "./productsRoutes";
+
 
 export default [
     {
@@ -50,11 +51,11 @@ export default [
             companyRoutes,
             productionLinesRoutes,
             productionOrdersRoutes,
-            productsAnditemsRoutes,
             providerStationsRoutes,
             warehousesRoutes,
             workStationsRoutes,
-            providerRoutes
+            providerRoutes,
+            productsRoutes
         ]
     }
 ]

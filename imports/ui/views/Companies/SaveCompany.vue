@@ -16,8 +16,14 @@
             <v-form @submit.prevent="saveCompany" id="saveCompany" autocomplete="off">
               <v-row>
                 <v-col xs="12" sm="12" md="8">
-                  <v-text-field v-model="company.name" id="inputName" name="name" label="Nombre">
-                  </v-text-field>
+        
+                  <v-text-field
+                        v-model="company.name" id="inputName" name="name"
+                        :rules="[rules.required, rules.counter]"
+                        label="Nombre"
+                        counter
+                        maxlength="20"
+                  ></v-text-field>
                   <v-text-field v-model="company.name_full" id="inputNameFull" name="name_full" label="Nombre completo">
                   </v-text-field>
                     <v-text-field v-model="company.companyBussinessId" id="inputcompanyBussinessId" name="companyBussinessId" label="RFC">
@@ -28,8 +34,13 @@
                   </v-text-field>
                   <v-text-field v-model="company.web" id="inputweb" name="web" label="Web">
                   </v-text-field>
-                  <v-text-field v-model="company.email" id="inputemail" type="email" name="email" label="Correo">
                   </v-text-field>
+                  <v-text-field
+                    v-model="company.email" id="inputemail" type="email" name="email"
+                    :rules="[rules.required, rules.email]"
+                    label="Correo Electrónico"
+                  ></v-text-field>
+
                    <td>
                 <v-switch
                     v-model="company.isAvailable"
@@ -65,6 +76,14 @@ export default {
         web: null,
         email: null,
         isAvailable: false
+      },
+      rules: {
+          required: value => !!value || 'Requerido.',
+          counter: value => value.length <= 20 || 'Max 20 caracteres',
+          email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Correo Electrónico incorrecto.'
+          }
       },
       dataView: {
         title: '',

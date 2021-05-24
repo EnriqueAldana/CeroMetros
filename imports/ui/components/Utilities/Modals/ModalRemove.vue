@@ -35,6 +35,7 @@ export default {
   },
   methods: {
     removeElement() {
+      console.info('this.modalData borrar',this.modalData);
       this.$emit('id_element', this.modalData._id);
       this.dialog = false;
     },

@@ -38,6 +38,11 @@ import '../../api/Providers/ProviderCtl';
 import '../../api/Providers/ProviderPubs';
 import '../../api/Providers/ProviderSeeder';
 import '../../api/Providers/ProviderServ';
+import '../../api/Products/Product';
+import '../../api/Products/ProductCtl';
+import '../../api/Products/ProductPubs';
+import '../../api/Products/ProductSeeder';
+import '../../api/Products/ProductServ';
 
 
 

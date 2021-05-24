@@ -63,3 +63,15 @@ Acciones para regenerar el ambiente de desarrollo
 
 Procesar estilos
 https://vue-loader.vuejs.org/guide/pre-processors.html#sass
+
+
+Expresiones regulares comunes
+
+https://www.bonaval.com/images/uploads/2011/06/TutorialExpresionesRegularesJavaScript.pdf
+
+Graficas en vue
+
+https://apexcharts.com/
+
+EJEMPLOS de Dragable
+https://sortablejs.github.io/Vue.Draggable/#/functional

@@ -7,3 +7,27 @@ Para desmontar cambios
 
 git reset --PathYNombreDeArchivo
 
+Instalacion sobre EC2 de AWS
+
+1.- Crear la imagen virtual Ubuntu 16 o mayor
+Conexion
+ ssh -i "ZeroMeters.pem" ubuntu@ec2-13-57-10-7.us-west-1.compute.amazonaws.com
+ 
+2.- Instalar Docker en Maquina virtual
+3.- Descargar o clonar codigo del repositorio
+https://github.com/EnriqueAldana/CeroMetros.git
+
+4.- Instalar la aplicacion
+    4.1 Crear una imagen para Mongo con:
+    docker-compose up -d mongo   // Debemos esta en el directorio de la app
+    4.2 Crear el contenedor crontab para backup de la BD
+    docker-compose up -d crontab 
+ 
+    4.3 
+    4.4 Crear la imagen Docker con:
+    Ajustar permisos para el usuario ubuntu
+    sudo chown -Rh ubuntu .meteor/local
+    docker-compose build
+    4.2 Levantar el contenedor de Mongo
+    docker-compose up -d mongo
+

@@ -23,3 +23,98 @@ mongodump --uri="mongodb://<host URL/IP>:<Port>" [additional options]
 
 Conexion desde programas
 mongodb+srv://cerometrosuser:cerom3tros@cluster0.vmvzt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+2.- Instalar la aplicacion
+    2.1 Instalar el cliente de heroku
+    brew tap heroku/brew && brew install heroku
+    2.2 Crear una App en heroku
+    https://dashboard.heroku.com/apps
+
+    2.3 conectar el gitHub local con el remoto 
+    heroku git:remote -a nombreApp
+    heroku git:remote -a cerometros
+    se obtiene :
+    enrique@Mac-mini-de-Enrique CeroMetros % heroku git:remote -a cerometros
+ ›   Warning: Our terms of service have changed: 
+ ›   https://dashboard.heroku.com/terms-of-service
+heroku: Press any key to open up the browser to login or q to exit: 
+Opening browser to https://cli-auth.heroku.com/auth/cli/browser/c08a5cdd-0bd2-4c62-a42d-749d2763cb13?requestor=SFMyNTY.g2gDbQAAAA4xODcuMjEzLjExOC4yMm4GAKoz3qB5AWIAAVGA.HOxAHaiT4DFZCPJECC4W1HQnmWE_6ah8jJBTe7XvWMo
+Logging in... done
+set git remote heroku to https://git.heroku.com/cerometros.git
+enrique@Mac-mini-de-Enrique CeroMetros % 
+
+    3.- Desplegar el codigo 
+    git push heroku main
+    4.- Instalar el empacador de Meteor en heroku
+    heroku buildpacks:set admithub/meteor-horse
+    resultado
+    enrique@Mac-mini-de-Enrique CeroMetros % heroku buildpacks:set admithub/meteor-horse
+Buildpack set. Next release on cerometros will use admithub/meteor-horse.
+Run git push heroku main to create a new release using this buildpack.
+enrique@Mac-mini-de-Enrique CeroMetros % 
+    5.- Instalar un AddOn para mongo
+     heroku addons:create mongolab
+    6.- Fijar las variables de ambiente;
+     heroku config:set ROOT_URL="https://cerometros.herokuapp.com" # or other URL
+     heroku config:set MONGO_URL='mongodb+srv://cerometrosuser:cerom3tros@cluster0.vmvzt.mongodb.net/zmeters?retryWrites=true&w=majority'
+     heroku config:set LOGO_IMAGE_PATH='https://firebasestorage.googleapis.com/v0/b/cerometros.appspot.com/o/Logo.png?alt=media&token=0a923e0e-df2f-4201-a910-0d5a7ad735f2'
+     heroku config:set PRODUCT_IMAGE_PATH='https://firebasestorage.googleapis.com/v0/b/cerometros.appspot.com/o/ZeroMts_Product.png?alt=media&token=084767d8-190f-4fb6-8cab-ee1a40f2c00d'
+     heroku config:set MAIL_URL=smtp://contacto@dimemex.site:Contacto2020@pam.asoshared.com:26 
+     heroku config:set SENDER_EMAIL=contacto@dimemex.site
+
+    5.- Crear otro push para compliar con este empaqeutamiento
+
+        git push heroku main
+
+        resultadoenrique@Mac-mini-de-Enrique CeroMetros % git push heroku main
+Enumerating objects: 10020, done.
+Counting objects: 100% (10020/10020), done.
+Delta compression using up to 6 threads
+Compressing objects: 100% (7823/7823), done.
+Writing objects: 100% (10020/10020), 24.22 MiB | 1.70 MiB/s, done.
+Total 10020 (delta 2559), reused 8362 (delta 1772)
+remote: Compressing source files... done.
+remote: Building source:
+remote: 
+remote: -----> Building on the Heroku-20 stack
+remote: -----> Using buildpack: admithub/meteor-horse
+remote: -----> Node.js app detected
+remote: -----> Installing meteor
+remote: Downloading Meteor distribution
+remote: 
+remote: Meteor 2.2 has been installed in your home directory (~/.meteor).
+remote: 
+remote: Now you need to do one of the following:
+remote: 
+remote:   (1) Add "$HOME/.meteor" to your path, or
+remote:   (2) Run this command as root:
+remote:         cp "/tmp/codon/tmp/cache/meteor/.meteor/packages/meteor-tool/2.2.0/mt-os.linux.x86_64/scripts/admin/launch-meteor" /usr/bin/meteor
+remote: 
+remote: Then to get started, take a look at 'meteor --help' or see the docs at
+remote: docs.meteor.com.
+remote: -----> Target Meteor version: Meteor 2.1
+remote: -----> Checking if this meteor version supports --server-only
+remote: -----> Using node: v12.21.0
+remote: ----->    and npm: 6.14.8
+remote: npm WARN rm not removing /tmp/build_be7f7e95/node_modules/.bin/semver as it wasn't installed by /tmp/build_be7f7e95/node_modules/semver
+remote: 
+remote: > bcrypt@5.0.1 install /tmp/build_be7f7e95/node_modules/bcrypt
+remote: > node-pre-gyp install --fallback-to-build
+remote: 
+remote: [bcrypt] Success: "/tmp/build_be7f7e95/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node" is installed via remote
+remote: 
+remote: > protobufjs@6.10.2 postinstall /tmp/build_be7f7e95/node_modules/protobufjs
+remote: > node scripts/postinstall
+remote: 
+remote: npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules/fsevents):
+remote: npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+remote: 
+remote: added 101 packages from 100 contributors, removed 91 packages, updated 273 packages and audited 375 packages in 16.374s
+remote: 
+remote: 19 packages are looking for funding
+remote:   run `npm fund` for details
+remote: 
+remote: found 1 moderate severity vulnerability
+remote:   run `npm audit fix` to fix them, or `npm audit` for details
+remote: -----> Building Meteor app with ROOT_URL: https://cerometros.herokuapp.com
+

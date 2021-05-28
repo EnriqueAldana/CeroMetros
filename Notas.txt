@@ -4,7 +4,8 @@ OPTION + COMMAND + L
 Arrancar la aplicacion
 1.- Fijar la variable de entorno en el shell
 export MONGO_URL=mongodb://localhost:27017/zmeters
-export MAIL_URL=smtp://contacto@dimemex.site:Contacto2020@pam.asoshared.com:26
+export MONGO_URL mongodb+srv://cerometrosuser:cerometrosuser2021@cluster0.vmvzt.mongodb.net/zmeters?retryWrites=true&w=majority
+mongodb+srv://cerometrosuser:cerom3tros@cluster0.vmvzt.mongodb.net/zmeters?authSource=admin&replicaSet=atlas-o745ey-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=trueexport MAIL_URL=smtp://contacto@dimemex.site:Contacto2020@pam.asoshared.com:26
 export SENDER_EMAIL=jealdana@gmail.com
 export PRODUCT_IMAGE__PATH="URL_PATH en http"
 export LOGO_PATH="URL_PAT en http"

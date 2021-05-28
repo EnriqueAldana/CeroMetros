@@ -1,6 +1,6 @@
 build:
   docker:
-    web: Dockerfile
+    web: dockerfile
 setup:
   config:
     MAIL_URL: smtp://contacto@dimemex.site:Contacto2020@pam.asoshared.com:26

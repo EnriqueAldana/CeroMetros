@@ -8,3 +8,11 @@ conosiderar poner indices a workstation y lineas de produccion
 4.- Validar que no se pueda borrar una estacion si esta INCLUIDA a una linea de produccion. OK
 5.- Pendiente mostrar las estaciones de trabajo de cada linea en su lista de lineas de produccion. OK
 
+6 Julio 2021
+6.- Agregar menu de Unidades de medida y probar CRUD. No se puede borrar una UM si un producto la esta usando. OK
+7 Julio 2021
+PENDIENTE calcular el Stock de productos al editar un producto o dehabilitar campo de Stock
+7.- Implementar catalogo de insumos. FALTA PROBAR funcionalidad
+8.- Implementar pantalla para asociar insumos al producto y establecer punto de ensamble mediante estaciones de trabajo.
+9.- Implementar CRUD de ordenes de produccion
+10.- Implementar pantalla de operacion de la estacion de trabajo

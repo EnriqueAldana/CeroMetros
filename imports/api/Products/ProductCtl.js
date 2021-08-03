@@ -20,7 +20,8 @@ new ValidatedMethod({
                 name_full: String,
                 unit: {
                     _id: String,
-                    name: String
+                    name: String,
+                    symbol: String
                 },
                 stock: String
                 ,
@@ -55,14 +56,6 @@ new ValidatedMethod({
                     ]
                 }
                 ,
-                bom:[
-                        {
-                            _id: Match.OneOf(String, null),
-                            name: Match.OneOf(String, null),
-                            quantity: Match.OneOf(String, null)
-                            
-                        }
-                    ],
                 isAvailable: Boolean
             });
 

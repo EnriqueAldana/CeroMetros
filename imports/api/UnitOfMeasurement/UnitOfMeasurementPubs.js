@@ -1,9 +1,9 @@
-import { WarehouseRepository } from './Warehouse';
+import {UnitOfMeasurementRepository} from './UnitOfMeasurement';
 import { PermissionMiddleware } from '../../middlewares/PermissionMiddleware';
 import Permissions from '../../startup/server/Permissions';
 
-const warehousePublication=new PublishEndpoint('warehouse.list',function(param1){
-        return WarehouseRepository.find({},{});
+const unitOfMeasurementPublication=new PublishEndpoint('unitofmeasurement.list',function(param1){
+        return UnitOfMeasurementRepository.find({},{});
 });
 
-warehousePublication.use(new PermissionMiddleware(Permissions.WAREHOUSES.LIST.VALUE));
+unitOfMeasurementPublication.use(new PermissionMiddleware(Permissions.UNITOFMEASUREMENT.LIST.VALUE));

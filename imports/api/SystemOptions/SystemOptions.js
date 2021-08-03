@@ -41,9 +41,9 @@ export default [
                 routeName:'home.products'
             },
             {
-                title:'Est Suministro',
-                permission: Permissions.PROVIDERSTATIONS.LIST.VALUE,
-                routeName:'home.providerstation'
+                title:'Suministros',
+                permission: Permissions.SUPPLIES.LIST.VALUE,
+                routeName:'home.supplies'
             },
             {
                 title:'Almacenes',
@@ -59,5 +59,10 @@ export default [
                 title:'Estaciones Trabajo',
                 permission: Permissions.WORKSTATIONS.LIST.VALUE,
                 routeName:'home.workstations'
+            },
+            {
+                title:'Unidades de medida',
+                permission: Permissions.UNITOFMEASUREMENT.LIST.VALUE,
+                routeName:'home.unitsofmeasurement'
             }    
     ]

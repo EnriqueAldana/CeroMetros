@@ -1,3 +1,5 @@
 .cache
 node_modules
 node_modules/.yarn-integrity
+.DS_Store
+.DS_Store

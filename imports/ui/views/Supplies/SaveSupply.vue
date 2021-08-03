@@ -5,7 +5,7 @@
         <div class="headline">{{dataView.title}}</div>
       </v-col>
       <v-col cols="2">
-        <v-btn block type="submit" form="saveProduct" color="primary" v-text="dataView.targetButton">
+        <v-btn block type="submit" form="saveSupply" color="primary" v-text="dataView.targetButton">
         </v-btn>
       </v-col>
     </v-row>
@@ -15,7 +15,7 @@
         
         >
           <v-card-text>
-            <v-form @submit.prevent="saveProduct" id="saveProduct" autocomplete="off"
+            <v-form @submit.prevent="saveSupply" id="saveSupply" autocomplete="off"
             v-scroll.self="onScroll"
         class="overflow-y-auto"
         max-height="600"
@@ -23,19 +23,19 @@
               <v-row>
                 <v-col xs="12" sm="12" md="8">
                   <v-text-field
-                        v-model="product.name" id="inputName" name="name"
+                        v-model="supply.name" id="inputName" name="name"
                         :rules="[rules.required, rules.counter]"
                         label="Nombre"
                         counter
                         maxlength="20"
                   ></v-text-field>
 
-                  <v-text-field v-model="product.name_full" id="inputNameFull" name="name_full" 
+                  <v-text-field v-model="supply.name_full" id="inputNameFull" name="name_full" 
                   :rules="[rules.required]"
                   label="Nombre completo">
                   </v-text-field>
 
-                  <v-select v-model="product.unit" id="selectUnit" name="unit"
+                  <v-select v-model="supply.unit" id="selectUnit" name="unit"
                             :items="units"
                             :rules="[rules.required]"
                             item-text="name" item-value="_id" return-object
@@ -43,41 +43,34 @@
                   </v-select>
 
                   <v-text-field
-                    v-model="product.stock" id="inputStock" name="stock" label="Existencia"
+                    v-model="supply.stock" id="inputStock" name="stock" label="Existencia"
                     :rules="[rules.required, rules.number]"
                     
                   ></v-text-field>
 
-                  <v-text-field v-model="product.location" id="inputlocation" name="location" label="Ubicacion"
+                  <v-text-field v-model="supply.location" id="inputlocation" name="location" label="Ubicacion"
                   :rules="[rules.required]"
                   ></v-text-field>
-                  <v-text-field v-model="product.sku" id="inputsku" 
+                  <v-text-field v-model="supply.sku" id="inputsku" 
                   :rules="[rules.required]"
                   name="sku" label="SKU">
                   </v-text-field>
-                  <v-select v-model="product.warehouse" id="selectWarehouse" name="warehouse"
+                  <v-select v-model="supply.warehouse" id="selectWarehouse" name="warehouse"
                             :items="warehouses"
                             :rules="[rules.required]"
                             item-text="name" item-value="_id" return-object
                             label="Almacen">
                   </v-select>
-                  <v-select v-model="product.provider" id="selectProvider" name="provider"
+                  <v-select v-model="supply.provider" id="selectProvider" name="provider"
                             :items="providers"
                             :rules="[rules.required]"
                             item-text="name" item-value="_id" return-object
                             label="Proveedor">
                   </v-select>
-                  <v-select v-model="product.production_line" id="selectProductionLine" 
-                            :rules="[rules.required]"
-                            name="productionline"
-                            :items="production_lines"
-                            item-text="name" item-value="_id" return-object
-                            label="Linea de produccion">
-                  </v-select>
                   <td>
                     <v-switch
-                        v-model="product.isAvailable"
-                        label="¿Habilitar producto?"
+                        v-model="supply.isAvailable"
+                        label="¿Habilitar suministro?"
                         color="indigo"
                         hide-details
                     ></v-switch>
@@ -97,38 +90,27 @@
         </v-card>
       </v-col>
     </v-row>
-    <modal-bOM ref="refModalBoM" v-bind:modalData="productTempBOM"
-                  @bomList="setProductBoM">
-    </modal-bOM>
-    <modal-product ref="refModalBOMProduct" v-bind:modalData="productTempBOM"
-                  @bomList="setProductBoM">
-    </modal-product>
   </v-container>
   
 </template>
 
 <script>
 import {WarehouseRepository} from "../../../api/Warehouses/Warehouse";
-import {ProductionLineRepository} from "../../../api/ProductionLines/ProductionLine";
 import {Provider} from "../../../api/Providers/Provider";
 import {UnitOfMeasurementRepository} from "../../../api/UnitOfMeasurement/UnitOfMeasurement";
 import draggable from 'vuedraggable';
-import ModalBOM from "./ModalBoM";
 // import ModalBOMProduct from "./ModalBOMProduct";
 
 let id = 3;
 export default {
-  name: "SaveProduct",
+  name: "SaveSupply",
   components: {
-    draggable,
-    ModalBOM
+    draggable
   },
   data() {
     return {
       id,
-      productTempBOM: {
-      },
-      product: {
+      supply: {
                 _id: null,
                 name: '',
                 name_full: null,
@@ -149,23 +131,6 @@ export default {
                     _id: null,
                     name: null
                 },
-                production_line: {
-                    _id: null,
-                    name: null,
-                    workstations: [
-                        {
-                            _id: null,
-                            name: null,
-                            name_full: null,
-                            location: null,
-                            productionline: {
-                                description : null,
-                                name : null,
-                                _id : null
-                            }
-                        }
-                    ]
-                },
                 isAvailable: false
       },
       rules: {
@@ -183,99 +148,55 @@ export default {
       dataView: {
         title: '',
         targetButton: ''
-      },
-      headersBOMFilter:{
-              name: '',
-              quantity: ''
-          }
+      }
     }
   },
   created(){  // Este es un metodo gancho, y se ejecuta cuando el HTML es creado
     if(this.$router.currentRoute.name.includes("create")){
-      this.dataView.title="Crear producto";
+      this.dataView.title="Crear suministro";
       this.dataView.targetButton="Crear";
       
     }else if(this.$router.currentRoute.name.includes("edit")){
-      this.dataView.title="Editar producto";
+      this.dataView.title="Editar suministro";
       this.dataView.targetButton="Actualizar";
-      const tempProduct=this.$store.state.temporal.element;
-      console.info('tempProduct',tempProduct);
-      this.product= {
-        _id: tempProduct._id,
-        name: tempProduct.name,
-        name_full: tempProduct.name_full,
-        unit: tempProduct.unit,
-        stock: tempProduct.stock,
-        sku: tempProduct.sku,
-        location: tempProduct.location,
-        warehouse: tempProduct.warehouse,
+      const tempSupply=this.$store.state.temporal.element;
+      console.info('tempSupply',tempSupply);
+      this.supply= {
+        _id: tempSupply._id,
+        name: tempSupply.name,
+        name_full: tempSupply.name_full,
+        unit: tempSupply.unit,
+        stock: tempSupply.stock,
+        sku: tempSupply.sku,
+        location: tempSupply.location,
+        warehouse: tempSupply.warehouse,
         provider: tempProduct.provider,
-        bom: tempProduct.bom,
-        isAvailable: tempProduct.isAvailable,
-        production_line: tempProduct.production_line
+        isAvailable: tempProduct.isAvailable
       };
      
     }
   },
   methods: {
-    openModalBoM(product) {  
-      // Aqui mandamos el objeto product
-       this.productTempBOM = product;
-      // this.$refs.refModalBoM.dialog = true;
-      this.$refs.refModalBOMProduct.dialog= true;
-
-    },
-    setProductBoM(bomList){
-      // Aqui fijar la lista a la variable BOM del producto
-      console.info('bomList ', bomList);
-      this.product.bom=bomList;
-    },
-    saveProduct() {
-      this.$loader.activate('Guardando producto...');
+    saveSupply() {
+      this.$loader.activate('Guardando suministro...');
       
-      Meteor.call('product.save',this.product,(error,response) => {
+      Meteor.call('supply.save',this.supply,(error,response) => {
         this.$loader.deactivate();
         if(error){
               this.$alert.showAlertSimple('error',error.reason);
         }else{
           this.$alert.showAlertSimple('success',response.message);
-          this.$router.push({name: 'home.products'});
+          this.$router.push({name: 'home.supplies'});
         }
       });
     }
   },
-  computed:{
-          headersBOMList() {
-            return [
-              {
-                value: 'quantity', text: 'Cantidad', sortable: true, filter: value => {
-                  return value != null && typeof value === 'string' &&
-                      value.toString().toLocaleLowerCase()
-                          .indexOf(this.headersBOMFilter.quantity.toLocaleLowerCase()) !== -1;
-                }
-              },
-              {
-                value: 'name', text: 'Nombre', sortable: true, filter: value => {
-                  return value != null && typeof value === 'string' &&
-                      value.toString().toLocaleLowerCase()
-                          .indexOf(this.headersBOMFilter.name.toLocaleLowerCase()) !== -1;
-                }
-              }
-              ,
-              {value: 'action', text: 'Opciones', sortable: false}
-            ]
-          }
-  },
   meteor:{
     
     $subscribe: {
-        'productionlines.list': [],
         'warehouse.list': [],
         'provider.list' : [],
         'unitofmeasurement.list' : []
-    },
-    production_lines(){
-      return ProductionLineRepository.find({},{fields:{_id:1,name:1,description:1,workstations:1}}).fetch();
     },
     warehouses(){
       const warehouses= WarehouseRepository.find({},{fields:{_id:1,name:1,name_full:1,location:1}}).fetch();

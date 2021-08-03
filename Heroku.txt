@@ -78,6 +78,10 @@ Construyendo la imagen
 https://devcenter.heroku.com/articles/container-registry-and-runtime
 
 Pasos.
+
+Utilizar 
+https://elements.heroku.com/buildpacks/admithub/meteor-buildpack-horse
+
 1.- Firmarse en heroku
 heroku container:login
 2.- Navigate to the app’s directory 

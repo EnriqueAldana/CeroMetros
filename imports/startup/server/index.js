@@ -43,7 +43,16 @@ import '../../api/Products/ProductCtl';
 import '../../api/Products/ProductPubs';
 import '../../api/Products/ProductSeeder';
 import '../../api/Products/ProductServ';
-
+import '../../api/UnitOfMeasurement/UnitOfMeasurement';
+import '../../api/UnitOfMeasurement/UnitOfMeasurementCtl';
+import '../../api/UnitOfMeasurement/UnitOfMeasurementPubs';
+import '../../api/UnitOfMeasurement/UnitOfMeasurementSeeder';
+import '../../api/UnitOfMeasurement/UnitOfMeasurementServ';
+import '../../api/Supplies/Supplies';
+import '../../api/Supplies/Supply';
+import '../../api/Supplies/SupplyPubs';
+import '../../api/Supplies/SupplySeeder';
+import '../../api/Supplies/SupplyServ';
 
 
 // Ejemplos de creacion de metodos o End Points

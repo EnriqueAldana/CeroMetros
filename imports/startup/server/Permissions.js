@@ -62,11 +62,11 @@ const Permissions={
         DELETE:{VALUE:'products-delete',TEXT:'Borrar producto'}
 
     },
-    PROVIDERSTATIONS:{
-        LIST:{VALUE:'providerstations-view',TEXT:'Listar estaciones de suministro'},
-        CREATE:{VALUE:'providerstations-create',TEXT:'Crear estacion de suministro'},
-        UPDATE:{VALUE:'providerstations-edit',TEXT:'Editar estacion de suministro'},
-        DELETE:{VALUE:'providerstations-delete',TEXT:'Borrar estacion de suministro'}
+    SUPPLIES:{
+        LIST:{VALUE:'supplies-view',TEXT:'Listar suministros'},
+        CREATE:{VALUE:'supplies-create',TEXT:'Crear suministros'},
+        UPDATE:{VALUE:'supplies-edit',TEXT:'Editar suministros'},
+        DELETE:{VALUE:'supplies-delete',TEXT:'Borrar suministros'}
 
     },
     WAREHOUSES:{
@@ -90,6 +90,14 @@ const Permissions={
         DELETE:{VALUE:'providers-delete',TEXT:'Borrar proveedore'}
 
     },
+    UNITOFMEASUREMENT:{
+        LIST:{VALUE:'unitofmeasurement-view',TEXT:'Listar unidad de medida'},
+        CREATE:{VALUE:'unitofmeasurement-create',TEXT:'Crear unidad de medida'},
+        UPDATE:{VALUE:'unitofmeasurement-edit',TEXT:'Editar unidad de medida'},
+        DELETE:{VALUE:'unitofmeasurement-delete',TEXT:'Borrar unidad de medida'}
+
+    },
+    
 
 };
 
@@ -115,8 +123,10 @@ Devuelve esto:
 if(Meteor.settings.private && Meteor.settings.private.REFRESH_PERMISSIONS){
     console.log(' Updating permissions...');
     const currentRoles= Roles.getAllRoles().fetch();
+    console.log('currentRoles ', currentRoles);
     for(let permission of permissionsArray){
         let exists= currentRoles.find(_role=> _role._id==permission.VALUE)
+        //console.log('Permission value',permission.VALUE);
         if(!exists){
             Roles.createRole(permission.VALUE);
         }else{

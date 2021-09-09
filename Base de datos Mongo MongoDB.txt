@@ -32,3 +32,17 @@ mongodump --host="localhost" --port=27017
 
 Remoto
 mongodump --uri="mongodb://<host URL/IP>:<Port>" [additional options]
+
+
+Manuales para consulta , Insercion y Actualizacion
+https://guiadev.com/tutorial-de-mongodb-parte-02-sinaxtis-de-consultas/
+Datos no repetidos
+https://nelsoncode.medium.com/como-agregar-un-nuevo-campo-a-una-colección-en-mongodb-8bd756db5e29
+
+Actualizar todos los registros con una nueva columna
+https://www.iteramos.com/pregunta/25173/anadir-un-nuevo-campo-a-una-coleccion-en-mongodb
+
+Administrar MongoDB
+https://geekflare.com/es/mongodb-queries-examples/
+
+

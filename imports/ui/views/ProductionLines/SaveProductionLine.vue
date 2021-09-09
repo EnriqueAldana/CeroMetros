@@ -29,7 +29,7 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title>Estaciones de trabajo de esta linea de produccion</v-card-title>
+          <v-card-title>Estaciones de trabajo asociadas</v-card-title>
           <v-card-text>
             <v-text-field v-model="searchSelfWorkstation" placeholder="Buscar. . ."
                           id="inputSearchSelfWorkstation" name="workstationName">
@@ -50,7 +50,7 @@
       </v-col>
       <v-col>
         <v-card>
-          <v-card-title>Todas las estaciones de trabajo</v-card-title>
+          <v-card-title>Estaciones de trabajo asignadas</v-card-title>
           <v-card-text>
             <v-text-field v-model="searchWorkstation" placeholder="Buscar. . ."
                           id="inputSearchWorkstation" name="workstationName2">
@@ -102,7 +102,7 @@ export default {
     if (this.$router.currentRoute.name.includes("create")) {
       this.dataView.title = "Crear linea de produccion";
       this.dataView.targetButton = "Crear";
-      //this.listAllWorkstations();
+      this.listAllWorkstations();
     } else if (this.$router.currentRoute.name.includes("edit")) {
       const tempWorkstation=this.$store.state.temporal.element;
       this.productionline= {

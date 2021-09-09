@@ -129,6 +129,7 @@ export default {
           ...mapMutations('temporal',['setElement']),
             openEditSupply(supply) {
               //Guardar en Vuex para recuperar en la vista de supply.save
+              console.log("Id del suministro por editar ",supply._id);
               this.setElement(supply);
               this.$router.push({name: 'home.supplies.edit'});
             },
@@ -224,7 +225,7 @@ export default {
             },
             supplies(){
               const supplyList = Supplies.find({},{fields:{isAvailable:1,name:1,name_full:1,stock:1,unit:1,sku:1,location:1,provider:1,warehouse:1}}).fetch();
-              console.info('supplyList',supplyList)
+              //console.info('supplyList',supplyList)
               return supplyList;
             }
         }  

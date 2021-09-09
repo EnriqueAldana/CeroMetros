@@ -238,8 +238,8 @@ export default {
               'product.list':[]
             },
             products(){
-              const productList = Product.find({},{fields:{isAvailable:1,name:1,name_full:1,stock:1,unit:1,sku:1,location:1,provider:1,warehouse:1,production_line:1,bom:1}}).fetch();
-              console.info('productList',productList)
+              const productList = Product.find({},{fields:{isAvailable:1,name:1,name_full:1,stock:1,unit:1,sku:1,location:1,provider:1,warehouse:1,production_line:1,components:1}}).fetch();
+              //console.info('productList',productList)
               return productList;
             }
         }  

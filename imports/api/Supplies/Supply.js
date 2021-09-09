@@ -45,6 +45,7 @@ new ValidatedMethod({
             throw new Meteor.Error('403', 'La informacion introducida no es valida');
         }
         // Validar que no haya suministro con el mismo nombre
+        console.log("Suministro num ", supply._id);
         SupplyServ.validateSupplyName(supply.name,supply._id);
     },
     run(supply){
@@ -102,12 +103,13 @@ new ValidatedMethod({
             console.error('supply.delete', exception);
             throw new Meteor.Error('403', 'Ocurrio un error al eliminar el suministro');
         }
-        // validar que no sea posible eliminar un suministro si hay un producto utilizandolo.
+        // validar que no sea posible eliminar un suministro si hay un almacen utilizandolo.
         // ToDo
         try{
-            validateSupplyBusy(idSupply);
+            console.log("Suministr por borrar", idSupply);
+            // validateSupplyBusy(idSupply);
         }catch(exception ){
-            throw new Meteor.Error('403','No es posible elimiar el suministro',
+            throw new Meteor.Error('403','No es posible eliminar el suministro',
             'Hay al menos un almacen utilizando el suministro');
         }
         

@@ -170,8 +170,8 @@ export default {
         sku: tempSupply.sku,
         location: tempSupply.location,
         warehouse: tempSupply.warehouse,
-        provider: tempProduct.provider,
-        isAvailable: tempProduct.isAvailable
+        provider: tempSupply.provider,
+        isAvailable: tempSupply.isAvailable
       };
      
     }

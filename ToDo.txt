@@ -10,9 +10,24 @@ conosiderar poner indices a workstation y lineas de produccion
 
 6 Julio 2021
 6.- Agregar menu de Unidades de medida y probar CRUD. No se puede borrar una UM si un producto la esta usando. OK
+
 7 Julio 2021
 PENDIENTE calcular el Stock de productos al editar un producto o dehabilitar campo de Stock
-7.- Implementar catalogo de insumos. FALTA PROBAR funcionalidad
+7.- Implementar catalogo de insumos. FALTA No borrar si esta siendo usado en algun producto.
+
+12 Agosto 2021
 8.- Implementar pantalla para asociar insumos al producto y establecer punto de ensamble mediante estaciones de trabajo.
+Utilizar
+v-data-table with CRUD actions using a v-dialog component for editing each row
+https://vuetifyjs.com/en/components/data-tables/#item
+
+Por hacer, que el click sobre la seleccion de la estacion de trabajo, seleccione el renglon y traiga los componentes
+27 Agosot 2021
+Pendiente Probar funcionamiento de crear y editar
+7 Sept 2021
+Solo falta edicion de componentes OK
+8 Sept 2021
+Solo falta validar que en la edicion de componentes el seleccionado no traiga valor cero.OK
 9.- Implementar CRUD de ordenes de produccion
 10.- Implementar pantalla de operacion de la estacion de trabajo
+11.- Implementar catalogo de costos indirectos que deberan ser asociados al producto.

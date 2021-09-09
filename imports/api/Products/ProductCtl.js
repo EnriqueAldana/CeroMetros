@@ -56,6 +56,34 @@ new ValidatedMethod({
                     ]
                 }
                 ,
+                components: [
+                    {
+                        amount: String,
+                        isAvailable: Boolean,
+                        location: String,
+                        name: String,
+                        name_full: String,
+                        provider:  {
+                            _id: String,
+                            name: String
+                        },
+                        sku: String,
+                        stock: String,
+                        unit: {
+                            _id: String,
+                            name: String,
+                            symbol: String
+                        },
+                        warehouse: {
+                            _id: String,
+                            name: String,
+                            name_full: String,
+                            location: String
+                        },
+                        _id: String,
+                        workstationId: String
+                    }
+                ],
                 isAvailable: Boolean
             });
 
@@ -83,11 +111,11 @@ new ValidatedMethod({
                     warehouse: product.warehouse,
                     production_line: product.production_line,
                     provider: product.provider,
-                    bom:    product.bomList,
-                    isAvailable: product.isAvailable
+                    isAvailable: product.isAvailable,
+                    components: product.components
                     }
                 });
-                responseMessage.create('Se actualizó la empresa exitosamente');
+                responseMessage.create('Se actualizó el producto exitosamente');
             }else{
                 Product.insert({
                     name: product.name,
@@ -99,8 +127,9 @@ new ValidatedMethod({
                     warehouse: product.warehouse,
                     production_line: product.production_line,
                     provider: product.provider,
-                    bom:    product.bomList,
-                    isAvailable: product.isAvailable
+                    isAvailable: product.isAvailable,
+                    components: product.components
+
                 });
                 responseMessage.create('Se insertó el producto exitosamente');
             }

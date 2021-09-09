@@ -61,3 +61,17 @@
             </tr>
           </template>
         </v-data-table>
+
+
+                console.info("Estacion seleccionada", this.product.production_line.workstations[this.editedWorkstationIndex]);
+          let iD = this.product.production_line.workstations[this.editedWorkstationIndex].id
+          console.info("ID de Estacion seleccionada",iD );
+         this.componentsByWorkStation = this.product.components.filter( function(component, iD) {
+             console.info("component ", component);
+             //console.info("Id de la estacion" , component.workstation._id)
+             console.info("Id de la estacion seleccionada", iD);
+             if(component.workstation._id==iD) {
+               return true;
+             }
+           });
+           

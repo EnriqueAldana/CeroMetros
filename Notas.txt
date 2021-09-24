@@ -86,3 +86,39 @@ https://apexcharts.com/
 
 EJEMPLOS de Dragable
 https://sortablejs.github.io/Vue.Draggable/#/functional
+
+
+Documentacion de Meteor validaciones
+https://docs.meteor.com/api/check.html
+
+
+Manejo de Fechas ISO
+
+The toISOString() method returns a string in simplified extended ISO format (ISO 8601), 
+which is always 24 or 27 characters long (YYYY-MM-DDTHH:mm:ss.sssZ or ±YYYYYY-MM-DDTHH:mm:ss.sssZ,
+ respectively). The timezone is always zero UTC offset, as denoted by the suffix "Z".
+
+Libreria utilizada
+luxon
+https://moment.github.io/luxon/#/install
+npm install --save luxonnpm
+
+Manejo de Zonas
+
+Changing zones
+setZone
+Luxon objects are immutable, so when we say "changing zones" we really mean 
+"creating a new instance with a different zone". 
+Changing zone generally means "change the zone in which this DateTime is expressed 
+(and according to which rules it is manipulated), 
+but don't change the underlying timestamp." For example:
+
+var local = DateTime.local();
+var rezoned = local.setZone("America/Los_Angeles");
+
+// different local times with different offsets
+local.toString(); //=> '2017-09-13T18:30:51.141-04:00'
+rezoned.toString(); //=> '2017-09-13T15:30:51.141-07:00'
+
+// but actually the same time
+local.valueOf() === rezoned.valueOf(); //=> true

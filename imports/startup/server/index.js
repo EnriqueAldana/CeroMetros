@@ -53,7 +53,15 @@ import '../../api/Supplies/Supply';
 import '../../api/Supplies/SupplyPubs';
 import '../../api/Supplies/SupplySeeder';
 import '../../api/Supplies/SupplyServ';
-
+import '../../api/Customers/Customer';
+import '../../api/Customers/CustomerCtl';
+import '../../api/Customers/CustomerPubs';
+import '../../api/Customers/CustomerServ';
+import '../../api/ProductionOrders/ProductionOrder';
+import '../../api/ProductionOrders/ProductionOrderCtl';
+import '../../api/ProductionOrders/ProductionOrderPubs';
+import '../../api/ProductionOrders/ProductionOrderSeeder';
+import '../../api/ProductionOrders/ProductionOrderServ';
 
 // Ejemplos de creacion de metodos o End Points
 import {ValidatedMethod} from 'meteor/mdg:validated-method';

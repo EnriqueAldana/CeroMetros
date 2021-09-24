@@ -21,6 +21,11 @@ export default [
                 routeName:'home.companies'
             },
             {
+                title:'Clientes',
+                permission: Permissions.CUSTOMERS.LIST.VALUE,
+                routeName:'home.customers'
+            },
+            {
                 title:'Chat',
                 permission: Permissions.CHAT.LIST.VALUE,
                 routeName:'home.chat'

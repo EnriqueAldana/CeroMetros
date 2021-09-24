@@ -147,9 +147,10 @@ new ValidatedMethod({
     permissions: [Permissions.PRODUCTS.DELETE.VALUE],
     beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
     afterHooks: [],
-    validate({ idProduct }){
+    validate({ idProductOrder }){
+        console.info("Product id para borrar",idProductOrder)
         try {
-            check(idProduct, String);
+            check(idProductOrder, String);
         }catch (exception) {
             console.error('product.delete', exception);
             throw new Meteor.Error('403', 'Ocurrio un error al eliminar el producto');
@@ -164,10 +165,10 @@ new ValidatedMethod({
                 'Hay al menos un almacen utilizando el producto');
         }
     },
-    run({ idProduct }){
+    run(idProductOrder){
         const responseMessage = new ResponseMessage();
         try {
-            Product.remove(idProduct);
+            Product.remove(idProductOrder);
                 responseMessage.create('Producto eliminado exitosamente');
         }catch (exception) {
             console.error('product.delete', exception);

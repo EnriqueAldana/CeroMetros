@@ -41,6 +41,13 @@ const Permissions={
         DELETE:{VALUE:'companies-delete',TEXT:'Borrar compañias'}
 
     },
+    CUSTOMERS:{
+        LIST:{VALUE:'customers-view',TEXT:'Listar clientes'},
+        CREATE:{VALUE:'customers-create',TEXT:'Crear clientes'},
+        UPDATE:{VALUE:'customers-edit',TEXT:'Editar clientes'},
+        DELETE:{VALUE:'customers-delete',TEXT:'Borrar clientes'}
+
+    },
     PRODUCTIONLINES:{
         LIST:{VALUE:'productionlines-view',TEXT:'Listar linea de produccion'},
         CREATE:{VALUE:'productionlines-create',TEXT:'Crear linea de produccion'},

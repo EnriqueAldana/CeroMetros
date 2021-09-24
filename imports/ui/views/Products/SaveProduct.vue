@@ -139,7 +139,7 @@
                         :headers="headersWorkStations"
                         :items="this.product.production_line.workstations"
                         show-select
-                        single-select="true"
+                        :single-select="true"
                         item-key="name"
                         class="elevation-1"
                         :search="searchWorkStation"
@@ -492,7 +492,6 @@ export default {
         isAvailable: true,
         workstationId: "",
       },
-      selectedSupplies: [],
       singleSelect: false,
       id,
       product: {

@@ -1,3 +1,3 @@
 import {Product} from "./Product";
 
-//Product.rawCollection().createIndex({'name':1},{unique: true});
+Product.rawCollection().createIndex({'name':1},{unique: true});

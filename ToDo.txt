@@ -29,5 +29,17 @@ Solo falta edicion de componentes OK
 8 Sept 2021
 Solo falta validar que en la edicion de componentes el seleccionado no traiga valor cero.OK
 9.- Implementar CRUD de ordenes de produccion
+10 Sept 2021
+falta dar vida a la seleccion de la tabla de ordenes de productos. Falta agregar Status en la Bd 
+y Listar Ordenes de trabajo. OK
+
+
+falta validaciones OK
+falta Guardar ............Falta poner un Folio a la O.Prod.
+falta editar..........Falta que se seleccionen los productos asignados.OK
+            ..........FAlta que se muestre el valor del renglon seleccionado..OK
+falta Folio que identifique a la Orden de Produccion. OK
+
+falta Borrar...OK.validar que no se pueda borrar si esta en proceso, despacho parcial o completa.OK
 10.- Implementar pantalla de operacion de la estacion de trabajo
-11.- Implementar catalogo de costos indirectos que deberan ser asociados al producto.
+11.- Implementar catalogo de costos indirectos que deberan ser asociados al producto. Ok Dar de alta Insumos indirectos

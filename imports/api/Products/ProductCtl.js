@@ -51,7 +51,16 @@ new ValidatedMethod({
                                 description : String,
                                 name : String,
                                 _id : String
-                            }
+                            },
+                            configurations:[
+                                {
+                                    description:String,
+                                    instructions:String,
+                                    name:String,
+                                    _id:String,
+                                }
+
+                            ],
                         }
                     ]
                 }
@@ -81,7 +90,10 @@ new ValidatedMethod({
                             location: String
                         },
                         _id: String,
-                        workstationId: String
+                        workstationId: String,      
+                        configurationId: String,
+                        wsName:String,
+                        wsOperation:String,
                     }
                 ],
                 isAvailable: Boolean
@@ -147,28 +159,22 @@ new ValidatedMethod({
     permissions: [Permissions.PRODUCTS.DELETE.VALUE],
     beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
     afterHooks: [],
-    validate({ idProductOrder }){
-        console.info("Product id para borrar",idProductOrder)
+    validate({ idProduct}){
+        console.info("Product id para borrar",idProduct)
         try {
-            check(idProductOrder, String);
+            check(idProduct, String);
         }catch (exception) {
             console.error('product.delete', exception);
             throw new Meteor.Error('403', 'Ocurrio un error al eliminar el producto');
         }
-        // validar que no sea posible eliminar un producto si hay un almacen utilizandolo.
-        // ToDo
-        const isUseredByWarehouse = 0;
-        //CompanyServ.getUsersBycompany(idCompany);
-
-        if (isUseredByWarehouse.length > 0){
-            throw new Meteor.Error('403','No es posible elimiar el producto',
-                'Hay al menos un almacen utilizando el producto');
-        }
+        // validar que no sea posible eliminar un producto si hay una orden de produccion utilizandolo.
+        ProductServ.validateProductBusy(idProduct);
+        
     },
-    run(idProductOrder){
+    run(idProduct){
         const responseMessage = new ResponseMessage();
         try {
-            Product.remove(idProductOrder);
+            Product.remove(idProduct);
                 responseMessage.create('Producto eliminado exitosamente');
         }catch (exception) {
             console.error('product.delete', exception);

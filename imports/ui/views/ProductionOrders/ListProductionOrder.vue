@@ -46,13 +46,21 @@
           </template>
           <template v-slot:body.append="{ isMobile }">
             <tr v-if="!isMobile">
-            <td>
+              <td>
                 <v-text-field
                   v-model="headersFilter.folio"
                   type="text"
                   label="Numero Orden Produccion"
                 ></v-text-field>
               </td>
+              <td>
+                <v-text-field
+                  v-model="headersFilter.status[0].statusKey"
+                  type="text"
+                  label="Ultimo estatus"
+                ></v-text-field>
+              </td>
+              
               <td>
                 <v-text-field
                   v-model="headersFilter.customer.name"
@@ -126,6 +134,12 @@ export default {
                     web : ''
                   },
                   folio:'',
+                  status:[{
+                    statusDate : '',
+                    statusKey : '',
+                    statusDescription: '',
+                    statusOrigin: ''
+                  }],
                   createdAt:'', 
                   requiredDate:'',
                   estimatedDeliveryAt:'',
@@ -176,6 +190,14 @@ export default {
                   return value != null && typeof value === 'string' &&
                       value.toString().toLocaleLowerCase()
                           .indexOf(this.headersFilter.folio.toLocaleLowerCase()) !== -1;
+                },
+                
+              },
+              {
+                value: 'status[0].statusKey', text: 'Ultimo estatus', sortable: true, filter: value => {
+                  return value != null && typeof value === 'string' &&
+                      value.toString().toLocaleLowerCase()
+                          .indexOf(this.headersFilter.status[0].statusKey.toLocaleLowerCase()) !== -1;
                 },
                 
               },
@@ -245,6 +267,7 @@ export default {
                 var dateTimeEstimatedDeliveryAt=new Date(po.estimatedDeliveryAt);
                 var dateTimeEstimatedDeliveryAtString = dateTimeEstimatedDeliveryAt.getDate()+ "/" + (parseInt(dateTimeEstimatedDeliveryAt.getMonth())+1) + "/" + dateTimeEstimatedDeliveryAt.getFullYear()
                 po.estimatedDeliveryAt=dateTimeEstimatedDeliveryAtString
+                po.status[0]=po.status.pop();
                 return po;
 
               })

@@ -90,6 +90,13 @@ const Permissions={
         DELETE:{VALUE:'workstations-delete',TEXT:'Borrar estacion de trabajo'}
 
     },
+    WORKSTATIONSETUP:{
+        LIST:{VALUE:'workstationsetup-view',TEXT:'Listar configuraciones de estacion de trabajo'},
+        CREATE:{VALUE:'workstationsetup-create',TEXT:'Crear configuraciones de estacion de trabajo'},
+        UPDATE:{VALUE:'workstationsetup-edit',TEXT:'Editar configuraciones de estacion de trabajo'},
+        DELETE:{VALUE:'workstationsetup-delete',TEXT:'Borrar configuraciones de estacion de trabajo'}
+
+    },
     PROVIDERS:{
         LIST:{VALUE:'providers-view',TEXT:'Listar proveedores'},
         CREATE:{VALUE:'providers-create',TEXT:'Crear proveedore'},

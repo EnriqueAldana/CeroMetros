@@ -1,6 +1,7 @@
 
 import {Meteor} from "meteor/meteor";
 import {Product} from "./Product";
+import {ProductionOrders} from "../ProductionOrders/ProductionOrder";
 
 export default {
     
@@ -15,5 +16,11 @@ export default {
                 throw new Meteor.Error('403', 'El nuevo nombre del producto  ya esta siendo utilizado');
 
         }
-    }
+    },
+    validateProductBusy(idProduct){
+            const exitProductOnProdOrder= ProductionOrders.find({products:{_id:idProduct}}).fetch()
+            if(exitProductOnProdOrder){
+                throw new Meteor.Error('403', 'El producto tiene al menos una orden de produccion utilizandolo');
+            }
+        }
 }

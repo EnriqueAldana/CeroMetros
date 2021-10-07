@@ -32,14 +32,87 @@ Solo falta validar que en la edicion de componentes el seleccionado no traiga va
 10 Sept 2021
 falta dar vida a la seleccion de la tabla de ordenes de productos. Falta agregar Status en la Bd 
 y Listar Ordenes de trabajo. OK
-
-
 falta validaciones OK
 falta Guardar ............Falta poner un Folio a la O.Prod.
-falta editar..........Falta que se seleccionen los productos asignados.OK
-            ..........FAlta que se muestre el valor del renglon seleccionado..OK
+falta editar..........Falta que se seleccionen los productos asignados.OK 23 Sept 2021
+            ..........Falta que se muestre el valor del renglon seleccionado..OK
 falta Folio que identifique a la Orden de Produccion. OK
-
 falta Borrar...OK.validar que no se pueda borrar si esta en proceso, despacho parcial o completa.OK
-10.- Implementar pantalla de operacion de la estacion de trabajo
-11.- Implementar catalogo de costos indirectos que deberan ser asociados al producto. Ok Dar de alta Insumos indirectos
+
+10.- Implementar pantalla de operacion de la estacion de trabajo. 
+7 Oct 2021
+
+11.- Implementar pantalla de configuracion de Producto con Estaciones y Configuraciones. 
+CRUD Normal OK
+Asociar a estacion de trabajo en relacion una ET y Varios SetUp. OK
+SI se edita la ET actualizar La Linea de produccion y Los productos deberan ser adveertidos
+
+Ajustar componente de ET en PRODUCTO para que se elija el setup correspondiente para el producto.OK
+Falta Probar Agregar Insumo , borrar y editar......OK
+Falta validar que un producto no sea eliminado 
+si hay una Orden de Prod Usandolo....OK
+
+12.- Implementar catalogo de costos indirectos que deberan ser asociados al producto. 
+Ok Dar de alta Insumos indirectos
+13.- Implementar ordenes de compra para proveedores
+14.- Implementar recepcion de materiales de proveedores
+15.- Implementar Transportistas o fleteros
+16.- Implementar embarque de productos.
+17.- Implementar pedido y seguimiento en linea para clientes 
+18.- Implementar Dashboard o tablero de KPIs
+
+
+      // Si hay seleccionada una estacion de trabajo
+     console.info("this.editedWorkstationIndex", this.editedWorkstationIndex);
+      if (this.editedWorkstationIndex > -1 || this.active.length >0 ) {
+        // Si se ha seleccionado un suministro
+        console.info("Componente por agregar ", this.editedComponent);
+        if (this.editedComponent[0]) {
+          Object.assign(this.component, this.editedComponent[0]);
+          // Antes this.component.workstationId = this.workstation._id;
+          const wsId=  this.active[0].id.split("-");
+          this.component.workstationId = wsId[1]
+          this.component.configurationId = wsId[0]
+          // Agregar en 
+          // Si es una edicion
+          console.info("this.editedComponentIndex", this.editedComponentIndex);
+          // Si se esta actualizando
+          if (this.editedComponentIndex > -1) {
+            console.info("Insumo x actualizar",this.editedComponent[0])
+            //console.info("Actualizando componente");
+            //console.info(
+            //  "Componente del producto x actualizar",
+            //  this.componentsByProduct[this.editedComponentIndex]
+            //);
+            // Actualizar el campo de amount del componente editado
+            // Se actualiza en this.componentsByProduct el componente en el indice editedComponentIndex
+            this.componentsByProduct[this.editedComponentIndex].amount =
+              this.component.amount;
+            
+            // Liberar filtro de suministros
+            this.searchSupply = "";
+          } else {  // Si es nuevo y se agrega a la lista
+            // Agregar componente solo si amount >0
+            if (this.component.amount > 0) {
+              console.info("Agregando componente");
+              //Se agrega el componente a la lista this.componentsByProduct en el siguiente indice this.componentsByProductIndex
+              this.$set(
+                this.componentsByProduct,
+                this.componentsByProductIndex,
+                this.component
+              );
+              this.componentsByProductIndex = this.componentsByProductIndex + 1;
+            }
+          }
+          this.component = Object.assign({}, this.defaultComponent);
+          this.editedComponent = Object.assign({}, this.defaultComponent);
+          console.info("Componente seleccionado reestablecido", this.editedComponent)
+          this.editedComponentIndex = -1;
+          this.componentsByWorkStation = this.FilteredComponents();
+        }
+      }
+
+      this.close();
+
+
+

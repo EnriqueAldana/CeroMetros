@@ -150,7 +150,15 @@ export default {
               'workstation.list':[]
             },
             workstations(){
-              return WorkstationRepository.find().fetch();
+              const workstationfiltered = WorkstationRepository.find().fetch();
+              workstationfiltered.map(ws=>{
+                if(ws.productionline._id==null){
+                  ws.productionline._id=''
+                  ws.productionline.name=''
+                  ws.productionline.description=''
+                }
+              });
+              return workstationfiltered
             }
         }  
 }

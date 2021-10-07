@@ -20,3 +20,9 @@ Git push origin main - Envia los archivos al remoto
 
 Guia de Git
 https://rogerdudler.github.io/git-guide/index.es.html
+
+Pasos para actualizar el repositorio remoto
+1.- git status
+2.- git add .
+3.- git commit -m " Catalogo de Ordenes de produccion"
+4.- git push -u origin main

@@ -23,7 +23,7 @@
               @submit.prevent="saveProduct"
               id="saveProduct"
               autocomplete="off"
-              v-scroll.self="onScroll"
+              
               class="overflow-y-auto"
               max-height="600"
             >
@@ -66,7 +66,11 @@
                     id="inputStock"
                     name="stock"
                     label="Existencia"
-                    :rules="[rules.required, rules.number, rules.greatEqualZero]"
+                    :rules="[
+                      rules.required,
+                      rules.number,
+                      rules.greatEqualZero,
+                    ]"
                   ></v-text-field>
 
                   <v-text-field
@@ -133,244 +137,205 @@
                   <p class="text-center">Configuración de componentes</p>
                   <v-row>
                     <v-col xs="8" sm="8" md="4">
-                      <p class="text-center">Estaciones de trabajo</p>
-                      <v-data-table
-                        v-model="this.product.production_line.workstations"
-                        :headers="headersWorkStations"
-                        :items="this.product.production_line.workstations"
-                        show-select
-                        :single-select="true"
-                        item-key="name"
-                        class="elevation-1"
-                        :search="searchWorkStation"
-                        @click:row="clickWorkStationRow"
-                        @item-selected="clickWorkStationSelected"
-                      >
-                        <template v-slot:top>
-                          <v-text-field
-                            v-model="searchWorkStation"
-                            label="Buscar..."
-                            append-icon="mdi-magnify"
-                            single-line
-                            hide-details
-                            class="mx-4"
-                          ></v-text-field>
-                        </template>
-                      </v-data-table>
-                    </v-col>
-                    <v-col xs="16" sm="16" md="8">
-                      <p class="text-center">Componentes</p>
-                      <template>
-                        <v-data-table
-                          :headers="headersComponents"
-                          :items="componentsByWorkStation"
-                          sort-by="name"
-                          class="elevation-1"
-                        >
-                          <template v-slot:top>
-                            <v-toolbar flat>
-                              <v-toolbar-title
-                                >Lista de componentes del
-                                producto</v-toolbar-title
-                              >
-                              <v-divider
-                                class="mx-4"
-                                inset
-                                vertical
-                              ></v-divider>
-                              <v-spacer></v-spacer>
-                              <v-dialog v-model="dialog" max-width="800px">
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-btn
-                                    color="primary"
-                                    dark
-                                    class="mb-2"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    :disabled="areThereWorkstations"
-                                  >
-                                    Agregar componente
-                                  </v-btn>
-                                </template>
+                                  <template>
+                                    <v-card>
+                                      <v-toolbar color="primary" dark flat>
+                                        <v-icon>mdi-silverware</v-icon>
+                                        <v-toolbar-title
+                                          >Estaciones de trabajo de la
+                                          linea</v-toolbar-title
+                                        >
+                                      </v-toolbar>
 
-                                <v-card>
-                                  <v-card-title>
-                                    <span class="text-h5">{{ formTitle }}</span>
-                                  </v-card-title>
-
-                                  <v-card-text>
-                                    <v-container>
                                       <v-row>
-                                        <p class="text-center">Insumos</p>
-
-                                        <v-col cols="24" sm="12" md="8">
-                                          <v-data-table
-                                            v-model="editedComponent"
-                                            :headers="headersSupplies"
-                                            :items="supplies"
-                                            single-select="false"
-                                            show-select
-                                            item-key="name"
-                                            class="elevation-1"
-                                            :search="searchSupply"
-                                          >
-                                            <template v-slot:top>
-                                              <v-text-field
-                                                v-model="searchSupply"
-                                                label="Buscar..."
-                                                append-icon="mdi-magnify"
-                                                single-line
-                                                hide-details
-                                                class="mx-4"
-                                              ></v-text-field>
-                                            </template>
-
-                                            <template
-                                              v-slot:item.amount="props"
+                                        <v-col>
+                                          <v-card-text>
+                                            <v-treeview
+                                              v-model="tree"
+                                              :active.sync="active"
+                                              :items="items"
+                                              
+                                              :open.sync="open"
+                                              @update:open="openNode"
+                                              @update:active="clickOnNode"
+                                              return-object
+                                              open-all
+                                              activatable
+                                              selected-color="indigo"
+                                              open-on-click
+                                              transition
+                                              expand-icon="mdi-chevron-down"
+                                              on-icon="mdi-bookmark"
+                                              off-icon="mdi-bookmark-outline"
+                                              indeterminate-icon="mdi-bookmark-minus"
                                             >
-                                              <v-edit-dialog
-                                                :return-value.sync="
-                                                  props.item.amount
-                                                "
-                                                large
-                                                persistent
-                                                @save="
-                                                  saveComponentSelected(props)
-                                                "
-                                                @cancel="
-                                                  cancelComponentSelected(props)
-                                                "
-                                                @open="
-                                                  openComponentSelected(props)
-                                                "
-                                                @close="
-                                                  closeComponentSelected(props)
-                                                "
-                                              >
-                                                <div>
-                                                  {{ props.item.amount }}
-                                                </div>
-                                                <template v-slot:input>
-                                                  <div class="mt-4 text-h6">
-                                                    Actualiza Cant
-                                                  </div>
-                                                  <v-text-field
-                                                    v-model="props.item.amount"
-                                                    :rules="[
-                                                      rules.required,
-                                                      rules.greatZero,
-                                                      rules.number,
-                                                    ]"
-                                                    label="Edicion"
-                                                    single-line
-                                                    counter
-                                                    autofocus
-                                                  ></v-text-field>
-                                                </template>
-                                              </v-edit-dialog>
-                                            </template>
-                                          </v-data-table>
+                                            </v-treeview>
+                                          </v-card-text>
                                         </v-col>
                                       </v-row>
-                                    </v-container>
-                                  </v-card-text>
 
-                                  <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn
-                                      color="blue darken-1"
-                                      text
-                                      @click="close"
-                                    >
-                                      Cancelar
-                                    </v-btn>
-                                    <v-btn
-                                      color="blue darken-1"
-                                      text
-                                      @click="save"
-                                      :disabled="isAddComponentButtonDisabled"
-                                    >
-                                      Agregar
-                                    </v-btn>
-                                  </v-card-actions>
-                                </v-card>
-                              </v-dialog>
-                              <v-dialog
-                                v-model="dialogDelete"
-                                max-width="500px"
-                              >
-                                <v-card>
-                                  <v-card-title class="text-h5"
-                                    >¿Está Ud. seguro que desea eliminar el
-                                    componente?</v-card-title
-                                  >
-                                  <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn
-                                      color="blue darken-1"
-                                      text
-                                      @click="closeDelete"
-                                      >Cancelar</v-btn
-                                    >
-                                    <v-btn
-                                      color="blue darken-1"
-                                      text
-                                      @click="deleteItemConfirm"
-                                      >Eliminar</v-btn
-                                    >
-                                    <v-spacer></v-spacer>
-                                  </v-card-actions>
-                                </v-card>
-                              </v-dialog>
-                            </v-toolbar>
-                          </template>
-                          <template v-slot:item.actions="{ item }">
-                            <v-icon small class="mr-2" @click="editItem(item)">
-                              mdi-pencil
-                            </v-icon>
-                            <v-icon small @click="deleteItem(item)">
-                              mdi-delete
-                            </v-icon>
-                          </template>
-                        </v-data-table>
-                        <v-snackbar
-                          v-model="snack"
-                          :timeout="3000"
-                          :color="snackColor"
+                                      <v-divider></v-divider>
+
+                                      
+                                    </v-card>
+                                  </template>
+                      </v-col>
+                      <v-col xs="16" sm="16" md="8">
+                      
+                      <template>
+  <v-data-table
+    :headers="headersComponents"
+    :items="componentsByWsAndConfiguration"
+    sort-by="name"
+    class="elevation-1"
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title>Lista de componentes del producto</v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog" max-width="800px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="primary"
+              dark
+              class="mb-2"
+              v-bind="attrs"
+              v-on="on"
+              :disabled="areThereWorkstations"
+            >
+              Agregar componente
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">{{ formTitle }}</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <p class="text-center">Insumos</p>
+
+                  <v-col cols="24" sm="12" md="8">
+                    <v-data-table
+                      v-model="editedComponent"
+                      :headers="headersSupplies"
+                      :items="supplies"
+                      :single-select=false
+                      show-select
+                      item-key="name"
+                      class="elevation-1"
+                      :search="searchSupply"
+                    >
+                      <template v-slot:top>
+                        <v-text-field
+                          v-model="searchSupply"
+                          label="Buscar..."
+                          append-icon="mdi-magnify"
+                          single-line
+                          hide-details
+                          class="mx-4"
+                        ></v-text-field>
+                      </template>
+
+                      <template v-slot:item.amount="props">
+                        <v-edit-dialog
+                          :return-value.sync="props.item.amount"
+                          large
+                          persistent
+                          @save="saveComponentSelected(props)"
+                          @cancel="cancelComponentSelected(props)"
+                          @open="openComponentSelected(props)"
+                          @close="closeComponentSelected(props)"
                         >
-                          {{ snackText }}
-
-                          <template v-slot:action="{ attrs }">
-                            <v-btn v-bind="attrs" text @click="snack = false">
-                              Cerrar
-                            </v-btn>
+                          <div>
+                            {{ props.item.amount }}
+                          </div>
+                          <template v-slot:input>
+                            <div class="mt-4 text-h6">Actualiza Cant</div>
+                            <v-text-field
+                              v-model="props.item.amount"
+                              :rules="[
+                                rules.required,
+                                rules.greatZero,
+                                rules.number,
+                              ]"
+                              label="Edicion"
+                              single-line
+                              counter
+                              autofocus
+                            ></v-text-field>
                           </template>
-                        </v-snackbar>
-                      </template></v-col
-                    ></v-row
-                  ></v-col
-                ></v-row
-              ></v-form
+                        </v-edit-dialog>
+                      </template>
+                    </v-data-table>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">
+                Cancelar
+              </v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="save"
+                :disabled="isAddComponentButtonDisabled"
+              >
+                Agregar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5"
+              >¿Está Ud. seguro que desea eliminar el componente?</v-card-title
+            >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="closeDelete"
+                >Cancelar</v-btn
+              >
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                >Eliminar</v-btn
+              >
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+    </template>
+  </v-data-table>
+  <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
+    {{ snackText }}
+
+    <template v-slot:action="{ attrs }">
+      <v-btn v-bind="attrs" text @click="snack = false"> Cerrar </v-btn>
+    </template>
+  </v-snackbar>
+</template></v-col
+                    >
+
+                    </v-row>
+                      </v-col>
+                  </v-row></v-form
             ></v-card-text
           ></v-card
         ></v-col
       ></v-row
-    ></v-container
-  >
+    ></v-container>
 </template>
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    
-  </v-container>
-</template>
-
+                   
 <script>
 import { WarehouseRepository } from "../../../api/Warehouses/Warehouse";
 import { ProductionLineRepository } from "../../../api/ProductionLines/ProductionLine";
@@ -383,6 +348,10 @@ export default {
 
   data() {
     return {
+      tree: [],
+      active: [],
+      open: [],
+      workStationsAndConfigurationes: [],
       snack: false,
       snackColor: "",
       snackText: "",
@@ -392,6 +361,10 @@ export default {
       workstationOfComponent: {
         workstation: {},
       },
+      componentStructure: {
+        components: [],
+      },
+      componentsByWsAndConfiguration: [],
       componentsByProductOld: [],
       componentsByWorkStation: [],
       componentsByProduct: [],
@@ -426,6 +399,18 @@ export default {
           align: "start",
           sortable: true,
           value: "sku",
+        },
+        {
+          text: "Estación",
+          align: "start",
+          sortable: true,
+          value: "wsName",
+        },
+        {
+          text: "Operacion",
+          align: "start",
+          sortable: true,
+          value: "wsOperation",
         },
         { text: "Acciones", value: "actions", sortable: false },
       ],
@@ -466,6 +451,9 @@ export default {
         },
         isAvailable: true,
         workstationId: "",
+        configurationId: "",
+        wsName:"",
+        wsOperation:"",
       },
       component: {
         _id: "",
@@ -491,8 +479,11 @@ export default {
         },
         isAvailable: true,
         workstationId: "",
+        configurationId: "",
+        wsName:"",
+        wsOperation:"",
+
       },
-      singleSelect: false,
       id,
       product: {
         _id: null,
@@ -537,7 +528,8 @@ export default {
       rules: {
         required: (value) => !!value || "Requerido.",
         greatZero: (value) => value > 0 || "Inserte valor mayor a cero",
-        greatEqualZero:(value)=> value >= 0 || "Inserte valor igual o mayor a cero",
+        greatEqualZero: (value) =>
+          value >= 0 || "Inserte valor igual o mayor a cero",
         counter: (value) => value.length <= 20 || "Max 20 caracteres",
         email: (value) => {
           const pattern =
@@ -593,7 +585,7 @@ export default {
   },
   methods: {
     initializeByDefault() {
-      console.info("Producto al iniciar la creacion ", this.product);
+     
       // inicializar estaciones de trabajo a vacio
       this.product.components = [];
       // Inicializar estaciones de trabajo
@@ -609,8 +601,9 @@ export default {
       // Sin filtro asumiendo todas las estaciones de trabajo seleccionadas
       this.componentsByWorkStation = this.product.components;
       this.componentsByProductIndex = this.product.components.length;
+      this.FilteredComponents("", "")
     },
-    clickWorkStationRow(item, row) {
+    clickWorkStationRow(item, row) {   // OBSOLETO
       // Evento al hacer click sobre la lista de estaciones de trabajo
       // Seleccionar renglon
       if (row.isSelected) {
@@ -625,7 +618,7 @@ export default {
         this.editedWorkstationIndex = row.index;
       }
     },
-    clickWorkStationSelected(item) {
+    clickWorkStationSelected(item) {   // OBSOLETO
       //console.info("Item seleccionado en casilla ", item);
       //console.info("Item seleccionado en casilla valor ", item.value);
       if (item.value) {
@@ -640,47 +633,59 @@ export default {
         this.editedWorkstationIndex = -1;
       }
     },
-    FilteredComponents() {
-      if (this.editedWorkstationIndex > -1) {
-        //console.info("Componentes del producto antes de filtrar", this.componentsByProduct);
-        //console.info("Name de estacion seleccionada", this.workstation._id)
-        return this.componentsByProduct.filter((i) => {
-          //console.info("Name iterado", i.workstationId)
-          //console.info("Name estacio", this.workstation._id)
-          return i.workstationId === this.workstation._id;
-        });
-      }
+    FilteredComponents(iDWS, iDConfiguration) {
+      if(iDWS && iDConfiguration){
+        console.info("Entrando a filtrar")
+         this.componentsByWsAndConfiguration = this.componentsByProduct.filter(c=>c.configurationId==iDConfiguration && c.workstationId==iDWS);
+      }else{  // Parametros indefinidos o igual a ""
+        this.componentsByWsAndConfiguration = this.componentsByProduct
+      }  
+      console.info("this.componentsByProduct",this.componentsByProduct)
     },
     editItem(item) {
-      console.info("Item seleccionado para edicion", item);
-      this.editedComponentIndex = this.componentsByProduct.indexOf(item);
-      console.info("Indice del componente editado ", this.editedComponentIndex);
-      this.editedComponent = Object.assign({}, this.defaultComponent);
-      console.info("Compornente del producto por editar " , this.componentsByProduct[this.editedComponentIndex])
-      Object.assign(this.editedComponent, this.componentsByProduct[this.editedComponentIndex]);
-      //this.editedComponent[0].amount=item.amount;
-      console.info("Componente por editar",this.editedComponent)
-      // Filtrar suministros y solo dejar el editado
-      this.searchSupply = item.name;
-      this.dialog = true;
+      // Editar solo si hay una sola seleccion
+      if (this.component.configurationId!= "" && this.component.workstationId!=""){
+            this.editedComponent = Object.assign({}, this.defaultComponent);
+            this.editedComponentIndex=-1
+            this.componentsByProduct.filter((comp,i) => {
+              if(comp._id === item._id && 
+              comp.configurationId===this.component.configurationId && 
+              comp.workstationId ===this.component.workstationId){
+              this.editedComponent = Object.assign({}, comp);
+              this.editedComponentIndex= i
+              return true
+              }
+            });
+            // Filtrar suministros y solo dejar el editado
+            this.searchSupply = item.name;
+            this.dialog = true;
+      }
+      
     },
 
     deleteItem(item) {
-      this.editedComponentIndex = this.product.components.indexOf(item);
-      this.editedComponent = Object.assign({}, item);
-      this.dialogDelete = true;
+      // Solo cuando hay seleccionado una estacion y una operacion
+      if (this.component.configurationId!= "" && this.component.workstationId!=""){
+        this.editedComponentIndex = this.componentsByProduct.indexOf(item);
+        this.editedComponent = Object.assign({}, item);
+        this.dialogDelete = true;
+      }
+      
     },
 
     deleteItemConfirm() {
       this.componentsByProduct.splice(this.editedComponentIndex, 1);
-      this.componentsByWorkStation = this.FilteredComponents();
+      this.componentsByWorkStation = this.FilteredComponents(
+          this.component.workstationId,this.component.configurationId
+      );
       this.closeDelete();
     },
 
     close() {
       this.dialog = false;
       this.$nextTick(() => {
-        this.editedComponent = Object.assign({}, this.defaultComponent);
+        this.component = Object.assign({}, this.defaultComponent);
+        this.editedComponent = [];
         this.editedComponentIndex = -1;
         this.searchSupply = "";
       });
@@ -689,38 +694,22 @@ export default {
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedComponent = Object.assign({}, this.defaultComponent);
+        this.editedComponent = [];
         this.editedComponentIndex = -1;
       });
     },
 
     save() {
-      // Si hay seleccionada una estacion de trabajo
-     console.info("this.editedWorkstationIndex", this.editedWorkstationIndex);
-      if (this.editedWorkstationIndex > -1) {
-        // Si se ha seleccionado un suministro
-        console.info("Componente por agregar ", this.editedComponent);
-        if (this.editedComponent[0]) {
-          Object.assign(this.component, this.editedComponent[0]);
-          this.component.workstationId = this.workstation._id;
-          // Si es una edicion
-          console.info("this.editedComponentIndex", this.editedComponentIndex);
-          if (this.editedComponentIndex > -1) {
-            console.info("Insumo x actualizar",this.editedComponent[0])
-            //console.info("Actualizando componente");
-            //console.info(
-            //  "Componente del producto x actualizar",
-            //  this.componentsByProduct[this.editedComponentIndex]
-            //);
-            // Actualizar el campo de amount del componente editado
-            // Se actualiza en this.componentsByProduct el componente en el indice editedComponentIndex
-            this.componentsByProduct[this.editedComponentIndex].amount =
+      //console.info("this.editedComponent[0]",this.editedComponent[0])
+      if (this.editedComponent[0]) {
+        Object.assign(this.component, this.editedComponent[0]);
+        if (this.editedComponentIndex > -1) { // Edicion
+          this.componentsByProduct[this.editedComponentIndex].amount =
               this.component.amount;
-            
             // Liberar filtro de suministros
-            this.searchSupply = "";
-          } else {
-            // Agregar componente solo si amount >0
+            this.searchSupply = "";  
+        }else{  // Agregar
+        // Agregar componente solo si amount >0
             if (this.component.amount > 0) {
               console.info("Agregando componente");
               //Se agrega el componente a la lista this.componentsByProduct en el siguiente indice this.componentsByProductIndex
@@ -731,16 +720,15 @@ export default {
               );
               this.componentsByProductIndex = this.componentsByProductIndex + 1;
             }
-          }
-          this.component = Object.assign({}, this.defaultComponent);
-          this.editedComponent = Object.assign({}, this.defaultComponent);
-          console.info("Componente seleccionado reestablecido", this.editedComponent)
-          this.editedComponentIndex = -1;
-          this.componentsByWorkStation = this.FilteredComponents();
+                
         }
+        this.FilteredComponents(
+        this.component.workstationId,
+        this.component.configurationId
+        );
       }
 
-      this.close();
+      this.close();  // Aqui reiniciamos el componente de edicion
     },
     productionLineSelected() {
       // Evento invocado cuando seleccionamos una linea de produccion
@@ -748,14 +736,17 @@ export default {
       // this.areThereWorkstations = true;
       // Aqui se ha fijado la linea de produccion y con ello las estaciones cambiaron
       // Por defecto se hay mmarcado seleccionadas y se debe cargar los componentes
-      this.product.components = [];
+      
       this.componentsByProduct = this.product.components;
       // Sin filtro asumiendo todas las estaciones de trabajo seleccionadas
       this.componentsByWorkStation = this.product.components;
+      this.workStationsAndConfigurationes =
+        this.product.production_line.workstations;
+
     },
     saveProduct() {
       this.product.components = this.componentsByProduct;
-      console.info("Componentes del producto", this.product.components);
+      console.info("Producto", this.product);
       this.$loader.activate("Guardando producto...");
 
       Meteor.call("product.save", this.product, (error, response) => {
@@ -803,9 +794,61 @@ export default {
       console.info("Item closeComponentSelected", props);
       console.log("Edicion cerrada...");
     },
+    openNode(node) {
+      //console.info("Nodo abierto", node);
+      //console.info("active", this.active);
+    },
+    clickOnNode(node) {
+       if (this.active.length > 0) {
+        // habilitar boton agregar componentes
+        this.areThereWorkstations = false;
+        const wsId = this.active[0].id.split("-");
+        this.component.workstationId = wsId[2];
+        this.component.configurationId = wsId[0];
+        this.component.wsName=wsId[3]
+        this.component.wsOperation=wsId[1]
+        
+      } else {
+        // Deshabilitar boton agregar componentes
+        this.areThereWorkstations = true;
+        // Sin componente seleccionado - Estacion y Operacion
+        //this.component= [];
+         this.component= Object.assign({},this.defaultComponent)
+        
+      }
+      // Listar componentes en funcion de this.component
+      console.info("this.component",this.component)
+      this.FilteredComponents(
+          this.component.workstationId,
+          this.component.configurationId
+        );
+    },
   },
 
   computed: {
+    items() {
+      
+      const children = this.product.production_line.workstations.map((ws) => ({
+        id: ws._id,
+        name: ws.name,
+        children: ws.configurations.map((cf) => ({
+          id: cf._id + "-"+ cf.name+ "-" + ws._id+ "-"+ ws.name,
+          name: cf.name,
+        })),
+      }));
+
+      return [
+        {
+          id: 1,
+          name: this.product.production_line.name,
+          children,
+        },
+      ];
+    },
+    selected() {
+      console.info("active", active[0]);
+      //return this.users.find(user => user.id === id)
+    },
     formTitle() {
       return this.editedComponentIndex === -1
         ? "Agregar componente"

@@ -14,11 +14,17 @@
         <v-form @submit.prevent="saveProductionLine" id="saveProductionLine" autocomplete="off">
           <v-row>
             <v-col md="6">
-              <v-text-field v-model="productionline.name" id="inputName" name="name" label="Nombre de la linea de produccion">
+              <v-text-field v-model="productionline.name" 
+              id="inputName" 
+              :rules="[rules.required]"
+              name="name" label="Nombre de la linea de produccion">
               </v-text-field>
             </v-col>
             <v-col md="6">
-              <v-text-field v-model="productionline.description" id="inputDescription" name="description"
+              <v-text-field v-model="productionline.description" 
+              id="inputDescription" 
+              :rules="[rules.required]"
+              name="description"
                             label="Descripción de la linea de produccion">
               </v-text-field>
             </v-col>
@@ -50,7 +56,7 @@
       </v-col>
       <v-col>
         <v-card>
-          <v-card-title>Estaciones de trabajo asignadas</v-card-title>
+          <v-card-title>Estaciones de trabajo disponibles</v-card-title>
           <v-card-text>
             <v-text-field v-model="searchWorkstation" placeholder="Buscar. . ."
                           id="inputSearchWorkstation" name="workstationName2">
@@ -96,6 +102,25 @@ export default {
       searchWorkstation: '',
       selfWorkstations: [],
       allWorkstations: [],
+      rules: {
+        required: (value) => !!value || "Requerido.",
+        greatZero: (value) => value > 0 || "Inserte valor mayor a cero",
+        greatEqualZero:(value)=> value >= 0 || "Inserte valor igual o mayor a cero",
+        counter: (value) => value.length <= 20 || "Max 20 caracteres",
+        email: (value) => {
+          const pattern =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Correo Electrónico incorrecto.";
+        },
+        number: (value) => {
+          const pattern = /^[+-]?\d+([,.]\d+)?$/;
+          return (
+            pattern.test(value) ||
+            "Numero con formato equivocado, debe ser un real Ejemplo: -123.35 o 7,4 o 8"
+          );
+        },
+        max25chars: (v) => v.length <= 25 || "Entrada de datos muy grande!",
+      },
     }
   },
   created() {
@@ -141,7 +166,7 @@ export default {
       });
     },
     listAllWorkstations(){
-      Meteor.call('productionline.workstations',(error,response)=>{
+      Meteor.call('productionline.workstations.availables',(error,response)=>{
           if (error){
             this.$alert.showAlertSimple('error',error.reason,response);
           } else {
@@ -160,7 +185,7 @@ export default {
           this.selfWorkstations = response.data;
         }
       });
-      Meteor.call('productionline.workstations.availables.to.include',idProductionLine,(error,response)=>{
+      Meteor.call('productionline.workstations.availables',idProductionLine,(error,response)=>{
         if (error){
           this.$alert.showAlertSimple('error',error.reason,response);
         } else {

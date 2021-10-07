@@ -27,10 +27,18 @@ new ValidatedMethod({
                         name_full: String,
                         location: String,
                         productionline: {
-                            description : String,
-                            name : String,
-                            _id : String
-                        }
+                            description : Match.OneOf(String, null),
+                            name : Match.OneOf(String, null),
+                            _id : Match.OneOf(String, null)
+                        },
+                        configurations : [ 
+                            {
+                                _id : String,
+                                name : String,
+                                description : String,
+                                instructions : String
+                            }
+                        ] 
                     }
                 ]
             });
@@ -43,10 +51,20 @@ new ValidatedMethod({
      
     },
     run(productionline) {
-        console.log('productionline.save');
+        
         const responseMessage= new ResponseMessage();
         if(productionline._id !==null){
             try{
+                
+                    // Aqui traer las estaciones anteriores y actualizar con Null
+                   const pLine = ProductionLineRepository.findOne({"_id":productionline._id});
+                    ProductionLinesServ.updateWorkStationWithProductionLine(
+                        pLine.workstations,
+                        {"_id": null,
+                        "name":null,
+                        "description": null
+                        } 
+                    );
                 ProductionLineRepository.update(productionline._id,{
                     $set:{
                         name: productionline.name,
@@ -54,22 +72,38 @@ new ValidatedMethod({
                         workstations: productionline.workstations
                     }
                 });
-
-                console.log('Se ha actualizado la linea de produccion');
+                // Actualizar las estaciones de trabajo asignadas
+                ProductionLinesServ.updateWorkStationWithProductionLine(
+                    productionline.workstations,{"_id": productionline._id,
+                    "name":productionline.name,
+                    "description": productionline.description
+                } 
+                );
+                 // Actualizar la linea de produccion con la estacion de trabajo actualizada
+                 ProductionLinesServ.updateProductionLineWithWorkstation(productionline._id)
+                
                 responseMessage.create('Se ha actualizado la linea de produccion');
             }catch (exception) {
                 console.error('productionline.save', exception);
-                throw new Meteor.Error('500', 'Ocurrió un error al actualizar la linea de produccion');
+                throw new Meteor.Error('500', 'Error al actualizar la linea de produccion','Ocurrió un error al actualizar la linea de produccion');
             }
         }else{
             console.log('productionline: ',productionline);
             try{
-                ProductionLineRepository.insert({
+                const iDProductionLine=ProductionLineRepository.insert({
                     name: productionline.name,
                     description: productionline.description,
                     workstations: productionline.workstations
                 });
-                console.log('Se ha guardado la linea de produccion');
+                // Actualizar las estaciones de trabajo asignadas con el Id de la linea de produccion
+                ProductionLinesServ.updateWorkStationWithProductionLine(
+                    productionline.workstations,{"_id": iDProductionLine,
+                    "name":productionLine.name,
+                    "description": productionLine.description
+                } 
+                ); 
+                // Actualizar la linea de produccion con la estacion de trabajo actualizada
+                ProductionLinesServ.updateProductionLineWithWorkstation(iDProductionLine)
                 responseMessage.create('Se ha guardado la linea de produccion');
             }catch (exception) {
                 console.error('productionline.save', exception);
@@ -89,7 +123,6 @@ new ValidatedMethod({
     validate() {
     },
     run() {
-        console.log('productionline.list');
         const responseMessage= new ResponseMessage();
             try{
             const productionlines = ProductionLineRepository.find().fetch();
@@ -117,12 +150,21 @@ new ValidatedMethod({
             throw new Meteor.Error('403', 'Ocurrio un error al eliminar la linea de produccion');
         }
         // validar que no sea posible eliminar una linea de produccion si hay una orden de produccion ACTIVA utilizandolo.
-        
-    },
+        ProductionLinesServ.validateNoEraseProductionLine(idProductionline);
+        },
     run({ idProductionline }){
         const responseMessage = new ResponseMessage();
         try {
             ProductionLineRepository.remove(idProductionline);
+            // Liberar estaciones de trabajo
+            const pLine = ProductionLineRepository.findOne({"_id":productionline._id});
+                    ProductionLinesServ.updateWorkStationWithProductionLine(
+                        pLine.workstations,
+                        {"_id": null,
+                        "name":null,
+                        "description": null
+                        } 
+                    );
             responseMessage.create('Linea de produccion eliminada exitosamente');
         }catch (exception) {
             console.error('profile.delete', exception);
@@ -216,6 +258,29 @@ new ValidatedMethod({
         }catch(ex){
             console.log('productionline.workstations.included: ', ex);
             throw new Meteor.Error('500','Ocurrió un error al obtener la lista de estaciones de trabajo incluidas a una linea de produccion');
+        }
+
+        return responseMessage;
+    }
+
+});
+
+new ValidatedMethod({
+    name:'productionline.workstations.availables',
+    mixins: [MethodHooks],
+    permissions: [Permissions.PRODUCTIONLINES.LIST.VALUE],
+    beforeHooks: [AuthGuard.checkPermission],
+    validate() {
+    },
+    run() {
+        const responseMessage = new ResponseMessage();
+        try{
+            
+            const workstationsAvaiulables= WorkstationRepository.find({'productionline._id':null}).fetch();
+            responseMessage.create('Estaciones de trabajo disponibles para la linea de produccion','Estaciones disponibles',workstationsAvaiulables);
+        }catch(ex){
+            console.log('productionline.workstations.availables: ', ex);
+            throw new Meteor.Error('500','Ocurrió un error al obtener la lista de estaciones de trabajo disponibles para una linea de produccion');
         }
 
         return responseMessage;

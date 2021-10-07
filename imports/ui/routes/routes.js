@@ -11,6 +11,7 @@ import productionOrdersRoutes from "./productionOrdersRoutes";
 import supplyRoutes from "./supplyRoutes";
 import warehousesRoutes from "./warehousesRoutes";
 import workStationsRoutes from "./workStationsRoutes";
+import workStationSetupRoutes from "./workStationSetupRoutes";
 import providerRoutes from "./providerRoutes";
 import productsRoutes from "./productsRoutes";
 import unitOfMeasurementRoutes from "./unitOfMeasurementRoutes";
@@ -56,6 +57,7 @@ export default [
             supplyRoutes,
             warehousesRoutes,
             workStationsRoutes,
+            workStationSetupRoutes,
             providerRoutes,
             productsRoutes,
             unitOfMeasurementRoutes,

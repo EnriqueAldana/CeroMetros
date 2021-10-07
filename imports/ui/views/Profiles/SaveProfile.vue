@@ -140,16 +140,15 @@ export default {
     },
     listAllPermissions(){
       Meteor.call('permissions.list',(error,response)=>{
-          if (error){
-            this.$alert.showAlertSimple('error',error.reason,response);
-          } else {
-            console.log("Lista de todos los permisos ", response.data);
-            this.allPermissions = response.data;
-          }
+        if (error){
+          this.$alert.showAlertSimple('error',error.reason,response);
+        } else {
+          this.allPermissions = response.data;
+        }
       });
     },
     initPermissions(idProfile){
-      console.log("Entrando a initPermissions");
+
       Meteor.call('permissions.listByIdProfile',{"idProfile":idProfile},(error,response)=>{
         if (error){
           this.$alert.showAlertSimple('error',error.reason,response);
@@ -168,15 +167,20 @@ export default {
   },
   computed:{
     filteredSelfPermissions(){
+      //console.info("this.selfPermissions")
       return this.selfPermissions.filter(permission=>{
+        //console.info("Selfpermission",permission)
+        //console.info("this.searchSelfPermission", this.searchSelfPermission)
         return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
       })
     },
     filteredPermissions(){
       return this.allPermissions.filter(permission=>{
-        return permission.publicName.toLowerCase().includes(this.searchPermission.toLowerCase());
-      });
-    },
+        //console.info("Selfpermission",permission)
+        //console.info("this.searchSelfPermission", this.searchSelfPermission)
+        return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
+      })
+  },
   }
 }
 </script>

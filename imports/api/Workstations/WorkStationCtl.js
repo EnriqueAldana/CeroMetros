@@ -5,6 +5,7 @@ import AuthGuard from "../../middlewares/AuthGuard";
 import Permissions from "../../startup/server/Permissions";
 import {WorkstationRepository} from './WorkStation'
 import WorkStationServ from "./WorkStationServ";
+import {WorkstationSetupRepository} from '../WorkStationSetup/WorkstationSetup';
 
 new ValidatedMethod({
     name:'workstation.save',
@@ -23,7 +24,15 @@ new ValidatedMethod({
                     _id:Match.OneOf(String, null),
                     name: Match.OneOf(String, null),
                     description:Match.OneOf(String, null)
-                }
+                },
+                configurations: [ {
+                    _id: String,
+                    name: String,
+                    description: String,
+                    instructions: String
+                }   
+                ]
+
             });
 
         }catch ( exception){
@@ -44,22 +53,19 @@ new ValidatedMethod({
                     name: workstation.name,
                     name_full: workstation.name_full,
                     location: workstation.location,
-                    productionline: workstation.productionline
+                    productionline: workstation.productionline,
+                    configurations: workstation.configurations
                     }
                 });
-                
-
                 responseMessage.create('Se actualizó la estacion de trabajo exitosamente');
             }else{
                 WorkstationRepository.insert({
                     name: workstation.name,
                     name_full: workstation.name_full,
                     location: workstation.location,
-                    productionline: workstation.productionline
+                    productionline: workstation.productionline,
+                    configurations: workstation.configurations
                 });
-
-                // ToDo actualizar la Linea de produccion
-
                 responseMessage.create('Se insertó la estacion de trabajo exitosamente');
             }
         }catch ( exception){
@@ -100,6 +106,92 @@ new ValidatedMethod({
             throw new Meteor.Error('500', 'Ocurrio un error al eliminar la estacion de trabajo');
         }
 
+        return responseMessage;
+    }
+});
+
+new ValidatedMethod({
+    name: 'workstation.configurations.list',
+    mixins: [MethodHooks],
+    permissions: [Permissions.WORKSTATIONSETUP.LIST.VALUE],
+    beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
+    afterHooks: [],
+    validate() {
+    },
+    run() {
+        console.log('workstation.configurations.list');
+        const responseMessage= new ResponseMessage();
+            try{
+            const workstationConfigurations = WorkstationSetupRepository.find().fetch();
+                responseMessage.create('Se ha obtenido la lista de configuraciones para estaciones de trabajo',null,workstationConfigurations);
+            }catch (exception) {
+                console.error('productionline.save', exception);
+                throw new Meteor.Error('500', 'Ocurrió un error al obtener la lista de configuraciones para estaciones de trabajo');
+            }
+        
+        return responseMessage;
+    }
+});
+new ValidatedMethod({
+    name: 'workstation.configurationsExcludingWS',
+    mixins: [MethodHooks],
+    permissions: [Permissions.WORKSTATIONSETUP.LIST.VALUE],
+    beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
+    afterHooks: [],
+     validate({ iDWorkStation }) {
+         
+        try {
+            check(iDWorkStation , String);
+        }catch (exception) {
+            console.error('workstation.configurationsExcludingWS', exception);
+            throw new Meteor.Error('403', 'Ocurrio un error al obtener las configuraciones excluidas por Estacion de trabajo');
+        }
+    },
+    run({iDWorkStation}) {
+        const responseMessage= new ResponseMessage();
+            try{
+            const workstationConfig = WorkstationRepository.findOne({_id:iDWorkStation},{fields:{configurations:1}});
+            const workstationConfigurations = workstationConfig.configurations
+            const workstationConfigurationsAll = WorkstationSetupRepository.find().fetch();
+            const filteredWorkstationConfigurations =  workstationConfigurationsAll.filter(configuration=>{
+                let res = workstationConfigurations.filter(wsConfig=>wsConfig._id===configuration._id);
+                return res.length>0 ? false: true;
+            });
+            responseMessage.create('Se ha obtenido la lista de configuraciones excluidas para estaciones de trabajo',null,filteredWorkstationConfigurations);
+            }catch (exception) {
+                console.error('workstation.configurationsExcludingWS', exception);
+                throw new Meteor.Error('500', 'Ocurrió un error al obtener la lista de configuraciones excluidas para estaciones de trabajo');
+            }
+        
+        return responseMessage;
+    }
+});
+new ValidatedMethod({
+    name: 'workstation.configurations.byWS',
+    mixins: [MethodHooks],
+    permissions: [Permissions.WORKSTATIONSETUP.LIST.VALUE],
+    beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
+    afterHooks: [],
+    validate({iDWorkStation}) {
+        try {
+            check(iDWorkStation , String);
+        }catch (exception) {
+            console.error('workstation.configurations.byWS', exception);
+            throw new Meteor.Error('403', 'Ocurrio un error al obtener las configuraciones  por Estacion de trabajo');
+        }
+    },
+    run({iDWorkStation}) {
+
+        const responseMessage= new ResponseMessage();
+            try{
+            
+                const workstationConfigurations = WorkstationRepository.findOne({_id:iDWorkStation},{fields:{configurations:1}});
+                 responseMessage.create('Se ha obtenido la lista de configuraciones para estaciones de trabajo',null,workstationConfigurations.configurations);
+            }catch (exception) {
+                console.error('workstation.configurations.byWS', exception);
+                throw new Meteor.Error('500', 'Ocurrió un error al obtener la lista de configuraciones para estaciones de trabajo');
+            }
+        
         return responseMessage;
     }
 });

@@ -67,7 +67,16 @@ new ValidatedMethod({
                                     description: String,
                                     name: String,
                                     _id: String
-                                }
+                                },
+                                configurations:[
+                                    {
+                                        description:String,
+                                        instructions:String,
+                                        name:String,
+                                        _id:String,
+                                    }
+    
+                                ],
                             }
                         ]
                     },
@@ -101,7 +110,10 @@ new ValidatedMethod({
                                 location: String
                             },
                             _id: String,
-                            workstationId: String
+                            workstationId: String,
+                            configurationId: String,
+                            wsName:String,
+                            wsOperation:String,
                         }
                     ],
                     

@@ -66,6 +66,11 @@ export default [
                 routeName:'home.workstations'
             },
             {
+                title:'Configuracion Estaciones Trabajo',
+                permission: Permissions.WORKSTATIONSETUP.LIST.VALUE,
+                routeName:'home.workstationconfiguration'
+            },
+            {
                 title:'Unidades de medida',
                 permission: Permissions.UNITOFMEASUREMENT.LIST.VALUE,
                 routeName:'home.unitsofmeasurement'

@@ -26,17 +26,22 @@ export default [
                 routeName:'home.customers'
             },
             {
+                title:'Proveedores',
+                permission: Permissions.PROVIDERS.LIST.VALUE,
+                routeName:'home.providers'
+            },
+            {
                 title:'Chat',
                 permission: Permissions.CHAT.LIST.VALUE,
                 routeName:'home.chat'
             },
             {
-                title:'Lineas Produccion',
+                title:'Lineas Producción',
                 permission: Permissions.PRODUCTIONLINES.LIST.VALUE,
                 routeName:'home.productionlines'
             },
             {
-                title:'Ordenes Produccion',
+                title:'Ordenes Producción',
                 permission: Permissions.PRODUCTIONORDERS.LIST.VALUE,
                 routeName:'home.productionorders'
             },
@@ -56,17 +61,17 @@ export default [
                 routeName:'home.warehouses'
             },
             {
-                title:'Proveedores',
-                permission: Permissions.PROVIDERS.LIST.VALUE,
-                routeName:'home.providers'
-            },
-            {
-                title:'Estaciones Trabajo',
+                title:'Estaciones de Trabajo',
                 permission: Permissions.WORKSTATIONS.LIST.VALUE,
                 routeName:'home.workstations'
             },
             {
-                title:'Configuracion Estaciones Trabajo',
+                title:'Estación de Operación',
+                permission: Permissions.OPERATINGSTATION.LIST.VALUE,
+                routeName:'home.estacionoperacion'
+            },
+            {
+                title:'Configuración Estación de Trabajo',
                 permission: Permissions.WORKSTATIONSETUP.LIST.VALUE,
                 routeName:'home.workstationconfiguration'
             },

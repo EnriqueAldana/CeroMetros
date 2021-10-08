@@ -4,7 +4,7 @@ export const status = {
         STATUSKEY: 'INI',
         STATUSDESCRIPTION: 'Inicial',
       },
-	ACT: {
+	  ACT: {
         // INI Inicial , PAR - Parcial , COM Completa, CAN Cancelado , COM Completa
         STATUSKEY: 'ACT',
         STATUSDESCRIPTION: 'Actualizado',

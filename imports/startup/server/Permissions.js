@@ -97,6 +97,10 @@ const Permissions={
         DELETE:{VALUE:'workstationsetup-delete',TEXT:'Borrar configuraciones de estacion de trabajo'}
 
     },
+    OPERATINGSTATION:{
+        LIST:{VALUE:'operatingstation-view',TEXT:'Ver Estacion de operacion'},
+        CREATE:{VALUE:'operatingstation-view',TEXT:'Guardar acciones de la Estación de operación'},
+    },
     PROVIDERS:{
         LIST:{VALUE:'providers-view',TEXT:'Listar proveedores'},
         CREATE:{VALUE:'providers-create',TEXT:'Crear proveedore'},

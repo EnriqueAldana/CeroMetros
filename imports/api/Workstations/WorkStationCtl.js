@@ -25,12 +25,13 @@ new ValidatedMethod({
                     name: Match.OneOf(String, null),
                     description:Match.OneOf(String, null)
                 },
-                configurations: [ {
+                configurations: [
+                     {
                     _id: String,
                     name: String,
                     description: String,
                     instructions: String
-                }   
+                    } 
                 ]
 
             });
@@ -39,6 +40,20 @@ new ValidatedMethod({
             console.error('workstation.save', exception);
             throw new Meteor.Error('403', 'La informacion introducida no es valida');
         }
+
+        // Validar que haya al menos una configuracion
+        try {
+            const checkFn = Match.Where(function(x) {
+                if(x.length > 0)
+                    return true
+                return false;
+            });
+            check(workstation.configurations,checkFn)
+        }catch ( exception){
+            console.error('workstation.save', exception);
+            throw new Meteor.Error('500', 'Es necesaria una configuración para la estación al menos');
+        }
+
         // Validar que no haya estaciones de trabajo con el mismo nombre   
         
         WorkStationServ.validateWorkstationName(workstation.name,workstation._id);

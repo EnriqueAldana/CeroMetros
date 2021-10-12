@@ -6,7 +6,6 @@ export default {
     
     validateProductionOrderToErase(idProductionOrder){
         const existsProductionOrder= ProductionOrders.findOne({_id:idProductionOrder});
-        let statusOrder = status;
         if(existsProductionOrder !== null){  // orden de produccion existe
             // si hay un estatus en PAR - Parcial , COM Completa, CAN Cancelado 
             // no puede borrarse

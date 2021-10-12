@@ -70,6 +70,8 @@ Acciones para regenerar el ambiente de desarrollo
 5.- volver a ejecutar comando yarn install si se usa yarn o npm install si se usa npm
 6.- Arrancar Meteor .
 
+Documentacion Meteor y Vue
+https://www.meteor.com/tutorials/vue/creating-an-app
 
 
 Procesar estilos

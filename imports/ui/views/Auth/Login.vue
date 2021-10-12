@@ -63,4 +63,7 @@ import {mapMutations} from 'vuex';
     .login-wrapper {
         margin-top: 45px;
     }
+    html {
+    overflow-y: hidden !important;
+}
 </style>

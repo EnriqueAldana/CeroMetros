@@ -20,22 +20,28 @@ export default {
         return existsWorkstationNumber;
     },
     validateWorkstationChangeProductionLine(workstation){
-        // actualizar la Linea de produccion si es diferente de la actual
+                // actualizar la Linea de produccion si es diferente de la actual
                 // Validar que la linea nueva es diferente de la vieja.
                 // Si es diferente hay que removerla de la linea de produccion vieja.
+               // console.info("Entrando en validateWorkstationChangeProductionLine", workstation)
                 const oldWorkstation = WorkstationRepository.findOne(workstation._id);
+               // console.info("oldWorkstation", oldWorkstation)
                 
                 if(oldWorkstation){
                     if(oldWorkstation.productionline._id !== workstation.productionline._id){
                         const oldProductionLine = ProductionLineRepository.findOne(oldWorkstation.productionline._id);
-                        const oldProductionLineWorkstationsUpdated = oldProductionLine.workstations.filter(
-                            ws => ws._id  !== workstation._id
-                        );
-                        ProductionLineRepository.update(oldProductionLine._id,{
-                            $set: {
-                             workstations: oldProductionLineWorkstationsUpdated
-                            }
-                        });
+                        //console.info("oldProductionLine",oldProductionLine)
+                        if(oldProductionLine){
+                            const oldProductionLineWorkstationsUpdated = oldProductionLine.workstations.filter(
+                                ws => ws._id  !== workstation._id
+                            );
+                            ProductionLineRepository.update(oldProductionLine._id,{
+                                $set: {
+                                 workstations: oldProductionLineWorkstationsUpdated
+                                }
+                            });
+                        }
+                        
                     }
 
                 }

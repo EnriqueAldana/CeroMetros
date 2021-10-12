@@ -22,9 +22,12 @@ export default {
 </script>
 
 <style>
-
-<!--
->
+/**
+El estilo html remueve el scroll en la plantilla 
+html {  
+   overflow-y: hidden !important; 
+ }  
+*/
 .v_snack__content {
   padding: 0 !important;
 

@@ -41,11 +41,32 @@ falta Borrar...OK.validar que no se pueda borrar si esta en proceso, despacho pa
 
 10.- Implementar pantalla de operacion de la estacion de trabajo. 
 7 Oct 2021
+Entorno grafico
+9 Oct 2021
+Lista de Ordenes de produccion.
+Notacion documento que implicA QUE TODO EL DOCUMENTO COINCIDA
+db.getCollection('production-orders').find({{products:{  
+                                "production_line":{
+                                        "_id" : "W9RiSLSsyvNx4TBLz",
+                                        "workstations":{
+                                                "_id" : "6wDEREhT4Xrb4QZTa",
+                                                "configurations":{
+                                                        "_id":"jAgBXST4fqAianZzt"
+                                                }       
+                                        }        
+                                }
+                        }
+                }},{})
+
+Notacion punto para campos enbebidos
+db.getCollection('production-orders').find({"products.production_line._id": "W9RiSLSsyvNx4TBLz", "products.production_line.workstations._id":"6wDEREhT4Xrb4QZTa", "products.production_line.workstations.configurations._id":"jAgBXST4fqAianZzt"})
+
+
 
 11.- Implementar pantalla de configuracion de Producto con Estaciones y Configuraciones. 
 CRUD Normal OK
 Asociar a estacion de trabajo en relacion una ET y Varios SetUp. OK
-SI se edita la ET actualizar La Linea de produccion y Los productos deberan ser adveertidos
+SI se edita la ET actualizar La Linea de produccion.
 
 Ajustar componente de ET en PRODUCTO para que se elija el setup correspondiente para el producto.OK
 Falta Probar Agregar Insumo , borrar y editar......OK
@@ -62,57 +83,78 @@ Ok Dar de alta Insumos indirectos
 18.- Implementar Dashboard o tablero de KPIs
 
 
-      // Si hay seleccionada una estacion de trabajo
-     console.info("this.editedWorkstationIndex", this.editedWorkstationIndex);
-      if (this.editedWorkstationIndex > -1 || this.active.length >0 ) {
-        // Si se ha seleccionado un suministro
-        console.info("Componente por agregar ", this.editedComponent);
-        if (this.editedComponent[0]) {
-          Object.assign(this.component, this.editedComponent[0]);
-          // Antes this.component.workstationId = this.workstation._id;
-          const wsId=  this.active[0].id.split("-");
-          this.component.workstationId = wsId[1]
-          this.component.configurationId = wsId[0]
-          // Agregar en 
-          // Si es una edicion
-          console.info("this.editedComponentIndex", this.editedComponentIndex);
-          // Si se esta actualizando
-          if (this.editedComponentIndex > -1) {
-            console.info("Insumo x actualizar",this.editedComponent[0])
-            //console.info("Actualizando componente");
-            //console.info(
-            //  "Componente del producto x actualizar",
-            //  this.componentsByProduct[this.editedComponentIndex]
-            //);
-            // Actualizar el campo de amount del componente editado
-            // Se actualiza en this.componentsByProduct el componente en el indice editedComponentIndex
-            this.componentsByProduct[this.editedComponentIndex].amount =
-              this.component.amount;
-            
-            // Liberar filtro de suministros
-            this.searchSupply = "";
-          } else {  // Si es nuevo y se agrega a la lista
-            // Agregar componente solo si amount >0
-            if (this.component.amount > 0) {
-              console.info("Agregando componente");
-              //Se agrega el componente a la lista this.componentsByProduct en el siguiente indice this.componentsByProductIndex
-              this.$set(
-                this.componentsByProduct,
-                this.componentsByProductIndex,
-                this.component
-              );
-              this.componentsByProductIndex = this.componentsByProductIndex + 1;
-            }
-          }
-          this.component = Object.assign({}, this.defaultComponent);
-          this.editedComponent = Object.assign({}, this.defaultComponent);
-          console.info("Componente seleccionado reestablecido", this.editedComponent)
-          this.editedComponentIndex = -1;
-          this.componentsByWorkStation = this.FilteredComponents();
-        }
-      }
+   
+Publicaciones
 
-      this.close();
+const productionLinesPublication=new PublishEndpoint('productionlines.list',function(param1){
+        //return ProductionLineRepository.find({},{ _id:1,name:1,description:1,
+        return ProductionLineRepository.find({},{sort:{createdAt: -1}
+        });
+});
+
+productionLinesPublication.use(new PermissionMiddleware(Permissions.PRODUCTIONLINES.LIST.VALUE));
+
+const productionOrderPublication=new PublishEndpoint('production-order.list',function(){
+        return ProductionOrders.find({},{
+                customer:1,
+                createdAt:1, 
+                requiredDate:1,
+                estimatedDeliveryAt:1, 
+                products:1
+              });
+});
+const productionOrderPublicationByPL_WS_CONF=new PublishEndpoint('production-orderByPL_WS_CONF',function(
+        productionlineId,workstationId,configurationId){
+        return ProductionOrders.find(
+                {"products.production_line._id": productionlineId, 
+                "products.production_line.workstations._id":workstationId, 
+                "products.production_line.workstations.configurations._id":configurationId},
+                {
+                customer:1,
+                createdAt:1, 
+                requiredDate:1,
+                estimatedDeliveryAt:1, 
+                products:1
+              });
+});
+productionOrderPublication.use(new PermissionMiddleware(Permissions.PRODUCTIONORDERS.LIST.VALUE));
+productionOrderPublicationByPL_WS_CONF.use(new PermissionMiddleware(Permissions.PRODUCTIONORDERS.LIST.VALUE));
+
+meteor: {
+    $subscribe: {
+      "productionlines.list": [],
+      "production-order.list":[],        
+      "production-orderByPL_WS_CONF": function(){
+        return [this.productionline._id,this.workstation._id,this.configuration._id]
+      },
+    },
+    productionlines(){
+      this.productionLines= ProductionLineRepository.find({}).fetch();
+      return this.productionLines;
+    },productionorder(){
+              const productionordersList= ProductionOrders.find({},{fields:{folio:1,customer:1,createdAt:1,editedAt:1, requiredDate:1,estimatedDeliveryAt:1,notes:1, products:1,status:1}}).fetch();
+            return productionordersList;
+    },productionorderByPL_WS_CONF(){
+              const productionordersByPL_WS_CONFList= ProductionOrders.find({},{fields:{folio:1,customer:1,createdAt:1,editedAt:1, requiredDate:1,estimatedDeliveryAt:1,notes:1, products:1,status:1}}).fetch();
+    },
+  },
 
 
-
+Iconos en color
+<template>
+  <div align="center">
+      <div v-if="loading">
+        <h3>Cargando datos...</h3>
+      </div>
+      <div v-else>
+        <v-icon size="120" :color="status?'green':'red'">
+          {{ status ? 'mdi-check-circle' : 'mdi-cancel' }}
+        </v-icon>
+        <h3 class="text-wrap">
+          {{ message }}
+          <small v-text="description"></small>
+        </h3>
+        <v-btn :to="{name:'login'}" color="primary">Regresar a inicio</v-btn>
+      </div>
+  </div>
+</template>

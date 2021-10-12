@@ -831,10 +831,12 @@ export default {
       const children = this.product.production_line.workstations.map((ws) => ({
         id: ws._id,
         name: ws.name,
-        children: ws.configurations.map((cf) => ({
-          id: cf._id + "-"+ cf.name+ "-" + ws._id+ "-"+ ws.name,
-          name: cf.name,
-        })),
+        children: ws.configurations.map(function(cf) {
+            return ({
+              id: cf._id+"-"+cf.name+"-"+ws._id+"-"+ws.name,
+              name: cf.name,
+            });
+          }),
       }));
 
       return [

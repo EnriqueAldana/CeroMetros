@@ -251,6 +251,7 @@ export default {
             },
             productionOrder(){
               const productionordersList= ProductionOrders.find({},{fields:{folio:1,customer:1,createdAt:1,editedAt:1, requiredDate:1,estimatedDeliveryAt:1,notes:1, products:1,status:1}}).fetch();
+             
               const productionordersListFiltered = productionordersList.map(po => {
                 var dateTimeCreatedAt=new Date(po.createdAt);
                 var dateTimeCreatedAtString = dateTimeCreatedAt.getDate()+ "/" + (parseInt(dateTimeCreatedAt.getMonth())+1) + "/" + dateTimeCreatedAt.getFullYear()

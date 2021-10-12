@@ -160,7 +160,7 @@ new ValidatedMethod({
     beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
     afterHooks: [],
     validate({ idProduct}){
-        console.info("Product id para borrar",idProduct)
+        //console.info("Product id para borrar",idProduct)
         try {
             check(idProduct, String);
         }catch (exception) {
@@ -171,7 +171,7 @@ new ValidatedMethod({
         ProductServ.validateProductBusy(idProduct);
         
     },
-    run(idProduct){
+    run({idProduct}){
         const responseMessage = new ResponseMessage();
         try {
             Product.remove(idProduct);

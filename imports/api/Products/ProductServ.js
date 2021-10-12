@@ -19,7 +19,8 @@ export default {
     },
     validateProductBusy(idProduct){
             const exitProductOnProdOrder= ProductionOrders.find({products:{_id:idProduct}}).fetch()
-            if(exitProductOnProdOrder){
+            console.info("exitProductOnProdOrder",exitProductOnProdOrder)
+            if(exitProductOnProdOrder.length>0){
                 throw new Meteor.Error('403', 'El producto tiene al menos una orden de produccion utilizandolo');
             }
         }

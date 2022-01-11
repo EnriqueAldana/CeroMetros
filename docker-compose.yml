@@ -51,6 +51,22 @@ services:
     networks:
       - cerometros-net
 
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    depends_on:
+      - mongo
+    networks:
+      - cerometros-net
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: "mongodb://root:CeroM3tros@mongo:27017/"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: CeroM3tros
+ 
+ 
   crontab:
     container_name: crontab
     build: 
@@ -65,6 +81,30 @@ services:
       - ./backups:/opt/backups
     networks:
       - cerometros-net 
-
+  #zookeeper:
+  #  container_name: zookeeper
+  #  image: 'bitnami/zookeeper:latest'
+  #  networks:
+  #    - cerometros-net
+  #kafka:
+  #  container_name: kafka
+  #  image: 'bitnami/kafka:latest'
+  #  depends_on:
+  #    - zookeeper
+  #  networks:
+  #    - cerometros-net
+  #kafka-ui:
+  #  container_name: kafka-ui
+  #  image: 'provectuslabs/kafka-ui:latest'
+  #  networks:
+  #    - cerometros-net
+  #  depends_on:
+  #    - kafka
+  #  ports:
+  #    - 8080:8080 
+  #  environment:
+  #  - KAFKA_CLUSTERS_0_NAME='local'
+  #  - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS='kafka:9092'
 networks:
       cerometros-net:
+        driver: bridge

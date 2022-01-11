@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import { createModuleResolutionCache } from "typescript";
 export default {
 
     generateNumberToken(min, max) {
@@ -20,6 +21,41 @@ export default {
             Object.assign(object, {status:[]});
           object.status.push(obj);
           return object;
+    },
+    addSuppliesRequested(obj,suppliedSelected){
+      // Este metodo actualiza 
+      console.info("suppliedSelected",suppliedSelected.selectedSupplies.length)
+      for(let i=0; i<obj.products.length;i++){
+      
+          for(let j=0; j<obj.products[i].components.length;j++){
+              console.info("Componente",obj.products[i].components[j])
+              for(let k=0; k<suppliedSelected.selectedSupplies.length; k++){
+                console.info("suministro",suppliedSelected.selectedSupplies[k])
+                if(
+                  obj.products[i]._id === suppliedSelected.selectedSupplies[k].productId &&
+                  obj.products[i].components[j]._id === suppliedSelected.selectedSupplies[k]._id && 
+                  obj.products[i].components[j].workstationId === suppliedSelected.selectedSupplies[k].workstationId &&
+                  obj.products[i].components[j].configurationId === suppliedSelected.selectedSupplies[k].configurationId)
+                  {
+                    console.info("component agregado", obj.products[i].components[j])
+                    obj.products[i].components[j].requested.push(
+                    {
+                      requestCompleted: false,
+                      requestedDate: new Date(), 
+                      requestedAmount:suppliedSelected.selectedSupplies[k].amountRequested, 
+                      dispatch:[{
+                        requestedDispatchDate:"", 
+                        requestedDispatchAmount:""
+                      }]
+                      }
+                    );
+                  }
+              }  
+          }
+        
+      }
+      return obj;
+
     },
     dateTimeFromString_dd_MM_YYYY(strDate){
        // console.info("Cadena por convertir", strDate)

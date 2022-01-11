@@ -1,5 +1,5 @@
 export const status = {
-	INI: {
+	  INI: {
         // INI Inicial , PAR - Parcial , COM Completa, CAN Cancelado , COM Completa
         STATUSKEY: 'INI',
         STATUSDESCRIPTION: 'Inicial',
@@ -24,4 +24,10 @@ export const status = {
         STATUSKEY: 'CAN',
         STATUSDESCRIPTION: 'Cancelado',
       },
+    SIN: {
+        // INI Inicial , PAR - Parcial , COM Completa, CAN Cancelado , COM Completa
+        STATUSKEY: 'SIN',
+        STATUSDESCRIPTION: 'Solicitó Insumos',
+      }
+    
 }

@@ -100,41 +100,7 @@
                     </v-card-actions>
                 </v-card>
               </v-row>
-              <v-divider class="mx-4"></v-divider>
-              <v-row align="center"
-              class="mx-0"
-              no-gutters>
-              <v-card
-                elevation="24"
-                 >
-                  <v-card-title>
-                      <div class="subtitle-4">
-                        Acciones 
-                      </div>
-                  </v-card-title>
-                  <v-card-subtitle>
-                  Las acciones son comandos para la operación de la estación.
-                  Cada botón le permite llevar a cabo una acción.
-                  </v-card-subtitle>
-                  <v-card-text>
-                    <v-chip-group
-                      v-model="selection"
-                      active-class="deep-purple accent-4 white--text"
-                      column
-                    >
-                      <v-chip>Arrancar</v-chip>
-                      <v-chip>Parar</v-chip>
-                      <v-chip>Producción</v-chip>
-                      <v-chip>Insumos</v-chip>
-                      <v-chip>Mantto.</v-chip>
-                    </v-chip-group>
-                  </v-card-text>
-               <v-card-actions>
-               
-                  
-              </v-card-actions>
-              </v-card>
-              </v-row>
+            
                 
       </v-col>
      
@@ -187,16 +153,181 @@
                           lastIcon: 'mdi-arrow-collapse-right',
                           prevIcon: 'mdi-minus',
                           nextIcon: 'mdi-plus'
-                        }"
-                        
-                        
-                        
+                        }" 
                       >
-                      <template
-                        v-slot:footer
-                      >
-                      
-                      </template>
+                      <template v-slot:top>
+                              <v-toolbar flat>
+                                <v-toolbar-title>Acciones para Ordenes</v-toolbar-title>
+                                <v-divider class="mx-4" inset vertical></v-divider>
+                                
+                                <v-dialog v-model="dialogStart" max-width="800px">
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                      color="primary"
+                                      dark
+                                      class="mb-2"
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      :disabled="isStart"
+                                    >
+                                      Iniciar
+                                    </v-btn>
+                                  </template>
+
+                                  <v-card>
+                                    <v-card-title>
+                                      <span class="text-h5">Iniciar la producción </span>
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                      <v-container>
+                                        <v-row>
+                                          <p class="text-center">Asegurese de tener la configuracion correcta de la estación</p>
+
+                                          <v-col cols="24" sm="12" md="8">
+                                            <p class="text-center">¿Está usted seguro de iniciar la operación?</p>
+                                          </v-col>
+                                        </v-row>
+                                      </v-container>
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                      <v-spacer></v-spacer>
+                                      <v-btn color="blue darken-1" text @click="closeStart">
+                                        Cancelar
+                                      </v-btn>
+                                      <v-btn
+                                        color="blue darken-1"
+                                        text
+                                        @click="saveStart"
+  
+                                      >
+                                        Aceptar
+                                      </v-btn>
+                                    </v-card-actions>
+                                  </v-card>
+                                </v-dialog>
+                                <v-dialog v-model="dialogStop" max-width="800px">
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                      color="primary"
+                                      dark
+                                      class="mb-2"
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      :disabled="isStop"
+                                    >
+                                      Detener
+                                    </v-btn>
+                                  </template>
+
+                                  <v-card>
+                                    <v-card-title>
+                                      <span class="text-h5">Detener la producción </span>
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                      <v-container>
+                                        <v-row>
+                                          <p class="text-center">¿Está usted seguro de detener la operación?</p>
+
+                                          <v-col cols="24" sm="12" md="8">
+                                            <p class="text-center">Aqui una tabla o forma</p>
+                                          </v-col>
+                                        </v-row>
+                                      </v-container>
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                      <v-spacer></v-spacer>
+                                      <v-btn color="blue darken-1" text @click="closeStop">
+                                        Cancelar
+                                      </v-btn>
+                                      <v-btn
+                                        color="blue darken-1"
+                                        text
+                                        @click="saveStop"
+  
+                                      >
+                                        Aceptar
+                                      </v-btn>
+                                    </v-card-actions>
+                                  </v-card>
+                                </v-dialog>
+                                <v-dialog v-model="dialogSupplies" max-width="800px">
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                      color="primary"
+                                      dark
+                                      class="mb-2"
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      :disabled="isSupplies"
+                                      
+                                    >
+                                      Solicitar insumos
+                                    </v-btn>
+                                  </template>
+
+                                  <v-card>
+                                    <v-card-title>
+                                      <span class="text-h5">Solicitar insumos</span>
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                      <v-container>
+                                        <v-row>
+                                          <p class="text-center">Insumos</p>
+
+                                          <v-col cols="24" sm="12" md="8">
+                                            <v-data-table
+                                              v-model="suppliesSelected"
+                                              :headers="headersSupplies"
+                                              :items="supplies"
+                                              :single-select=false
+                                              show-select
+                                              item-key="name"
+                                              class="elevation-1"
+                                              :search="searchSupply"
+                                            >
+                                              <template v-slot:top>
+                                                <v-text-field
+                                                  v-model="searchSupply"
+                                                  label="Buscar..."
+                                                  append-icon="mdi-magnify"
+                                                  single-line
+                                                  hide-details
+                                                  class="mx-4"
+                                                ></v-text-field>
+                                              </template>
+
+                                              
+                                            </v-data-table>
+                                          </v-col>
+                                        </v-row>
+                                      </v-container>
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                      <v-spacer></v-spacer>
+                                      <v-btn color="blue darken-1" text @click="closeSupplies">
+                                        Cancelar
+                                      </v-btn>
+                                      <v-btn
+                                        color="blue darken-1"
+                                        text
+                                        @click="saveSupplies"
+                                        :disabled="isSuppliesButtonDisabled"
+                                        
+                                      >
+                                        Solicitar
+                                      </v-btn>
+                                    </v-card-actions>
+                                  </v-card>
+                                </v-dialog>
+                              </v-toolbar>
+    </template>
+    
                       <template v-slot:item.status.statusKey="{item}">
                         <div class="d-flex align-center pt-5 pb-5">
                           <v-icon :color="item.isAvailable?'green' : 'red'">
@@ -336,10 +467,32 @@ export default {
       configurations: [],
       selectedProductionOrder:[],
       selection:[],
+      isStart:true,
+      isStop: true,
+      isSupplies: true,
+      dialogStart: false,
+      dialogStop: false,
+      dialogSupplies: false,
+      suppliesSelected: [],
+      supplies:[],
+      isSuppliesButtonDisabled:false,
+      searchSupply: "",
+      
       dataView: {
         title: "",
         targetButton: "",
       },
+      headersSupplies: [
+        { text: "Cantidad", value: "amount" },
+        {
+          text: "Nombre",
+          align: "start",
+          sortable: true,
+          value: "name",
+        },
+        { text: "Unidad", value: "unit.name" },
+        { text: "SKU", value: "sku" },
+      ],
       headersFilter: {
                   customer: {
                     _id : '',
@@ -494,15 +647,28 @@ export default {
     initialize() {
       this.loadingWorkstationList();  
     },
+    initializeBtns(){
+      console.info("Entrando en initializeBtns")
+      this.isStart=true
+      this.isStop= true
+      this.isSupplies= true
+      this.isSuppliesButtonDisabled=false
+    },
     productionLineSelected(){
+      console.info("Entrando en seleccion de linea de PRD")
+      this.selectedProductionOrder=[]
+      this.initializeBtns();
       this.configurations=[]
       this.configuration._id=null
       this.operatingstations=[]
       this.workstation._id=null
       this.operatingstations = this.productionline.workstations
       this.productionOrder();
+      
     },
     operatingStationSelected(){
+      this.initializeBtns();
+      this.selectedProductionOrder=[]
       this.configurations=[]
       this.configuration._id=null
       for(let i=0; i< this.operatingstations.length; i++){
@@ -512,14 +678,18 @@ export default {
         }  
       }
       this.productionOrder();
+      
     },
     configurationSelected(){
+      this.initializeBtns();
+      this.selectedProductionOrder=[]
       // Actualizar lista de Ordenes de produccion
       //console.info("Actualizando la lista de estaciones")
       //console.info("this.productionline",this.productionline)
       //console.info("this.workstation", this.workstation)
       //console.info("this.configuration",this.configuration)
       this.productionOrder();
+      
     },
     openViewProductionOrder(item) {
               //Aqui abrir la ventana emergente
@@ -533,22 +703,168 @@ export default {
       // Al fijarlo estaremos evocando clickProductSelected(item)
       if (row.isSelected) {
         row.select(false);
+        // deshabilitar botones
+        this.isStart=true;
+        this.isStop=true;
+       // Mandar estatus de maquina parada
+
+       this.isSupplies=true
       } else {
         row.select(true);
+        // Aqui leer el estatus de la maquina para la Orden
+        this.isStart=false;
+        this.isStop= true;
+        this.isSupplies=false;
       }
     },
     clickProductOrderSelected(item) {
       
       console.info("clickProductSelected", item);
-      // Si el item.value entonces agregar el producto en la lista
+      // Si el item.value entonces activar botones
       if (item.value) {
-
-      } else {
+        // Aqui tomar los insumos del item
+        this.getSupplies(item);
+        // Aqui leer estatus de la estacion para la Orden
+        this.isStart=false;
+        this.isStop= true;
+        this.isSupplies=false;
         
+      } else {
+        this.isStart=true;
+        this.isStop=true;
+        this.isSupplies=true;
+        // vaciar suministros
+        this.supplies=[]
       }
-     
-    }
 
+      
+     
+    },
+    closeStart() {
+      this.dialogStart = false;
+      this.$nextTick(() => {
+        // Hacer algo si se requiere
+      });
+    },
+    saveStart() {
+      // Aqui salvar tabla o forma del boton arrancar
+      this.dialogStart = false;
+      // Deshabilitar boton star
+      this.isStart=true;
+      // Habilitar boton Stop
+      this.isStop=false;
+      this.$nextTick(() => {
+        // Hacer algo si se requiere
+      });
+    },
+    closeStop(){
+      this.dialogStop= false;
+    },
+    saveStop(){
+      this.dialogStop= false;
+      // Habilitar boton star
+      this.isStart=false;
+      // DesHabilitar boton Stop
+      this.isStop=true;
+    },
+    closeSupplies(){
+      this.dialogSupplies=false;
+    },
+    saveSupplies(){
+      this.dialogSupplies=false;
+      // Generar las solicitudes agregando los campos a warehouse
+      
+      // amountRequested,requestedDate, productionOrderId, productionOrderFolio,
+      
+      console.info("Suministros",this.supplies)
+      console.info("suppliesSelected", this.suppliesSelected)
+      let  selectedSupplies=[]
+      for (let i=0; i< this.suppliesSelected.length; i++){
+        selectedSupplies.push(
+          {
+                    _id:this.suppliesSelected[i]._id,
+                    amountRequested: this.suppliesSelected[i].amount,
+                    productId:this.suppliesSelected[i].productId,
+                    workstationId: this.suppliesSelected[i].workstationId,
+                    configurationId: this.suppliesSelected[i].configurationId,
+                    requestedDate: Date(),
+                    productionOrderId: this.selectedProductionOrder[0]._id,
+                    productionOrderFolio: this.selectedProductionOrder[0].folio,
+                   }
+        );
+      }
+       
+
+      
+      const suppliedSelected= {productionOrderId:this.selectedProductionOrder[0]._id,selectedSupplies}
+      this.$loader.activate("Solicitando insumos...");
+      
+      // Aqui mandar actualizar informacion de los insumos del producto de la Orden de produccion
+
+      Meteor.call("productionorder.request.supplies", {suppliedSelected}, (error, response) => {
+        this.$loader.deactivate();
+        
+        if (error) {
+          this.$alert.showAlertSimple("error", error.reason);
+        } else {
+          if(response.data.tipoMsg==='warning'){
+            this.$alert.showAlertSimple("warning", response.message);
+          }else{
+            this.$alert.showAlertSimple("success", response.message); 
+            //desactivar boton de solicitar
+            this.isSuppliesButtonDisabled=true;
+            
+          }
+
+          console.warn('response',response)
+          
+          
+          
+        }
+      });
+    },
+    getSupplies(item){
+      //console.info("ITEM",item)
+      //console.info("item.products", item.item.products)
+      //console.info("item.products.length", item.item.products.length)
+      let productAmount=0
+      let componentAmount=0
+      for(let i=0; i< item.item.products.length; i++){
+        productAmount=0
+        for(let j=0; j<item.item.products[i].components.length; j++){
+            componentAmount=0
+            if(
+              item.item.products[i].production_line._id===this.productionline._id
+              &&
+              item.item.products[i].components[j].workstationId===this.workstation._id
+              &&
+              item.item.products[i].components[j].configurationId===this.configuration._id 
+              
+              ){
+                productAmount=parseFloat(item.item.products[i].amount) 
+                componentAmount=parseFloat(item.item.products[i].components[j].amount)   
+                item.item.products[i].components[j].amount= componentAmount * productAmount 
+                Object.assign(item.item.products[i].components[j],{"productId":item.item.products[i]._id});
+                this.supplies.push(item.item.products[i].components[j]);
+            }  
+        }
+      }
+      
+      
+    },
+
+  },
+  watch: {
+    dialogStart(val) {
+      val || this.closeStart();
+    },
+    dialogStop(val){
+      val || this.closeStop();
+    },
+    dialogSupplies(val) {
+      val || this.closeSupplies();
+    },
+    
   },
   meteor:{
             $subscribe: {

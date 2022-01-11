@@ -34,3 +34,90 @@ docker rmi $(docker images -f dangling=true -q)
 docker rm $(docker ps -f status=exited -q)
 
 
+Eliminar todos los contenedores detenidos
+
+docker system prune
+
+Eliminar todas las imágenes
+
+docker rmi $(docker images -a -q)
+
+Listar los volumenes
+
+docker volume ls 
+
+Eliminar todos los volumenes
+
+docker volume prune
+
+Construir las imagenes definidas en la orquestación
+
+docker-compose -f stack-billing.yml build
+
+Inicializar los contenedores de los servicios de la orquestación
+
+docker-compose -f stack-billing.yml up -d
+
+Detener todos los servicios de la orquestación
+
+docker-compose -f stack-billing.yml stop
+
+Escalar un servicio al iniciar la orquestación
+
+docker-compose -f stack-billing.yml up --scale  billingapp-front=3 -d --force-recreate
+Detener todos los contenedores
+
+docker stop $(docker ps -a -q)
+
+Listar las redes virtuales
+
+docker network ls
+
+Eliminar las redes virtuales
+
+docker network prune
+
+reconstruir las imagenes
+
+docker-compose -f stack-billing.yml build --no-cache
+
+reconstruir los contenedores d ela orquestación
+
+docker-compose -f stack-billing.yml up -d --force-recreate
+
+
+Correr mongo express Web sobre la imagen
+
+docker run -it --rm \
+    --network cerometros_cerometros-net \
+    --name mongo-express \
+    -p 8081:8081 \
+    -e ME_CONFIG_OPTIONS_EDITORTHEME="ambiance" \
+    -e ME_CONFIG_MONGODB_SERVER="mongo" \
+    -e ME_CONFIG_MONGODB_URL= "mongodb://root:CeroM3tros@mongo:27017/" \
+    -e ME_CONFIG_BASICAUTH_USERNAME="root" \
+    -e ME_CONFIG_BASICAUTH_PASSWORD="CeroM3tros" \
+    -e ME_CONFIG_MONGODB_AUTH_DATABASE="zmeters" \
+    mongo-express
+
+mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
+
+
+
+Acceder a Kafka desde dentro y fuera del contenedores
+
+Producer and consumer using external client
+
+These clients, from the host, will use localhost to connect to Apache Kafka.
+
+kafka-console-producer.sh --broker-list 127.0.0.1:9093 --topic test
+kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9093 --topic test --from-beginning
+
+
+Producer and consumer using internal client
+
+These clients, from other containers on the same Docker network, will use the kafka container service hostname to connect to Apache Kafka.
+
+kafka-console-producer.sh --broker-list kafka:9092 --topic test
+kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic test --from-beginning
+Similarly, application code will need to use bootstrap.servers=kafka:9092

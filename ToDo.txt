@@ -61,7 +61,9 @@ db.getCollection('production-orders').find({{products:{
 Notacion punto para campos enbebidos
 db.getCollection('production-orders').find({"products.production_line._id": "W9RiSLSsyvNx4TBLz", "products.production_line.workstations._id":"6wDEREhT4Xrb4QZTa", "products.production_line.workstations.configurations._id":"jAgBXST4fqAianZzt"})
 
-
+21 Oct 2021
+10. 1 Implementar funcionalidad generar solicitudes de insumos
+26 oct 2021 Sigue funcionalidad generar solicitudes de insumos
 
 11.- Implementar pantalla de configuracion de Producto con Estaciones y Configuraciones. 
 CRUD Normal OK

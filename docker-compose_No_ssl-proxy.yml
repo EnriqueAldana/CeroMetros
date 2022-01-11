@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: dockerfile
+    depends_on:
+      - mongo
+    image: cerometros-web
+    restart: on-failure
+    env_file: docker.env
+    ports:
+      - 80:80
+    networks:
+      - cerometros-net
+  
+  mongo:
+    container_name: mongo
+    command:
+      - --storageEngine=wiredTiger
+    image: mongo:4.2.5-bionic
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: CeroM3tros
+    volumes:
+      - $PWD/data:/data/db
+      - $PWD/database/zmeters:/opt/database
+    networks:
+      - cerometros-net
+
+  crontab:
+    container_name: crontab
+    build: 
+      context: .
+      dockerfile: cron-dockerfile
+    image: crontab
+    privileged: true
+    restart: always
+    depends_on: 
+      - mongo
+    volumes: 
+      - ./backups:/opt/backups
+    networks:
+      - cerometros-net 
+
+networks:
+      cerometros-net:

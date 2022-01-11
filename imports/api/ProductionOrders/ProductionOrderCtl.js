@@ -9,6 +9,7 @@ import  Utilities from "../../startup/server/utilities/Utilities";
 import { DateTime } from "luxon";
 import {status} from "../Status/Status"
 import  {ControlFolios} from "../../startup/server/utilities/FoliosControl";
+import { createModuleResolutionCache } from 'typescript';
 new ValidatedMethod({
     name: 'production-order.save',
     mixins: [MethodHooks],
@@ -16,7 +17,7 @@ new ValidatedMethod({
     beforeHooks: [AuthGuard.checkPermission],
     validate(productionorder) {
         try {
-            //console.info('productionorder', productionorder)
+            console.info('productionorder', productionorder)
             check(productionorder, {
                 _id: Match.OneOf(String, null),
                 folio: Match.Maybe(String), 
@@ -199,6 +200,15 @@ new ValidatedMethod({
                 productionorder.estimatedDeliveryAt=DateTime.local();
                 productionorder.requiredDate= Utilities.dateTimeFromString_dd_MM_YYYY(productionorder.requiredDate)
                 const folioPO= Utilities.getFolio();
+                // Insertar en el componente de cada producto la estructura para los datos de solicitud
+                // 
+                const products=productionorder.products.filter(product =>{
+                    
+                    return product.components.map(component=>{
+                            Object.assign(component,{requested:[]})
+                    })    
+                });
+                console.info("products",products)
                 ProductionOrders.insert({
                     folio: folioPO,
                     createdAt: productionorder.createdAt,
@@ -207,8 +217,9 @@ new ValidatedMethod({
                     estimatedDeliveryAt: productionorder.estimatedDeliveryAt,
                     customer: productionorder.customer,
                     notes: productionorder.notes,
-                    products: productionorder.products,
-                    status: productionorder.status
+                    products: products,
+                    status: productionorder.status,
+                
                 });
 
                 responseMessage.create('Se insertó la orden de produccion exitosamente');
@@ -246,6 +257,75 @@ new ValidatedMethod({
         } catch (exception) {
             console.error('production-order.delete', exception);
             throw new Meteor.Error('500', 'Ocurrio un error al eliminar la orden de produccion');
+        }
+
+        return responseMessage;
+    }
+});
+
+new ValidatedMethod({
+    name: 'productionorder.request.supplies',
+    mixins: [MethodHooks],
+    permissions: [Permissions.PRODUCTIONORDERS.UPDATE.VALUE],
+    beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
+    afterHooks: [],
+    validate({suppliedSelected}) {
+        try {
+            console.warn("suppliesSelected", suppliedSelected)
+            check(suppliedSelected,{
+                productionOrderId: String,
+                selectedSupplies:[
+                   {
+                    _id:String,
+                    amountRequested: Number,
+                    productId: String,
+                    workstationId: String,
+                    configurationId: String,
+                    requestedDate: String,
+                    productionOrderId: String,
+                    productionOrderFolio: String,
+                   } 
+                ] 
+            });
+        } catch (exception) {
+            console.error('productionorder.request.supplies', exception);
+            throw new Meteor.Error('403', 'Ocurrio un error al recibir la solicitud de insumos para la orden de produccion');
+        }
+       
+
+    },
+    run({suppliedSelected}) {
+        const responseMessage = new ResponseMessage();
+        try {
+              if(suppliedSelected.selectedSupplies.length > 0){
+                // traer la orden de produccion
+                let prodOrd= ProductionOrders.findOne({
+                    _id: suppliedSelected.productionOrderId
+                },{});
+                console.info("prodOrd",prodOrd)
+                // para cada suministro seleccionado actualizar la Orden
+                    if(prodOrd){
+                        
+                        Utilities.setStatusToObject(prodOrd,status.SIN,"Orden de Produccion solicito insumos productionorder.request.supplies");
+                        console.info("Objeto original",prodOrd.products[0].components[0].requested)
+                        prodOrd=Utilities.addSuppliesRequested(prodOrd,suppliedSelected)
+                        console.info("Objeto actualizado",prodOrd.products[0].components[0].requested)
+                        ProductionOrders.update(prodOrd._id, {
+                            $set: {
+                                products:prodOrd.products,
+                                status: prodOrd.status
+                            }
+                        });
+                    }
+                
+                responseMessage.create('Solicitud de insumos realizada exitosamente','',{tipoMsg:'success'});
+            }else{
+                responseMessage.create('No se ha solicitado insumo alguno','',{tipoMsg:'warning'});  
+            }
+            
+        } catch (exception) {
+            console.error('productionorder.request.supplies', exception);
+            throw new Meteor.Error('500', 'Ocurrio un error al solicitar insumos para la orden de produccion');
         }
 
         return responseMessage;

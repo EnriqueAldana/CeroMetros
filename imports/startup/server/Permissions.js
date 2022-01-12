@@ -115,6 +115,9 @@ const Permissions={
         DELETE:{VALUE:'unitofmeasurement-delete',TEXT:'Borrar unidad de medida'}
 
     },
+    VERSION:{
+        LIST:{VALUE:'version-view',TEXT:'Listar Version del aplicativo'}
+    }
     
 
 };

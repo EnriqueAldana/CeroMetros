@@ -1,4 +1,5 @@
 import './Permissions';
+import './Version';
 import './services/MailServ';
 import '../../api/Users/UsersCtrl';
 import '../../api/Users/User';

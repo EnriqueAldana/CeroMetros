@@ -1,11 +1,15 @@
 <template>
   <v-container fluid>
-    <app-bar></app-bar>
-    <!-- 
+    
+      <!-- 
+        <app-bar></app-bar>
+        -->
+    
     <header-view></header-view>
-    -->
+    
+    <!-- 
     <left-menu-view></left-menu-view>
-
+    -->
     <v-main id="main_section">
       <router-view name="sectionView" v-if="loggedUser"></router-view>
     </v-main>
@@ -22,7 +26,7 @@ import LeftMenuView from "./shared/LeftMenuView.vue";
 export default {
   name: "LytSPA",
   components: {
-    //HeaderView,
+    HeaderView,
     AppBar,
     LeftMenuView,
     FooterView

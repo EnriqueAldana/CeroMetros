@@ -1,0 +1,12 @@
+Archivo de control de versiones
+
+Version 0.1
+Prerequisitos.
+Crear un branch llamado SealedAir
+1.- Implementar la variable para el control de version y 
+mostrar en la barra del aplicativo
+12 de Enero 2022
+
+2.- Implementar la GUI de menu Izquierdo
+3.- Implementar reporte de solicitudes Cero Metros del 2009
+

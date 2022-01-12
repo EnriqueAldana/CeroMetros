@@ -1,6 +1,6 @@
 <template>
     <v-app-bar app dark dense src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
-        <v-toolbar-title>Sistema Cero Metros</v-toolbar-title>
+        <v-toolbar-title>Sistema Cero Metros Version - {{this.version.appVersion}}</v-toolbar-title>
         <v-spacer></v-spacer>
         <user-logged></user-logged>
       <template v-slot:extension>
@@ -24,7 +24,10 @@
         data() {
             return {
                 optionSelected: 0,
-                options: []
+                options: [],
+                version:{
+                            appVersion:"---"
+                        }
             }
         },
         created() {
@@ -36,6 +39,8 @@
               this.updateSelectedOption();
             }
           });
+
+          this.getVersionOfApp();
 
         },
         watch:{
@@ -50,7 +55,21 @@
             updateSelectedOption(){
                 const optionSelected = this.options.find(option => option.routeName === this.$route.name);
                 this.optionSelected = optionSelected ? this.options.indexOf(optionSelected) : this.optionSelected;
+            },
+            getVersionOfApp() {
+              this.$loader.activate("Obteniendo version del aplicativo....");
+              Meteor.call('version.app',this.version,(error,response)=>{
+                this.$loader.deactivate();
+                if(error){
+                  this.$alert.showAlertSimple('error',error.reason);
+                }else{
+                  this.$alert.showAlertSimple('success',response.message);
+                  this.version.appVersion = response.data;
+                }
+                return this.version.appVersion;
+              });
             }
+
         }
     }
 </script>

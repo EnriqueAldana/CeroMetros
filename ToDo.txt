@@ -77,6 +77,10 @@ si hay una Orden de Prod Usandolo....OK
 
 12.- Implementar catalogo de costos indirectos que deberan ser asociados al producto. 
 Ok Dar de alta Insumos indirectos
+
+12.1 Implementar layout con App bar, Menu de navegacion izq y contenido
+https://vuetifyjs.com/en/components/app-bars/#dense
+
 13.- Implementar ordenes de compra para proveedores
 14.- Implementar recepcion de materiales de proveedores
 15.- Implementar Transportistas o fleteros

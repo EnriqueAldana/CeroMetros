@@ -1,0 +1,104 @@
+<template>
+  <v-app-bar
+    id="default-app-bar"
+    app
+    absolute
+    class="v-bar--underline"
+    color="transparent"
+    :clipped-left="$vuetify.rtl"
+    :clipped-right="!$vuetify.rtl"
+    height="70"
+    flat
+  >
+    <v-app-bar-nav-icon
+      class="hidden-md-and-up"
+      @click="drawer = !drawer"
+    />
+
+    <default-drawer-toggle class="hidden-sm-and-down" />
+
+    <v-toolbar-title
+      class="font-weight-light text-h5"
+      v-text="name"
+    />
+
+    <v-spacer />
+
+    <default-search class="hidden-sm-and-down" />
+
+    <default-go-home />
+
+    <default-notifications />
+
+    <default-account />
+  </v-app-bar>
+</template>
+<script>
+
+    import UserLogged from "../../components/UserLogged/UserLogged"
+    import { get, sync } from 'vuex-pathify'
+    export default {
+        name: 'DefaultBar',
+        components: {
+            UserLogged,
+            DefaultAccount: () => import(
+                /* webpackChunkName: "default-account" */
+                './widgets/Account'
+            ),
+            DefaultDrawerToggle: () => import(
+                /* webpackChunkName: "default-drawer-toggle" */
+                './widgets/DrawerToggle'
+            ),
+            DefaultGoHome: () => import(
+                /* webpackChunkName: "default-go-home" */
+                './widgets/GoHome'
+            ),
+            DefaultNotifications: () => import(
+                /* webpackChunkName: "default-notifications" */
+                './widgets/Notifications'
+            ),
+            DefaultSearch: () => import(
+                /* webpackChunkName: "default-search" */
+                './widgets/Search'
+            ),
+        },
+        data() {
+            return {
+                optionSelected: 0,
+                options: []
+            }
+        },
+        created() {
+          Meteor.call('user.getSystemOptions',null,(error,response)=>{
+            if(error){
+              this.$alert.showAlertSimple('error',error.reason);
+            }else{
+              this.options= response.data;
+              this.updateSelectedOption();
+            }
+          });
+
+        },
+        watch:{
+            '$route'(){
+                this.updateSelectedOption();
+            }
+        },
+        methods: {
+            goToView(option) {
+                this.$router.push({name: option.routeName})
+            },
+            updateSelectedOption(){
+                const optionSelected = this.options.find(option => option.routeName === this.$route.name);
+                this.optionSelected = optionSelected ? this.options.indexOf(optionSelected) : this.optionSelected;
+            }
+        },
+        computed: {
+            ...sync('app', [
+                'drawer',
+                'mini',
+            ]),
+            name: get('route/name'),
+        },
+    }
+</script>

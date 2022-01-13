@@ -1,35 +1,23 @@
 <template>
-  <v-app>
-      <router-view name="allPageView"></router-view>
-    <alert-message/>
-    <loader/>
-  </v-app>
-
+  <v-fade-transition mode="out-in">
+    <router-view />
+  </v-fade-transition>
 </template>
 
 <script>
+  // Styles
+  import '@/styles/overrides.sass'
 
-import AlertMessage from "./components/Utilities/Alerts/AlertMessage";
-import Loader from "./components/Utilities/Loaders/Loader";
-
-export default {
-  name: "App",
-  components:{
-    AlertMessage,
-    Loader
+  export default {
+    name: 'App',
+    metaInfo: {
+      title: 'App',
+      titleTemplate: '%s | Material Dashboard Free',
+      htmlAttrs: { lang: 'en' },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+    },
   }
-}
 </script>
-
-<style>
-/**
-El estilo html remueve el scroll en la plantilla 
-html {  
-   overflow-y: hidden !important; 
- }  
-*/
-.v_snack__content {
-  padding: 0 !important;
-
-}
-</style>

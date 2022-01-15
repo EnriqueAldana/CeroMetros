@@ -7,13 +7,12 @@ import {check, Match} from "meteor/check";
 
 new ValidatedMethod({
     name:'version.app',
-     mixins:[MethodHooks],
-     permissions: [Permissions.VERSION.LIST],  
-     beforeHooks: [AuthGuard.checkPermission],
+     mixins:[MethodHooks],  
     validate(version){
         try {
+            
             check(version,{
-                version: Match.OneOf(String, null),
+                appVersion: Match.OneOf(String, null),
             });
 
         }catch ( exception){
@@ -25,10 +24,11 @@ new ValidatedMethod({
     run(version){
         const responseMessage = new ResponseMessage(); 
         try {
-            if(version.app !== null){
-                version.version= Version.appVersion;
-                responseMessage.create(version);
-            }
+           
+            version.appVersion= Version.appVersion;
+            //console.log("version.appVersion",version.appVersion)
+            responseMessage.create("Version del aplicativo","Version codigo del servidor",version.appVersion);
+            
         }catch ( exception){
             console.error('version.app', exception);
             throw new Meteor.Error('500', 'Ha ocurrido un error al guardar la empresa');

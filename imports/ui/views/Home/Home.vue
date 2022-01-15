@@ -4,22 +4,17 @@
 </template>
 
 <script>
+import Version from "../../../startup/server/Version"
 export default {
 name: "Home",
 data ()  {
     return{
- 
+        appVersion:""
     }
 },
 created() {
-  
-    
-  },
-mounted(){
-
-},
-  methods: {
-      
+    this.appVersion=Version.appVersion;
+    console.info('Version en ejecución ',Version.appVersion);
   }
 }
 </script>

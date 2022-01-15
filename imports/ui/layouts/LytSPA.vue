@@ -20,14 +20,12 @@
 <script>
 import HeaderView from "./shared/HeaderView";
 import FooterView from "./shared/FooterView";
-import AppBar from "./shared/AppBar";
 import LeftMenuView from "./shared/LeftMenuView.vue";
 
 export default {
   name: "LytSPA",
   components: {
     HeaderView,
-    AppBar,
     LeftMenuView,
     FooterView
   },

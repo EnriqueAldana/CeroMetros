@@ -167,18 +167,23 @@ export default {
   },
   computed:{
     filteredSelfPermissions(){
-      //console.info("this.selfPermissions")
       return this.selfPermissions.filter(permission=>{
-        //console.info("Selfpermission",permission)
-        //console.info("this.searchSelfPermission", this.searchSelfPermission)
-        return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
-      })
+        if(permission && permission.publicName){
+         return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
+        }else{
+          return false;
+        }
+      });
     },
     filteredPermissions(){
+  
       return this.allPermissions.filter(permission=>{
-        //console.info("Selfpermission",permission)
-        //console.info("this.searchSelfPermission", this.searchSelfPermission)
-        return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
+        if(permission && permission.publicName){
+          return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
+        }else{
+          return false;
+        }
+
       })
   },
   }

@@ -56,9 +56,9 @@
                 this.optionSelected = optionSelected ? this.options.indexOf(optionSelected) : this.optionSelected;
             },
             getVersionOfApp() {
-              this.$loader.activate("Obteniendo version del aplicativo....");
+          
               Meteor.call('version.app',this.version,(error,response)=>{
-                this.$loader.deactivate();
+
                 if(error){
                   this.$alert.showAlertSimple('error',error.reason);
                 }else{

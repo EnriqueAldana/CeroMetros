@@ -41,7 +41,8 @@ export default {
 
     ...mapMutations('auth',['logout']),
     closeSession(){
-      this.onLogoutHook.stop();
+      if(this.onLogoutHook!=null)
+        this.onLogoutHook.stop();
       Meteor.logout();  // Aqui se limpia la sesion del lado del servidor
       this.logout();    // Aqui se limpia la sesion del lado del cliente
       this.$router.push({name: 'login'})

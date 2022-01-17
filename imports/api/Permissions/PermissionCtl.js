@@ -16,7 +16,7 @@ new ValidatedMethod({
         const responseMessage = new ResponseMessage();
         try{
             const permissions = Meteor.roles.find().fetch();
-            console.info("Permisos dispopnibles del sistema", permissions);
+            //console.info("Permisos dispopnibles del sistema", permissions);
             responseMessage.create('Permisos disponibles del sistema',null,permissions);
         }catch(ex){
             console.log('permissions.list: ', ex);

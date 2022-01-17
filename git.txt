@@ -16,7 +16,8 @@ git init - inicializa un repositorio git en el directorio Actual
 Git add  - Monta los archivos en STAGE
 Git commit -m "Comentarios" - Archivos en HEAD
 Git push origin main - Envia los archivos al remoto     
- 
+Git merge SealedAir - Se asume que estamos en main y vamos a traer los ca,mbios desde SealedAir.
+
 
 Guia de Git
 https://gerdudler.github.io/git-guide/index.es.html

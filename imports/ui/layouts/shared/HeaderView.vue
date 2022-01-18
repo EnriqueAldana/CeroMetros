@@ -1,25 +1,24 @@
 <template>
-    <v-app-bar app dark dense src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
-        <v-toolbar-title>Sistema Cero Metros Version - {{this.version.appVersion}}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <user-logged></user-logged>
-      <template v-slot:extension>
-            <v-tabs v-model="optionSelected" align-with-title>
-                <v-tab v-for="option in options" :key="option.title" @click="goToView(option)"
-                       v-text="option.title">
-                </v-tab>
-            </v-tabs>
-        </template>
-    </v-app-bar>
+  
+  <v-card
+    class="mx-auto overflow-hidden"
+    height="400"
+  >
+    <app-bar></app-bar>
+    
+  </v-card>
+
 </template>
 
 <script>
 
     import UserLogged from "../../components/UserLogged/UserLogged"
+    import AppBar from "./AppBar.vue"
     export default {
         name: "HeaderView",
         components: {
-            UserLogged
+            UserLogged,
+            AppBar,
         },
         data() {
             return {
@@ -27,7 +26,9 @@
                 options: [],
                 version:{
                             appVersion:"---"
-                        }
+                        },
+                drawer: false,
+                group: null,
             }
         },
         created() {

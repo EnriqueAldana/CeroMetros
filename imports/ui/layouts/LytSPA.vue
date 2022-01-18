@@ -1,33 +1,31 @@
 <template>
-  <v-container fluid>
-    
-      <!-- 
-        <app-bar></app-bar>
-        -->
-    
-    <header-view></header-view>
-    
-    <!-- 
-    <left-menu-view></left-menu-view>
-    -->
-    <v-main id="main_section">
-      <router-view name="sectionView" v-if="loggedUser"></router-view>
-    </v-main>
-    <footer-view></footer-view>
-  </v-container>
+<v-app>
+    <default-bar />
+    <default-drawer />      
+        <v-main id="main_section">
+            <router-view name="sectionView" v-if="loggedUser"></router-view>
+        </v-main>
+    <default-footer/>
+
+ </v-app>
+
+  <!-- v-container fluid -->
+ 
+  <!-- /v-container -->
 </template>
 
 <script>
-import HeaderView from "./shared/HeaderView";
-import FooterView from "./shared/FooterView";
-import LeftMenuView from "./shared/LeftMenuView.vue";
+
+import DefaultBar from "./shared/AppBar.vue"
+import DefaultDrawer from "./shared/Drawer.vue"
+import DefaultFooter from "./shared/Footer.vue"
 
 export default {
   name: "LytSPA",
   components: {
-    HeaderView,
-    LeftMenuView,
-    FooterView
+    DefaultBar,
+    DefaultDrawer,
+    DefaultFooter
   },
   data() {
     return {

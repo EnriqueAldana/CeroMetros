@@ -81,6 +81,21 @@ Ok Dar de alta Insumos indirectos
 12.1 Implementar layout con App bar, Menu de navegacion izq y contenido
 https://vuetifyjs.com/en/components/app-bars/#dense
 
+<v-app-bar app dark dense src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
+        <v-toolbar-title>Sistema Cero Metros Version - {{this.version.appVersion}}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <user-logged></user-logged>
+      <template v-slot:extension>
+            <v-tabs v-model="optionSelected" align-with-title>
+                <v-tab v-for="option in options" :key="option.title" @click="goToView(option)"
+                       v-text="option.title">
+                </v-tab>
+            </v-tabs>
+        </template>
+    </v-app-bar>
+  
+  <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+  
 13.- Implementar ordenes de compra para proveedores
 14.- Implementar recepcion de materiales de proveedores
 15.- Implementar Transportistas o fleteros

@@ -79,23 +79,25 @@ si hay una Orden de Prod Usandolo....OK
 Ok Dar de alta Insumos indirectos
 
 12.1 Implementar layout con App bar, Menu de navegacion izq y contenido
-https://vuetifyjs.com/en/components/app-bars/#dense
+OK 19 Enero 2022
+12.3 Implementar reporte de solicitudes con exportacion a CVS
+12.4 Implementar notificaciones a usuarios. 
+      12.4.1 Catalogo de notificaciones a usuarios
+              Propiedades del mensaje
+              1.- Contenido del mensaje corto 250 Caracteres
+              2.- Importancia, Alta, Media y Baja
+              3.- Alcance, Usuarios o Todos
+              4.- Vigencia de publicacion; de que fecha a que fecha 
+      12.4.2 Traer las notificaciones y pintarlas en la AppBar
+      
+12.3 Desplegarlo en servidor SealedAir
+      12.3.1 Instalar Kafka, MongoDB
+      12.3.2 Instalar Cero Metros Web
 
-<v-app-bar app dark dense src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
-        <v-toolbar-title>Sistema Cero Metros Version - {{this.version.appVersion}}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <user-logged></user-logged>
-      <template v-slot:extension>
-            <v-tabs v-model="optionSelected" align-with-title>
-                <v-tab v-for="option in options" :key="option.title" @click="goToView(option)"
-                       v-text="option.title">
-                </v-tab>
-            </v-tabs>
-        </template>
-    </v-app-bar>
-  
-  <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
-  
+
+
+
+
 13.- Implementar ordenes de compra para proveedores
 14.- Implementar recepcion de materiales de proveedores
 15.- Implementar Transportistas o fleteros

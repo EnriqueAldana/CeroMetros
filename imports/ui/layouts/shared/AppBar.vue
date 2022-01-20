@@ -5,13 +5,17 @@
     absolute
     class="v-bar--underline"
     color="transparent"
-    :clipped-left="$vuetify.rtl"
-    :clipped-right="!$vuetify.rtl"
+
     height="70"
     flat
   >
   
-    <v-toolbar-title>Sistema Cero Metros Version - {{this.version.appVersion}}</v-toolbar-title>
+    <v-toolbar-title>
+    <p class="font-weight-black">
+      Sistema Cero Metros Version - {{this.version.appVersion}}
+    </p>
+    
+    </v-toolbar-title>
 
 
     <v-spacer />
@@ -26,7 +30,7 @@
 
 <script>
   // Utilities
-  import { get, sync } from 'vuex-pathify'
+
   import DefaultAccount from "./widgets/Account"
   import DefaultDrawerToggle from "./widgets/DrawerToggle"
   import DefaultGoHome from "./widgets/GoHome"
@@ -61,8 +65,6 @@
                 if(error){
                   this.$alert.showAlertSimple('error',error.reason);
                 }else{
-                  //this.$alert.showAlertSimple('success',response.message);
-                  //console.log("Version",response.data);
                   this.version.appVersion = response.data;
                 }
                 return this.version.appVersion;

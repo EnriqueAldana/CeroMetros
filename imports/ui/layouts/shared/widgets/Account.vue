@@ -26,8 +26,28 @@
       </v-btn>
     </template>
     <v-list>
-      <v-list-item  :to="{name:'home.account'}">Cuenta</v-list-item>
-      <v-list-item  @click="closeSession">Cerrar sesión</v-list-item>
+      <v-list-item  :to="{name:'home.account'}">
+              <v-list-item-icon>
+                <v-icon >mdi-card-account-details</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title >Cuenta Usuario</v-list-item-title>
+              </v-list-item-content>
+      
+      </v-list-item>
+
+
+      <v-list-item  @click="closeSession">
+              <v-list-item-icon>
+                <v-icon >mdi-exit-run</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title >Cerrar sesión</v-list-item-title>
+              </v-list-item-content>
+      
+      </v-list-item>
+
+      
     </v-list>
 
     

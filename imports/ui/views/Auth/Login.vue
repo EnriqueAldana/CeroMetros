@@ -1,6 +1,6 @@
 <template>
     <div class="login-wrapper">
-        <div class="title secondary--text">Bienvenido!</div>
+        <div class="title secondary--text">¡Bienvenido!</div>
         <div class="display-1 mb-0 secondary--text">Iniciar sesión</div>
         <v-form @submit.prevent="login" autocomplete="nope">
             <v-text-field id="inputUser" v-model="user.userOrEmail" autocomplete="off"

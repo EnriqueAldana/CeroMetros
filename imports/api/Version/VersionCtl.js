@@ -7,7 +7,8 @@ import {check, Match} from "meteor/check";
 
 new ValidatedMethod({
     name:'version.app',
-     mixins:[MethodHooks],  
+     mixins:[MethodHooks], 
+     beforeHooks: [AuthGuard.isUserLogged],
     validate(version){
         try {
             

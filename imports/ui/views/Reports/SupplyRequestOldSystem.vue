@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <div class="headline">Catálogo de unidades de medida</div>
+        <div class="headline">Reporte de solicitudes de suministros</div>
       </v-col>
       <v-col cols="2">
         <div class="d-flex flex-row-reverse mb-5">
@@ -12,7 +12,7 @@
                 <v-icon>add</v-icon>
               </v-btn>
             </template>
-            <span>Agregar unidad de medida</span>
+            <span>Exportar reporte</span>
           </v-tooltip>
         </div>
       </v-col>
@@ -24,24 +24,6 @@
         <v-data-table :headers="headers" :items="unitsofmeasurements" @dblclick:row="(event,{item})=>openEditUnitOfMeasurement(item)"
                       sort-by="name" class="elevation-1">
         
-          <template v-slot:item.action="{item}">
-            <v-tooltip bottom>
-              <template v-slot:activator="{on}">
-                <v-icon v-can:edit.hide="'providers'" color="info" v-on="on" small class="mr-2" @click="openEditUnitOfMeasurement(item)">
-                  edit
-                </v-icon>
-              </template>
-              <span>Editar</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{on}">
-                <v-icon v-can:delete.hide="'providers'" color="error" v-on="on" small class="mr-2" @click="openRemoveModal(item)">
-                  delete
-                </v-icon>
-              </template>
-              <span>Eliminar</span>
-            </v-tooltip>
-          </template>
           <template v-slot:body.append="{isMobile}">
             <tr v-if="!isMobile">
               <td>
@@ -58,19 +40,16 @@
         </v-data-table>
      </v-col>
     </v-row>
-    <modal-remove ref="refModalRemove" v-bind:modalData="unitofmeasurementTemp"
-                  @id_element="deleteUnitOfMeasurement"></modal-remove>
+  
   </v-container>
 </template>
 
 <script>
-import ModalRemove from "../../components/Utilities/Modals/ModalRemove";
+
 import {UnitOfMeasurementRepository} from "../../../api/UnitOfMeasurement/UnitOfMeasurement";
-import {mapMutations} from "vuex";
 export default {
-        name: 'ListUnitOfMeasurement',
+        name: 'SupplyRequestOldSystem',
         components: {
-          ModalRemove
         },
         data() {
           return {
@@ -88,30 +67,7 @@ export default {
           }
         },
         methods: {
-          ...mapMutations('temporal',['setElement']),
-            openEditUnitOfMeasurement(unitofmeasurement) {
-              //Guardar en Vuex para recuperar en la vista de provider.save
-              this.setElement(unitofmeasurement);
-              this.$router.push({name: 'home.unitsofmeasurement.edit'});
-            },
-            openRemoveModal(unitofmeasurement) {
-              
-              this.unitofmeasurementTemp.element = unitofmeasurement;
-              this.unitofmeasurementTemp._id = unitofmeasurement._id;
-              this.unitofmeasurementTemp.mainNameElement = unitofmeasurement.name;
-              this.$refs.refModalRemove.dialog = true;
-            },
-            deleteUnitOfMeasurement(idUnitofmeasurement) {
-              this.$loader.activate("Eliminando unidad de medida....");
-              Meteor.call('unitofmeasurement.delete',{idUnitofmeasurement},(error,response)=>{
-                this.$loader.deactivate();
-                if(error){
-                  this.$alert.showAlertSimple('error',error.reason);
-                }else{
-                  this.$alert.showAlertSimple('success',response.message);
-                }
-              });
-            }
+          
         },
         computed: {
           headers() {

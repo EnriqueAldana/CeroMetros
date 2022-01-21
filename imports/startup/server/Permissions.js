@@ -117,7 +117,13 @@ const Permissions={
     },
     VERSION:{
         LIST:{VALUE:'version-view',TEXT:'Listar Version del aplicativo'}
+    },
+    REPORTS:{
+        SUPPLYREQUESTSOLDSYSTEM:{VALUE:'supplyrequestsoldsystem-view',TEXT:'Reporte de solicitudes de suministro sistema antiguo'}
+    
     }
+
+
     
 
 };
@@ -142,24 +148,39 @@ Devuelve esto:
 
  */
 if(Meteor.settings.private && Meteor.settings.private.REFRESH_PERMISSIONS){
-    console.log(' Updating permissions...');
+    console.log(' Updating permissions...en la tabla roles');
     const currentRoles= Roles.getAllRoles().fetch();
-    console.log('currentRoles ', currentRoles);
+    console.log('currentRoles en la coleccion roles', currentRoles);
     for(let permission of permissionsArray){
         let exists= currentRoles.find(_role=> _role._id==permission.VALUE)
         //console.log('Permission value',permission.VALUE);
         if(!exists){
-            Roles.createRole(permission.VALUE);
+            try{
+                console.log('El permiso'+ permission.VALUE+' se inserto en la coleccion roles');
+                Roles.createRole(permission.VALUE);
+            }catch(ex){
+                console.log('No se pudo insertar el permiso '+permission.VALUE+' en la coleccion roles')
+            }
+            
         }else{
-            Meteor.roles.update(permission.VALUE, {
-                $set:{
-                    publicName:permission.TEXT
-    
-                }
-            });
+            try{
+                console.log('El permiso'+ permission.VALUE+' se actualizo en la tabla roles');
+                Meteor.roles.update(permission.VALUE, {
+                    $set:{
+                        publicName:permission.TEXT
+        
+                    }
+                });
+            }catch{
+                console.log('El permiso'+ permission.VALUE+' NO se actualizo en la tabla roles');
+            }
+            
         }
         
     }
+    const updatedRoles= Roles.getAllRoles().fetch();
+    console.log('updatedRoles en la coleccion roles', updatedRoles);
+    
 }else{
     console.log('Not Updating permissions...');
 }

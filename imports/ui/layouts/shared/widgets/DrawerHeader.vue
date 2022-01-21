@@ -59,10 +59,10 @@ import {mapMutations} from 'vuex';
         emails: user.emails,
         profile: user.profile
       }
-  console.log("Usuario",this.user)
+
   },
    methods:{
-    ...mapMutations('auth',['setUser']),
+    // ...mapMutations('auth',['setUser']),
   }
   }
 </script>

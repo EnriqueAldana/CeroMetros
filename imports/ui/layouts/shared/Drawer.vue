@@ -5,7 +5,6 @@
     app
     width="360"
     permanent
-        expand-on-hover
   >
   <default-drawer-header />     
   <default-menu/>

@@ -17,6 +17,7 @@ import productsRoutes from "./productsRoutes";
 import unitOfMeasurementRoutes from "./unitOfMeasurementRoutes";
 import customerRoutes from "./customerRoutes";
 import operatingStationRoutes from "./operatingStationRoutes";
+import reportSupplyRequestsOldSystemRoutes from "./reportSupplyRequestsOldSystemRoutes"
 
 export default [
     {
@@ -63,6 +64,7 @@ export default [
             unitOfMeasurementRoutes,
             customerRoutes,
             operatingStationRoutes,
+            reportSupplyRequestsOldSystemRoutes,
             
         ]
     }

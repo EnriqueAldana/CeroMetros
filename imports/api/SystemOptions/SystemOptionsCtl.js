@@ -12,13 +12,14 @@ new ValidatedMethod({
        const userLogged= Meteor.user();
        const userRoles=Roles.getRolesForUser(userLogged._id,userLogged.profile.profile);
        //console.log('userRoles',userRoles);
+       //console.log('SystemOptions',SystemOptions);
        const optionOfUser= SystemOptions.reduce((accumulator,systemOption)=>{
            if(!systemOption.permission || !!userRoles.find(role=> role === systemOption.permission)){
                accumulator.push(systemOption);
            }
            return accumulator;
        },[]);
-       //console.log(optionOfUser);
+       console.log('optionOfUser',optionOfUser);
        responseMessage.create('Opciones del sistema para el usuario',null,optionOfUser);
        return responseMessage;
    }

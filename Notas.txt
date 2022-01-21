@@ -30,7 +30,8 @@ La coleccion de Usuarios se crea mediante los paquetes de Account, por eso lo ma
 La coleccion de Roles se crea mediante loa paquetes alanning:roles
 De ahi en mas las colecciones las haremos atraves de MongoDB.
 
-API de Roles se crehttps://meteor-community-packages.github.io/meteor-roles/classes/Roles.html
+API de Roles se crea
+https://meteor-community-packages.github.io/meteor-roles/classes/Roles.html
 
 Objeto Profiles
 {

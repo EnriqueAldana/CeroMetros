@@ -79,5 +79,21 @@ export default [
                 title:'Unidades de medida',
                 permission: Permissions.UNITOFMEASUREMENT.LIST.VALUE,
                 routeName:'home.unitsofmeasurement'
-            }    
+            },
+            {
+                title:'Clientes',
+                permission: Permissions.CUSTOMERS.LIST.VALUE,
+                routeName:'home.customers'
+            },
+            {
+                title:'Estacion de trabajo',
+                permission: Permissions.OPERATINGSTATION.LIST.VALUE,
+                routeName:'home.estacionoperacion'
+            },
+            {
+                title:'Reporte de solicitudes de suministro sistema antiguo',
+                permission: Permissions.REPORTS.SUPPLYREQUESTSOLDSYSTEM.VALUE,
+                routeName:'home.reports.supplyRequestOldSystem'
+            },
+
     ]

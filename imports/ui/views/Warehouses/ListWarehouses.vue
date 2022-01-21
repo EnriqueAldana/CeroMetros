@@ -1,7 +1,10 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <v-col xs="16" sm="16" md="14" lg="12" xl="9">
+  <v-row>
+      <v-col>
+        <div class="headline">Catálogo de almacenes</div>
+      </v-col>
+      <v-col cols="2">
         <div class="d-flex flex-row-reverse mb-5">
           <v-tooltip bottom>
             <template v-slot:activator="{on}">
@@ -12,6 +15,11 @@
             <span>Agregar almacen</span>
           </v-tooltip>
         </div>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col xs="16" sm="16" md="14" lg="12" xl="9">
+        
         <v-data-table :headers="headers" :items="warehouses" @dblclick:row="(event,{item})=>openEditWarehouse(item)"
                       sort-by="name" class="elevation-1">
           <template v-slot:item.action="{item}">

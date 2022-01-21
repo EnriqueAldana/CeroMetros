@@ -6,7 +6,7 @@
       "SUPPORT": "cobranza@dimemex.site",
       "SALES": "enrique@dimemex.site"
     },
-    "REFRESH_PERMISSIONS": false, 
+    "REFRESH_PERMISSIONS": false,   
     "REFRESH_STATIC_PROFILES": false,
     "SHOW_ZERO_METERS_VERSION":true,
     "ZERO_METERS_USER":"SealedAir",

@@ -191,12 +191,12 @@
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                      <v-list-item v-if="validatePermission('productionorders-view')" :to="{name:'home.productionorders'}">
+                      <v-list-item v-if="validatePermission('supplyrequestsoldsystem-view')" :to="{name:'home.reports.supplyRequestOldSystem'}">                                   
                         <v-list-item-icon>
                           <v-icon >mdi-notebook</v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
-                          <v-list-item-title >Reporte Solicitudes Insumos</v-list-item-title>
+                          <v-list-item-title >Reporte sol. sum. Escritorio</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                 </v-expansion-panel-content>
@@ -243,7 +243,7 @@ export default {
         this.$alert.showAlertSimple("error", error.reason);
       } else {
         this.options = response.data;
-        console.log("opciones menu ", this.options);
+        //console.log("opciones menu ", this.options);
         this.updateSelectedOption();
       }
     });

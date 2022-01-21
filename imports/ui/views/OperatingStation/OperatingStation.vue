@@ -10,7 +10,7 @@
         class="mx-0">
       <v-col cols="2" xl="2" lg="2" md="12" sm="12" xs="12">
         <v-card
-        elevation="24"
+            elevation="24"
           >
                   <v-card-title>
                         Operador de la estación

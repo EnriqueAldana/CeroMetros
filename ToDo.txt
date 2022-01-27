@@ -81,7 +81,11 @@ Ok Dar de alta Insumos indirectos
 12.1 Implementar layout con App bar, Menu de navegacion izq y contenido
 OK 19 Enero 2022
 12.3 Implementar reporte de solicitudes con exportacion a CVS
-12.4 Implementar notificaciones a usuarios. 
+    20 Enero 2022
+    Ajuste de titulos de paginas por despliegue de menu lateral
+    Se declaro la ruta para reporte de sol de suministros Escritorio
+    
+12.4 Implementar notificaciones a usuarios en el componente de AppBar. 
       12.4.1 Catalogo de notificaciones a usuarios
               Propiedades del mensaje
               1.- Contenido del mensaje corto 250 Caracteres

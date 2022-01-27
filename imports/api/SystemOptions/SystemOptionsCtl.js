@@ -19,7 +19,7 @@ new ValidatedMethod({
            }
            return accumulator;
        },[]);
-       console.log('optionOfUser',optionOfUser);
+       //console.log('optionOfUser',optionOfUser);
        responseMessage.create('Opciones del sistema para el usuario',null,optionOfUser);
        return responseMessage;
    }

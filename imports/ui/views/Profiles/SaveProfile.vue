@@ -167,6 +167,7 @@ export default {
   },
   computed:{
     filteredSelfPermissions(){
+  
       return this.selfPermissions.filter(permission=>{
         if(permission && permission.publicName){
          return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
@@ -179,7 +180,7 @@ export default {
   
       return this.allPermissions.filter(permission=>{
         if(permission && permission.publicName){
-          return permission.publicName.toLowerCase().includes(this.searchSelfPermission.toLowerCase());
+          return permission.publicName.toLowerCase().includes(this.searchPermission.toLowerCase());
         }else{
           return false;
         }

@@ -128,7 +128,7 @@ new ValidatedMethod({
         const responseMessage= new ResponseMessage();
             try{
             const productionlines = ProductionLineRepository.find().fetch();
-                responseMessage.create('Se ha obtenido la lista de lineas de produccion',null,productionlines);
+            responseMessage.create('Se ha obtenido la lista de lineas de produccion',null,productionlines);
             }catch (exception) {
                 console.error('productionline.save', exception);
                 throw new Meteor.Error('500', 'Ocurrió un error al obtener las linea de produccion');

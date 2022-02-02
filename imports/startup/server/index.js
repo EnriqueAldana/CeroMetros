@@ -73,6 +73,9 @@ import '../../api/OperatingStation/OperatingStationCtl';
 import '../../api/OperatingStation/OperatingStationServ';
 import '../../api/OperatingStation/OperatinStationSeeder';
 import '../../api/Version/VersionCtl';
+import '../../api/Reports/ToSolicitudCtl';
+
+
 // Ejemplos de creacion de metodos o End Points
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
 import {check} from 'meteor/check';

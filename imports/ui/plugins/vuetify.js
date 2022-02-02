@@ -2,12 +2,16 @@ import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loade
 import Vue from 'vue';
 import Vuetify from "vuetify";
 import 'vuetify/dist/vuetify.min.css';
-
+import es from 'vuetify/src/locale/es'
 
 Vue.use(Vuetify);
 
 
 export default new Vuetify({
+    lang: {
+        locales: { es },
+        current: 'es',
+      },
     them:{
         options:{
             customProperties:true
@@ -28,5 +32,6 @@ export default new Vuetify({
     icons:{
         iconFont: 'md',
     },
+
     
 });

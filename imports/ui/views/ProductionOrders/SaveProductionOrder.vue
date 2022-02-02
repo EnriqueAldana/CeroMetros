@@ -68,8 +68,7 @@
                             no-title
                             @input="menuCalendar = false"
                           ></v-date-picker>
-                        </v-menu>
-                      
+                        </v-menu>  
                     </v-col>
               </v-row>
               <v-row>

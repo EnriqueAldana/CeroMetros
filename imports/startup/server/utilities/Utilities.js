@@ -57,6 +57,12 @@ export default {
       return obj;
 
     },
+    dateTimeToISO(strDate){
+      //console.log(strDate)
+      var dt = DateTime.fromFormat(strDate, "yyyy-MM-dd", { locale: 'es_MX' })
+      //console.log(dt.toISO())
+      return dt.toISO();
+    },
     dateTimeFromString_dd_MM_YYYY(strDate){
        // console.info("Cadena por convertir", strDate)
        // const day = strDate.substr(0, 2)

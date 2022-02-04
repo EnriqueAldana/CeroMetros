@@ -106,6 +106,9 @@ luxon
 https://moment.github.io/luxon/#/install
 npm install --save luxonnpm
 
+EJEMPLOS
+https://moment.github.io/luxon/demo/global.html
+
 Manejo de Zonas
 
 Changing zones

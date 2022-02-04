@@ -26,7 +26,8 @@ export default {
   components: {
     DefaultBar,
     DefaultDrawer,
-    DefaultFooter
+    DefaultFooter,
+
   },
   data() {
     return {

@@ -90,82 +90,12 @@ OK 19 Enero 2022
     Se implemento filtros por fecha
     
     Pendiente validar rango , que la fecha fin sea mayor que la inicial
-    Pendiente exportar archivo a CVS
+    OK Pendiente exportar archivo a EXCEL 2 Feb 2022
+    https://github.com/dwqs/js2excel
     Pendiente pruebas de fechas y datos consistentes
-    
-
-{
-"IdSolicitud": 3474765,
-"IdMaquina":6,
-"IdUsuario":80,
-"IdCaja"
-:
-5,
-"CantidadCaja"
-:
-12,
-"CantidadTapa"
-:
-12,
-"FechaSolicitud"
-:
-"2021-06-05T16:33:00.000+00:00",
-"FechaDespachoTotal"
-:
-null,
-"FechaDespachoParcial"
-:
-null,
-"FechaEspectativaDespacho"
-:
-null,
-"EstatusSolicitud"
-:
-0,
-"SurtirEnDucto"
-:
-"N",
-"GrupoOperador"
-:
-2,
-"numordprod"
-:
-54,
-"TipoSol"
-:
-0,
-"Medida"
-:
-null,
-"Resistencia"
-:
-null,
-"Borde"
-:
-null,
-"Suministro"
-:
-null,
-"SumTipo"
-:
-null,
-"Actividad"
-:
-null,
-"FechaPreSolicitud"
-:
-null,
-"UPDATE_TS"
-:
-"2022-01-06T17:47:39.000+00:00"
-  
-}
-
+    3 Febrero 2022
 
 FechaSolicitud:{ $gte:ISODate("2021-06-05T16:33:00.000Z"), $lte:ISODate("2021-06-05T16:33:00.000Z")}
-
-
-
 
 
 12.4 Implementar notificaciones a usuarios en el componente de AppBar. 

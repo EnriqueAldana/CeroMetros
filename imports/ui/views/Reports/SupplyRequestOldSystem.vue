@@ -4,6 +4,7 @@
       <v-col>
         <div class="headline">Reporte de solicitudes de suministros</div>
       </v-col>
+      
       <v-col cols="2">
         <div class="d-flex flex-row-reverse mb-5">
           <v-tooltip bottom>
@@ -34,7 +35,8 @@
                 v-on="on"
                 fab
                 dark
-                :to="{ name: 'home.unitsofmeasurement.create' }"
+                @click="datatable2Excel()"
+                :disabled="areThereRequestRecords"
               >
                 <v-icon>launch</v-icon>
               </v-btn>
@@ -76,6 +78,7 @@
                     ></v-text-field>
                   </template>
                   <v-date-picker
+                    ref="pickerIni"
                     v-model="date"
                     no-title
                     locale="es-es"
@@ -112,12 +115,15 @@
                     ></v-text-field>
                   </template>
                   <v-date-picker
+                    ref="pickerEnd"
                     v-model="dateEnd"
                     locale="es-es"
                     no-title
                     show-current
                     show-adjacent-months
                     @input="menu2 = false"
+                    :allowed-dates="disablePastDatesOfPickerIni"
+                    
                   ></v-date-picker>
                 </v-menu>
                 <!-- p>
@@ -309,21 +315,33 @@
 </template>
 
 <script>
+// es6
+import { json2excel, excel2json } from "js2excel";
+
 export default {
   name: "SupplyRequestOldSystem",
   components: {},
   data() {
     return {
-      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000))
-      .toISOString().substr(0, 10),
-      dateEnd: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000))
-      .toISOString().substr(0, 10),
-      dateFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000))
-      .toISOString().substr(0, 10)),
-      dateEndFormatted: this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000))
-      .toISOString().substr(0, 10)),
+      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      dateEnd: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      dateFormatted: this.formatDate(
+        new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+          .toISOString()
+          .substr(0, 10)
+      ),
+      dateEndFormatted: this.formatDate(
+        new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+          .toISOString()
+          .substr(0, 10)
+      ),
       menu1: false,
       menu2: false,
+      areThereRequestRecords: true,
       tosolicitudes: [],
       headersFilter: {
         IdSolicitud: "",
@@ -354,24 +372,38 @@ export default {
     };
   },
   created() {
-    
+    // Initiaizing Initial date 1 month before than current date
+    let currentDate = new Date(this.dateEnd)
+    currentDate.setMonth(currentDate.getMonth()-1);
+    this.date= currentDate.toISOString().substr(0, 10)
   },
   watch: {
-    date (val) {
-        this.dateFormatted = this.formatDate(this.date)
-      },
+    date(val) {
+      this.dateFormatted = this.formatDate(this.date);
+      console.log("Fecha Inicial", val)
+      // Fijar fecha inicial permitida en calendario End
+
+    },
     dateEnd(val) {
-        this.dateEndFormatted = this.formatDate(this.dateEnd)
-      },
+      this.dateEndFormatted = this.formatDate(this.dateEnd);
+    },
+    tosolicitudes(){
+      if(this.tosolicitudes.length>0){
+        this.areThereRequestRecords=false
+      }else{
+        this.areThereRequestRecords=true
+      }
+        
+    }
   },
   methods: {
     getToSolicitud() {
       this.$loader.activate("Buscando solicitudes de suministro... ...");
-      console.log("this.date", this.date)
-      console.log("this.dateEnd", this.dateEnd)
+      //console.log("this.date", this.date);
+      //console.log("this.dateEnd", this.dateEnd);
       Meteor.call(
         "toSolicitud.list",
-        { dateQuery:{dateStart: this.date, dateEnd: this.dateEnd} },
+        { dateQuery: { dateStart: this.date, dateEnd: this.dateEnd } },
         (error, response) => {
           this.$loader.deactivate();
           if (error) {
@@ -388,10 +420,64 @@ export default {
       if (!date) return null;
       const [year, month, day] = date.split("-");
       return `${day}-${month}-${year}`;
+    },
+    msgInitExportReport(){
+      new Promise((resolve) => {
+        this.$loader.deactivate();
+        this.$alert.showAlertSimple(
+          "info",
+          "¡ Su reporte esta siendo generado...espere por favor !"
+        );
+        
+        resolve(1);
+      });
+    },
+    exportExcelReport(){
+      // this will be export a excel and the file's name is user-info-data.xlsx
+      // the default file's name is excel.xlsx
+      
+      new Promise((resolve) => {
+        try {
+          //this.$loader.activate("Exportando a Excel...");
+        const cdt = new Date();
+        //const currentDateTime= cdt.getDay().toString()+"-"+cdt.getMonth().toString()+"-"+cdt.getFullYear().toString()+"-"+cdt.getHours().toString()+":"+cdt.getMinutes().toString()
+        const currentDateTime = cdt.toString().slice(0, 24);
+        const data = this.tosolicitudes;
+        const fileName = "0m-Sol-" + currentDateTime;
+
+        json2excel({
+          data,
+          name: fileName,
+          formateDate: "yyyy/mm/dd",
+        });
+      } catch (e) {
+        console.error("export error");
+        this.$alert.showAlertSimple("error", e);
+      } finally {
+        //this.$loader.deactivate();
+      }
+        resolve(1);
+      });
+      
+    },
+    msgEndExportReport(){
+      new Promise((resolve) => {
+        this.$alert.showAlertSimple("info", "El reporte ha sido exportado");
+        resolve(1);
+      });
+         
+    },
+    async datatable2Excel() {
+      await this.msgInitExportReport()
+      await this.exportExcelReport()
+      await this.msgEndExportReport()
+      
+    },
+    disablePastDatesOfPickerIni(val){
+      return val >= this.date
     }
   },
   computed: {
-    
     headers() {
       return [
         {

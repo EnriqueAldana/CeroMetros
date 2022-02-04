@@ -30,8 +30,10 @@ new ValidatedMethod({
 
         const responseMessage = new ResponseMessage();
         try {
+            console.log("dateQuery.dateStart",dateQuery.dateStart)
+            console.log("dateQuery.dateEnd",dateQuery.dateEnd)
             const dateStartISO= Utilities.dateTimeToISO(dateQuery.dateStart)
-            const dateEndISO= Utilities.dateTimeToISO(dateQuery.dateEnd)
+            const dateEndISO= Utilities.dateTimeToISOEndDay(dateQuery.dateEnd)
             console.log("dateStartISO", dateStartISO)
             console.log("dateEndISO", dateEndISO)
             
@@ -95,7 +97,7 @@ new ValidatedMethod({
            });
         
            
-            console.log("tosolicitudes", respuesta)
+           // console.log("tosolicitudes", respuesta)
 
             responseMessage.create('Se ha obtenido la lista de solicitudes ', 'Solicitudes sistema Escritorio', respuesta);
         } catch (exception) {

@@ -63,6 +63,13 @@ export default {
       //console.log(dt.toISO())
       return dt.toISO();
     },
+    dateTimeToISOEndDay(strDate){
+      //console.log(strDate)
+      var dt = DateTime.fromISO(strDate+"T23:59:59")
+      //console.log(dt.toISO())
+      return dt.toISO();
+    }
+    ,
     dateTimeFromString_dd_MM_YYYY(strDate){
        // console.info("Cadena por convertir", strDate)
        // const day = strDate.substr(0, 2)
@@ -84,6 +91,11 @@ export default {
       const dateFolio =DateTime.now().toISO({ format: 'basic' }) //=> '20210923T175537.004-0500'
       return dateFolio.substr(2, 2) + dateFolio.substr(6, 2)+dateFolio.substr(4, 2)+dateFolio.substr(9, 6)+dateFolio.substr(16, 3)
     },
+    getDateDayMonthYearTime(){
+      const dateFolio =DateTime.now().toISO({ format: 'basic' }) //=> '20210923T175537.004-0500'
+      return dateFolio.substr(6, 2)+dateFolio.substr(4, 2)+dateFolio.substr(0, 4)+dateFolio.substr(9, 6)
+     
+    }
     
 
 };

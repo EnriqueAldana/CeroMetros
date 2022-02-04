@@ -10,7 +10,6 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn
-                v-can:create.hide="'users'"
                 color="blue"
                 v-on="on"
                 fab
@@ -30,7 +29,6 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn
-                v-can:create.hide="'users'"
                 color="blue"
                 v-on="on"
                 fab

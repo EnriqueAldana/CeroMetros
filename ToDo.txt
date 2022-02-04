@@ -96,7 +96,8 @@ OK 19 Enero 2022
     3 Febrero 2022
 
 FechaSolicitud:{ $gte:ISODate("2021-06-05T16:33:00.000Z"), $lte:ISODate("2021-06-05T16:33:00.000Z")}
-
+    Desplegar en Meteor Cloud
+12.3.1  Ajustar mediante directivas seguridad a botones de todas las pantallas
 
 12.4 Implementar notificaciones a usuarios en el componente de AppBar. 
       12.4.1 Catalogo de notificaciones a usuarios

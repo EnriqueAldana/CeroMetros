@@ -91,7 +91,7 @@ yarn run:mac
 **On Windows**
 - Run the following commands:
 ```shell
-SET MONGO_URL=mongodb://localhost:27017/curso-meteor
+SET MONGO_URL=mongodb://localhost:27017/zmeters
 yarn run:windows
 ```
 

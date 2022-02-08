@@ -1,15 +1,15 @@
 {
   "private":{
-    "MAIL_URL": "smtp://contacto@dimemex.site:Contacto2020@pam.asoshared.com:26",
+    "MAIL_URL": "smtp://cerometros@jealdana.com:cerometros2022$@smtp.ionos.mx:26",
     "SENDER_EMAILS":{
-      "CONTACT": "contacto@dimemex.site",
-      "SUPPORT": "cobranza@dimemex.site",
-      "SALES": "enrique@dimemex.site"
+      "CONTACT": "cerometros@jealdana.com",
+      "SUPPORT": "cerometros@jealdana.com",
+      "SALES": "cerometros@jealdana.com"
     },
     "REFRESH_PERMISSIONS": false,   
     "REFRESH_STATIC_PROFILES": false,
     "SHOW_ZERO_METERS_VERSION":true,
-    "ZERO_METERS_USER":"SealedAir",
+    "ZERO_METERS_USER":"Cero Metros",
     "ZERO_METERS_VERSION":"0.1"
   }
 

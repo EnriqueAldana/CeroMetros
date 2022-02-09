@@ -1,6 +1,6 @@
 {
   "name": "zmeters",
-  "version": "0.1",
+  "version": "pwd",
   "private": true,
   "scripts": {
     "start": "meteor run",

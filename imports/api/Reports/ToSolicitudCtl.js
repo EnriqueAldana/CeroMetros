@@ -30,12 +30,12 @@ new ValidatedMethod({
 
         const responseMessage = new ResponseMessage();
         try {
-            console.log("dateQuery.dateStart",dateQuery.dateStart)
-            console.log("dateQuery.dateEnd",dateQuery.dateEnd)
+            //console.log("dateQuery.dateStart",dateQuery.dateStart)
+            //console.log("dateQuery.dateEnd",dateQuery.dateEnd)
             const dateStartISO= Utilities.dateTimeToISO(dateQuery.dateStart)
             const dateEndISO= Utilities.dateTimeToISOEndDay(dateQuery.dateEnd)
-            console.log("dateStartISO", dateStartISO)
-            console.log("dateEndISO", dateEndISO)
+            //console.log("dateStartISO", dateStartISO)
+            //console.log("dateEndISO", dateEndISO)
             
                 const toSol = ToSolicitudRepository.find(
                     {

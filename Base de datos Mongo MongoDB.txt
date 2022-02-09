@@ -27,7 +27,7 @@ y en Mongo de Meteor se maneja con el segundo parametro: .find({},{sort:[campo:1
 
 
 hacer un backup
-mongodump --port 27017 --host localhost --username admin --password admin --authenticationDatabase=zmeters admin --db zmeters --out database/zmeters24Mayo2021_Catalogos 
+mongodump  --port 27017 --host localhost --username admin --password admin --authenticationDatabase=zmeters admin --db zmeters --out database/zmeters8Feb2022
 mongodump --host="localhost" --port=27017
 
 Remoto

@@ -29,7 +29,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: CeroM3tros
     volumes:
       - $PWD/data:/data/db
-      - $PWD/database/zmeters:/opt/database
+      - $PWD/database/zmeters8Feb2022/dump/zmeters:/opt/database:/opt/database
     networks:
       - cerometros-net
 

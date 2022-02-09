@@ -26,7 +26,7 @@
         <div class="text-body-1 font-weight-light pt-6 pt-md-0 text-center">
           &copy; {{ (new Date()).getFullYear() }}, Hecho por <v-icon>mdi-vuetify</v-icon>
           <a
-            href="http://dimemex.site"
+            href="http://cerometros.jealdana.com"
             class="text-decoration-none"
           >Ingeniería en Computo</a>
         </div>
@@ -42,7 +42,7 @@
     data: () => ({
       links: [
         {
-          href: 'https://vuetifyjs.com/',
+          href: 'http://cerometros.jealdana.com/doc',
           text: 'Cero metros documentación',
         },
         {

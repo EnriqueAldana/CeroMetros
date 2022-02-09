@@ -57,4 +57,6 @@ export ZERO_METERS_VERSION="0.1"
 
 7.- Hacer Backup de MongoDb para PRD
 hacer un backup
+    1.- Colocarse en el directorio para hacer el respaldo.
+    2.- ejecutar mongodump
 mongodump --port 27017 --host localhost --username admin --password admin --authenticationDatabase=zmeters admin --db zmeters --out database/zmeters8Feb2022_Reporte 

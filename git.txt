@@ -27,3 +27,8 @@ Pasos para actualizar el repositorio remoto
 2.- git add .
 3.- git commit -m " Catalogo de Ordenes de produccion"
 4.- git push -u origin main
+
+
+
+
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader

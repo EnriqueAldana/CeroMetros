@@ -405,7 +405,7 @@ export default {
         (error, response) => {
           this.$loader.deactivate();
           if (error) {
-            this.$alert.showAlertSimple("error", error.error);
+            this.$alert.showAlertSimple("error", error);
           } else {
             this.$alert.showAlertSimple("success", response.message);
             this.tosolicitudes = response.data;

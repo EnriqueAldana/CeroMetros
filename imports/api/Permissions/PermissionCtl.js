@@ -37,7 +37,7 @@ new ValidatedMethod({
             try{
                 check('idProfile',String);
             }catch (exception) {
-                    console.error('user.remove', exception);
+                    console.error('permissions.listByIdProfile', exception);
                     throw new Meteor.Error('403','La informacion proporcionada no es correcta');
             }
     },

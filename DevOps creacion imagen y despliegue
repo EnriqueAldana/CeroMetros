@@ -28,6 +28,8 @@ mediante docker despliegue manual.
         1.4.2 Vaciar respaldo
         docker exec -ti mongo bash
         1.4.3 ir a la carpeta de /opt/database
+        cadena de comexion a MongoDB Dev
+        mongodb://jealdana.com:27017/zmeters
         1.4.3.1 desplegar variables de entorno
         env
         1.4.3.2 ejecutar backup

@@ -33,6 +33,14 @@ mongodump --host="localhost" --port=27017
 Remoto
 mongodump --uri="mongodb://<host URL/IP>:<Port>" [additional options]
 
+Problemas
+// Si error Mongo code 96 hay que aumentar memoria para ordenamiento al servidor de 32MB a mas
+            // Ejecutar en la ventana de comando de MongoDb
+            // mongo -u "root" -p CeroM3tros --authenticationDatabase "admin"
+            // db.adminCommand ({setParameter: 1, internalQueryExecMaxBlockingSortBytes: 335544320}) // No recomendado
+            // Se debe obtener algo asi
+            //db.adminCommand ({setParameter: 1, internalQueryExecMaxBlockingSortBytes: 335544320})
+            // { "was" : 33554432, "ok" : 1 }
 
 Manuales para consulta , Insercion y Actualizacion
 https://guiadev.com/tutorial-de-mongodb-parte-02-sinaxtis-de-consultas/

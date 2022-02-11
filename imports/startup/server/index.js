@@ -74,6 +74,11 @@ import '../../api/OperatingStation/OperatingStationServ';
 import '../../api/OperatingStation/OperatinStationSeeder';
 import '../../api/Version/VersionCtl';
 import '../../api/Reports/ToSolicitudCtl';
+import '../../api/Reports/ToSolicitudSeeder';
+import '../../api/AppPerformanceManagement/APM';
+import '../../api/AppPerformanceManagement/APMSeeder';
+import '../../api/AppPerformanceManagement/APMServ';
+import '../../api/AppPerformanceManagement/APMCtl';
 
 
 // Ejemplos de creacion de metodos o End Points

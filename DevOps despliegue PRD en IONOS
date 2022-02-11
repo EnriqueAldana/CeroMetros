@@ -4,6 +4,12 @@ Es un VPS
 SSH root@74.208.108.189
 
 Prerequisitos.
+BAckup de la base de datos
+7.- Hacer Backup de MongoDb para PRD
+hacer un backup
+    1.- Colocarse en el directorio para hacer el respaldo.
+    2.- ejecutar mongodump
+
 1.- Docker y Docker Compose
     1.- usuario cerometros que pueda ser SUDO
         Edita el fichero /etc/sudoers con root
@@ -20,7 +26,7 @@ Prerequisitos.
     /opt/database
     /opt/backups
 4.- Fijar variables de entorno 
-   export MAIL_URL="smtp://cerometros@jealdana.com:cerometros2022$@smtp.ionos.mx:26"
+   export MAIL_URL="smtp://enrique@jealdana.com:Enrique1937$@smtp.ionos.mx:587"
 export SENDER_EMAILS="{
       "CONTACT": "cerometros@jealdana.com",
       "SUPPORT": "cerometros@jealdana.com",
@@ -34,7 +40,6 @@ export ZERO_METERS_VERSION="0.1"
 
 5.- Crear imagenes Docker
     Ajustar permiso 
-    sudo chown -Rh cerometros .meteor/local
     Ajustar archivo docker-compose_No_ssl-proxy.yml
     $PWD/database/zmetersAQUI VA LA carpeta del DUM:/opt/database
     $PWD/database/zmeters8Feb2022/dump/zmeters:/opt/database
@@ -52,11 +57,39 @@ export ZERO_METERS_VERSION="0.1"
 
         Revisar MongoDB
         http://jealdana.com:8081
+        {'FechaSolicitud': { $gte: new Date('2020-01-01'),$lte: new Date('2022-02-10') }}
+
     1.6 Detener la aplicacion
     docker-compose down
+    Instalar respaldo base de datos
+        1.4.1 arrancar MongoDB
+        docker-compose up -d mongo
+        1.4.2 Vaciar respaldo
+        docker exec -ti mongo bash
+        1.4.3 ir a la carpeta de /opt/database
+        1.4.3.1 desplegar variables de entorno
+        env
+        1.4.3.2 ejecutar backup
+        mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters .
 
-7.- Hacer Backup de MongoDb para PRD
-hacer un backup
-    1.- Colocarse en el directorio para hacer el respaldo.
-    2.- ejecutar mongodump
-mongodump --port 27017 --host localhost --username admin --password admin --authenticationDatabase=zmeters admin --db zmeters --out database/zmeters8Feb2022_Reporte 
+7.- Bajar la aplicacion
+docker-compose down
+
+8.- Arrancar la aplicacion
+1.5.1 Levantar la aplicacion
+        docker-compose up -d
+        1.5.2 verificar contenedor
+        docker ps
+        1.5.3 verificar  logs
+            docker-compose logs
+    
+        Revisar MongoDB
+        http://jealdana.com:8081
+
+        Revisar Aplicacion
+        http://jealdana.com
+
+        Revisar App
+        docker exec -ti cerometros-web bash
+        Ejecutar env y revisar variables de entorno
+        Revisar envio de correos e imagenes en catalogo de usuarios

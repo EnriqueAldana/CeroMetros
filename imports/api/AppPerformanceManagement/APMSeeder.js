@@ -1,0 +1,11 @@
+import {APM} from "./APM";
+APM.rawCollection().createIndex({"dateCreated" : -1})
+APM.rawCollection().createIndex({"controller.methodName" : 1})
+APM.rawCollection().createIndex({"controller.validate.status" : 1})
+APM.rawCollection().createIndex({"controller.validate.error" : 1})
+APM.rawCollection().createIndex({"run.status" : 1})
+APM.rawCollection().createIndex({"run.dateRunStart" : -1})
+APM.rawCollection().createIndex({"run.timeUsed" : -1})
+APM.rawCollection().createIndex({"run.timeUsedOnProcess" : -1})
+APM.rawCollection().createIndex({"run.msg" : 1})
+APM.rawCollection().createIndex({"run.error" : 1})

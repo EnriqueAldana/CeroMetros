@@ -63,6 +63,9 @@ export default {
       //console.log(dt.toISO())
       return dt.toISO();
     },
+    dateTimeISO(){
+      return dt= DateTime.fromJSDate(new Date(),{ locale: 'es_MX' }).toISO
+    },
     dateTimeToISOEndDay(strDate){
       //console.log(strDate)
       var dt = DateTime.fromISO(strDate+"T23:59:59")

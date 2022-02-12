@@ -21,7 +21,7 @@ new ValidatedMethod({
         try {
             //console.log("dateQuery", dateQuery)
             APMlog.controller.methodName='toSolicitud.list'
-            APMlog.userId=Meteor.user();
+            APMlog.user=Meteor.user();
             const logId=APMServ.loggerDB(APMlog)
             APMlog._id=logId
             //console.log("logId de la insercion ",logId)

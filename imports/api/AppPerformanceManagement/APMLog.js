@@ -2,7 +2,7 @@
 import { DateTime } from "luxon";
 
 export default APMlog = {
-        userId: null,
+        user: null,
         dateLogCreated:DateTime.now().toUTC(),
         view: {
             status: null, //success / fail;

@@ -11,7 +11,7 @@ export default {
                
                 response = APM.insert(
                     {
-                        userId: apmlog.userId,
+                        user: apmlog.user,
                         dateLogCreated: apmlog.dateLogCreated,
                         view: {
                             status: apmlog.view.status, //success / fail;
@@ -49,7 +49,7 @@ export default {
                 
                 response = APM.update(apmlog._id, {
                     $set: {
-                        userId: apmlog.userId,
+                        user: apmlog.user,
                         dateLogCreated: apmlog.dateLogCreated,
                         view: {
                             status: apmlog.view.status, //success / fail;

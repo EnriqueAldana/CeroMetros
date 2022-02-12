@@ -28,3 +28,7 @@ Pasos para actualizar el repositorio remoto
 3.- git commit -m " Catalogo de Ordenes de produccion"
 4.- git push -u origin main
 
+
+Diferencia entre branch
+git diff main..SealedAir
+Se mostraran los commits de SealedAir No estan en main

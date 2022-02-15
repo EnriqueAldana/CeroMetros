@@ -4,7 +4,7 @@ Es un VPS
 SSH root@74.208.108.189
 
 Prerequisitos.
-BAckup de la base de datos
+Backup de la base de datos
 7.- Hacer Backup de MongoDb para PRD
 hacer un backup
     1.- Colocarse en el directorio para hacer el respaldo.

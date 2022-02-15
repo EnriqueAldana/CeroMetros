@@ -5,7 +5,7 @@ import AuthGuard from "../../middlewares/AuthGuard";
 import Permissions from "../../startup/server/Permissions";
 import { ToSolicitudRepository } from "./ToSolicitud"
 import toSolicitudServ from "./ToSolicitudServ"
-import  Utilities from "../../startup/server/utilities/Utilities";
+import  Utilities from "../../startup/both/Utilities";
 import APMServ from "../AppPerformanceManagement/APMServ"
 import { APMstatus } from "../AppPerformanceManagement/APMStatus";
 import APMlog from "../AppPerformanceManagement/APMLog"
@@ -31,14 +31,14 @@ new ValidatedMethod({
                     dateEnd: String}
                 );
             APMlog.controller.validate.status=APMstatus.SUCC
-            APMlog.controller.validate.dateValidate=DateTime.local({ locale: 'es_MX' });
-            APMlog.controller.validate.msg='validacion completa para parametros ' + { dateQuery }
+            APMlog.controller.validate.dateValidate=Utilities.getDateTimeNowUTC();
+            APMlog.controller.validate.msg='validacion completa para parametros ' + dateQuery.dateStart + dateQuery.dateEnd 
             APMServ.loggerDB(APMlog)
         } catch (exception) {
             console.error('toSolicitud.list', exception);
             APMlog.controller.validate.status=APMstatus.FAIL
-            APMlog.controller.validate.dateValidate=DateTime.local({ locale: 'es_MX' });
-            APMlog.controller.validate.msg='validacion NO completa para parametros '+ { dateQuery }
+            APMlog.controller.validate.dateValidate=Utilities.getDateTimeNowUTC();
+            APMlog.controller.validate.msg='validacion NO completa para parametros '+ dateQuery.dateStart + dateQuery.dateEnd 
             APMlog.controller.validate.error=exception
             APMServ.loggerDB(APMlog)
             throw new Meteor.Error('403', 'Ocurrio un error al obtener las solicitudes',exception);
@@ -50,10 +50,10 @@ new ValidatedMethod({
         try {
             const dateStartISO= Utilities.dateTimeToISO(dateQuery.dateStart)
             const dateEndISO= Utilities.dateTimeToISOEndDay(dateQuery.dateEnd)
-            const dateStart=DateTime.local({ locale: 'es_MX' });
+            const dateStart=Utilities.getDateTimeNowUTC();
             APMlog.controller.run.status=APMstatus.SUCC
             APMlog.controller.run.dateRunStart=dateStart
-            APMlog.controller.run.msg='Parametros usados para la consulta '+ 'dateStartISO '+dateStartISO+'dateEndISO '+dateEndISO
+            APMlog.controller.run.msg='Parametros usados para la consulta '+ 'dateStartISO '+dateStartISO+' dateEndISO '+dateEndISO
             APMlog.controller.run.timeUsed=0
             // Si error Mongo code 96 hay que aumentar memoria para ordenamiento al servidor de 32MB a mas
             // Ejecutar en la ventana de comando de MongoDb
@@ -99,11 +99,11 @@ new ValidatedMethod({
                         sort:{IdSolicitud: -1}
                     }
                 ).fetch();
-                const dateEnd=DateTime.local({ locale: 'es_MX' });
+                const dateEnd=Utilities.getDateTimeNowUTC();
                 APMlog.controller.run.dateRunEnd=dateEnd
-                APMlog.controller.run.timeUsed=(dateEnd.diff(dateStart))/1000 // Segundos
+                APMlog.controller.run.timeUsed=Utilities.getDataTimeDiff_Seconds(dateStart,dateEnd) // Segundos
                 APMServ.loggerDB(APMlog)
-                const dateRunStartProcess= DateTime.local({ locale: 'es_MX' });
+                const dateRunStartProcess= Utilities.getDateTimeNowUTC();
                 APMlog.controller.run.dateRunStartProcess=dateRunStartProcess
                 APMlog.controller.run.timeUsedOnProcess=0
                 const respuesta= toSol.filter(sol => {
@@ -125,11 +125,11 @@ new ValidatedMethod({
                     if(sol.Suministro == null ) sol.Suministro=''
             return true
            });
-           const dateRunEndProcess=DateTime.local({ locale: 'es_MX' });
+           const dateRunEndProcess=Utilities.getDateTimeNowUTC();
            APMlog.controller.run.dateRunEndProcess=dateRunEndProcess
-           APMlog.controller.run.timeUsedOnProcess=(dateRunEndProcess.diff(dateRunStartProcess))/1000
+           APMlog.controller.run.timeUsedOnProcess=Utilities.getDataTimeDiff_Seconds(dateRunStartProcess,dateRunEndProcess)
            APMServ.loggerDB(APMlog)
-            responseMessage.create('Se ha obtenido la lista de solicitudes ', 'Solicitudes sistema Escritorio', respuesta);
+            responseMessage.create('Se ha obtenido la lista de solicitudes ', APMlog._id, respuesta);
         } catch (exception) {
             let errorDescription=''
             if (exception.code==96)

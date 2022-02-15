@@ -76,3 +76,7 @@ $ne
 Matches all values that are not equal to a specified value.
 $nin
 Matches none of the values specified in an array.
+
+
+Consultas ordenadas
+db.getCollection('apm').find({}).sort( { dataCreated: -1 } )

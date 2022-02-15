@@ -315,12 +315,18 @@
 <script>
 // es6
 import { json2excel, excel2json } from "js2excel";
+import APMlog from "../../../api/AppPerformanceManagement/APMLog";
+import { APMstatus } from "../../../api/AppPerformanceManagement/APMStatus";
+import { DateTime } from "luxon";
+import Utilities from "../../../startup/both/Utilities"
+
 
 export default {
   name: "SupplyRequestOldSystem",
   components: {},
   data() {
     return {
+      logId:null,
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -378,7 +384,6 @@ export default {
   watch: {
     date(val) {
       this.dateFormatted = this.formatDate(this.date);
-      console.log("Fecha Inicial", val)
       // Fijar fecha inicial permitida en calendario End
 
     },
@@ -397,22 +402,67 @@ export default {
   methods: {
     getToSolicitud() {
       this.$loader.activate("Buscando solicitudes de suministro... ...");
-      //console.log("this.date", this.date);
-      //console.log("this.dateEnd", this.dateEnd);
       Meteor.call(
         "toSolicitud.list",
         { dateQuery: { dateStart: this.date, dateEnd: this.dateEnd } },
         (error, response) => {
           this.$loader.deactivate();
           if (error) {
+            this.log(['dateStart:'+ this.date, 'dateEnd:'+ this.dateEnd],
+            "No se obtuvo la lista de solicitudes",error);
             this.$alert.showAlertSimple("error", error);
           } else {
+            
+            
+            
             this.$alert.showAlertSimple("success", response.message);
             this.tosolicitudes = response.data;
+            this.logId=response.description
+            console.log("this.logId",this.logId)
+            this.log(['dateStart:'+ this.date, 'dateEnd:'+ this.dateEnd],
+            response.message,null);
           }
-          console.log("response.data", response.data);
+       
         }
       );
+    },
+    log(parametersP,msgP,errorP){
+      this.$loader.activate("Registrando informacion de monitoreo del aplicativo ...");
+      APMlog._id=this.logId
+      APMlog.view.viewComponentName="SupplyRequestOldSystem"
+      if(errorP!= null){
+        APMlog.view.status=APMstatus.FAIL
+      }else{
+        APMlog.view.status=APMstatus.SUCC
+      }
+
+      APMlog.view.dateViewCreated= Utilities.getDateTimeNowUTCString()
+      APMlog.view.viewComponentParameters=parametersP
+      APMlog.view.msg=msgP
+      APMlog.view.error= errorP     
+
+      Meteor.call(
+        "apm.logger",
+          { log: {
+            _id:APMlog._id,
+            viewComponentName:APMlog.view.viewComponentName,
+            status: APMlog.view.status,
+            dateViewCreated:APMlog.view.dateViewCreated,
+            viewComponentParameters:APMlog.view.viewComponentParameters,
+            msg:APMlog.view.msg,
+            error:APMlog.view.error
+          }
+        },
+        (error, response) => {
+          this.$loader.deactivate();
+          if (error) {
+            this.$alert.showAlertSimple("error", error);
+          }else{
+            return response.data
+          }
+        }
+      );
+       
     },
     formatDate(date) {
       if (!date) return null;
@@ -442,6 +492,8 @@ export default {
         const currentDateTime = cdt.toString().slice(0, 24);
         const data = this.tosolicitudes;
         const fileName = "0m-Sol-" + currentDateTime;
+        this.log(['fileName'],
+            'Exportando a Excel...',null);
 
         json2excel({
           data,
@@ -450,6 +502,8 @@ export default {
         });
       } catch (e) {
         console.error("export error");
+        this.log(['fileName'],
+            'Exportando a Excel...',e);
         this.$alert.showAlertSimple("error", e);
       } finally {
         //this.$loader.deactivate();

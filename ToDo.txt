@@ -80,7 +80,7 @@ Ok Dar de alta Insumos indirectos
 
 12.1 Implementar layout con App bar, Menu de navegacion izq y contenido
 OK 19 Enero 2022
-12.3 Implementar reporte de solicitudes con exportacion a CVS
+12.3 Implementar reporte de solicitudes con exportacion a Excel
     20 Enero 2022
     Ajuste de titulos de paginas por despliegue de menu lateral
     Se declaro la ruta para reporte de sol de suministros Escritorio
@@ -94,9 +94,16 @@ OK 19 Enero 2022
     https://github.com/dwqs/js2excel
     Pendiente pruebas de fechas y datos consistentes
     3 Febrero 2022
+    Despliegue en Servidor PRD en dominio jealdana.com
+    10 Feb 2022
+    Implementacion de Log a la Bd
+    11 Feb 2022 Lado del servidor
+    Implementar LOG del lado del FRONT
+    15 Feb 2022
+
 
 FechaSolicitud:{ $gte:ISODate("2021-06-05T16:33:00.000Z"), $lte:ISODate("2021-06-05T16:33:00.000Z")}
-    Desplegar en Meteor Cloud
+
 12.3.1  Ajustar mediante directivas seguridad a botones de todas las pantallas
 
 12.4 Implementar notificaciones a usuarios en el componente de AppBar. 

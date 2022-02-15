@@ -5,10 +5,10 @@ export default {
 
     loggerDB(apmlog) {
         let response = null;
-        //console.log("apmlog ", apmlog)
+        
         try {
-            if (!apmlog._id) {
-               
+            if (apmlog._id==null) {
+                console.log("Insertando")
                 response = APM.insert(
                     {
                         user: apmlog.user,
@@ -83,6 +83,7 @@ export default {
                     }
                 });
             }
+            
         } catch (e) {
             console.error('APMServ.loggerDB', e);
         } finally {

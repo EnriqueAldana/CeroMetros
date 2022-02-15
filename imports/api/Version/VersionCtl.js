@@ -19,6 +19,7 @@ new ValidatedMethod({
             APMlog.controller.methodName='version.app'
             APMlog.user=Meteor.user();
             const logId=APMServ.loggerDB(APMlog)
+            console.log("logId",logId)
             APMlog._id=logId
             check(version,{
                 appVersion: Match.OneOf(String, null),
@@ -49,6 +50,7 @@ new ValidatedMethod({
             const dateEnd=DateTime.local({ locale: 'es_MX' });
             APMlog.controller.run.dateRunEnd=dateEnd
             APMlog.controller.run.timeUsed=(dateEnd.diff(dateStart))/1000 // Segundos
+            APMlog.controller.run.msg="Version del aplicativo "+version.appVersion
             APMServ.loggerDB(APMlog)
             //console.log("version.appVersion",version.appVersion)
             responseMessage.create("Version del aplicativo","Version codigo del servidor",version.appVersion);

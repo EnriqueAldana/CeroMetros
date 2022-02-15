@@ -1,5 +1,5 @@
-import { DateTime } from "luxon";
-import { createModuleResolutionCache } from "typescript";
+import { DateTime, Settings } from "luxon";
+
 export default {
 
     generateNumberToken(min, max) {
@@ -63,8 +63,9 @@ export default {
       //console.log(dt.toISO())
       return dt.toISO();
     },
-    dateTimeISO(){
-      return dt= DateTime.fromJSDate(new Date(),{ locale: 'es_MX' }).toISO
+    todayDateTimeISOString(){
+      return dt= DateTime.now().toUTC()
+      DateTime.fromJSDate(new Date(),{ locale: 'es_MX' }).toISO.toString
     },
     dateTimeToISOEndDay(strDate){
       //console.log(strDate)
@@ -98,6 +99,70 @@ export default {
       const dateFolio =DateTime.now().toISO({ format: 'basic' }) //=> '20210923T175537.004-0500'
       return dateFolio.substr(6, 2)+dateFolio.substr(4, 2)+dateFolio.substr(0, 4)+dateFolio.substr(9, 6)
      
+    },
+    getDateTimeNowUTC(){
+      return DateTime.now().toUTC();
+    },
+    getDateTimeNowUTCString(){
+      return DateTime.now().toUTC().toString();
+    },
+    getDateTimeNowLocalZone(zone){
+      let ret=null
+      try{
+          ret = DateTime.fromObject({
+            zone
+          });
+      }catch(e){
+
+      }
+      return ret;
+    },
+    getDateTimeLocalZone(zone,dateTime){
+      let ret=null
+      try{
+          ret = dateTime.setZone(zone).toISO();
+      }catch(e){
+
+      }
+      return ret;
+    },
+    getDataTimeDiff_Seconds(dateTimeStart,dateTimeEnd){
+      return dateTimeEnd.diff(dateTimeStart)/1000
+
+    },
+    getDataTimeNowDiff_Seconds(dateTimeStart){
+      return DateTime.now().toUTC().diff(dateTimeStart).seconds
+    }
+    ,
+    setDefaultZone(defaultZone){
+      //"America/Mexico_City";
+      Settings.defaultZoneName = defaultZone
+    },
+    setDefaultLocale(defaultLocale){
+      // 'es_MX'
+      Settings.defaultLocale=defaultLocale
+    },
+    createDateTimeLocalZone(zone,dayP,monthP,yearP,hourP=0,minuteP=0,secondP=0){
+      ////"America/Mexico_City";
+      let ret=null
+      try{
+        ret =DateTime.fromObject({
+          zone
+        }).set({
+          day: dayP,
+          month: monthP,
+          year: yearP,
+          hour: hourP,
+          minute:minuteP,
+          second: secondP
+        });
+      }catch(e){
+
+      }
+      return ret;
+    },
+    isValidDateTime(datetime){
+      return datetime.isValid; //
     }
     
 

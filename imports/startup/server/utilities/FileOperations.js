@@ -1,5 +1,5 @@
 import mimetypes from 'mimetypes';
-import Utilities from "./Utilities";
+import Utilities from "../../both/Utilities";
 import { BASE_URL_STORAGE , firebaseAdminsStorage} from "../services/FirebaseAdmin";
 import {ResponseMessage} from "./ResponseMesssage";
 

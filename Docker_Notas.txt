@@ -7,7 +7,27 @@ docker-compose -f docker-compose_No_ssl-proxy.yml build app
 
 Para iniciar una instancia de una imagen
 docker-compose up -d  mongo
+Para iniciar si que reseete la configuracion del contenedores, los volumenes se mantienen.
 
+docker-compose up -d --no-recreate mongo 
+
+
+Arerancar Mongo-express
+docker run -it --rm \
+    --network cerometros_cerometros-net\
+    --name mongo-express \
+    -p 8081:8081 \
+    -e ME_CONFIG_OPTIONS_EDITORTHEME="ambiance" \
+    -e ME_CONFIG_MONGODB_SERVER="mongo" \
+    -e ME_CONFIG_BASICAUTH_USERNAME="admin" \
+    -e ME_CONFIG_BASICAUTH_PASSWORD="pass" \
+    -e ME_CONFIG_MONGODB_ADMINUSERNAME: "root" \
+    -e ME_CONFIG_MONGODB_ADMINPASSWORD: "CeroM3tros"
+    mongo-express
+
+ME_CONFIG_MONGODB_URL: "mongodb://root:CeroM3tros@localhost:27017/admin"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: CeroM3tros
 Para eliminar una imagen
 docker image rm cerometros-web
 
@@ -90,17 +110,7 @@ docker-compose -f stack-billing.yml up -d --force-recreate
 
 Correr mongo express Web sobre la imagen
 
-docker run -it --rm \
-    --network cerometros_cerometros-net \
-    --name mongo-express \
-    -p 8081:8081 \
-    -e ME_CONFIG_OPTIONS_EDITORTHEME="ambiance" \
-    -e ME_CONFIG_MONGODB_SERVER="mongo" \
-    -e ME_CONFIG_MONGODB_URL= "mongodb://root:CeroM3tros@mongo:27017/" \
-    -e ME_CONFIG_BASICAUTH_USERNAME="root" \
-    -e ME_CONFIG_BASICAUTH_PASSWORD="CeroM3tros" \
-    -e ME_CONFIG_MONGODB_AUTH_DATABASE="zmeters" \
-    mongo-express
+
 
 mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
 

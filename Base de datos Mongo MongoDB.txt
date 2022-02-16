@@ -1,4 +1,10 @@
 Base de datos Mongo MongoDB
+
+Conexion Local
+mongodb://localhost:27017/admin
+Conexion PRODUCCION
+mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin
+
 Script para agregar atributos a usuarios.
 
 db.getCollection('users').update({status:{$exists:false}}, { $set:{status:{online:false}}},{multi:true})

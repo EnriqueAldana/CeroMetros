@@ -35,8 +35,9 @@ export SENDER_EMAILS="{
 export REFRESH_PERMISSIONS="false"  
 export REFRESH_STATIC_PROFILES="false"
 export SHOW_ZERO_METERS_VERSION="true"
-export ZERO_METERS_USER="Cero Metros"
-export ZERO_METERS_VERSION="0.1"
+export ZERO_METERS_USER=" Mi empresa"
+export ZERO_METERS_VERSION="0.0.1"
+
 
 5.- Crear imagenes Docker
     Ajustar permiso 

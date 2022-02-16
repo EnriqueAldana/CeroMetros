@@ -2,12 +2,14 @@ Para creaar una imagen
 docker-compose build
 sudo docker-compose build
 
+Para crear solo la imagen del aplicativo
+docker-compose -f docker-compose_No_ssl-proxy.yml build app
 
 Para iniciar una instancia de una imagen
 docker-compose up -d  mongo
 
-Para crear una imagen
-
+Para eliminar una imagen
+docker image rm cerometros-web
 
 
 Para acceder dentro de una imagen con SSH

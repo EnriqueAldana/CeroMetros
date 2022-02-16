@@ -11,5 +11,5 @@ export LOGO_IMAGE_PATH="https://firebasestorage.googleapis.com/v0/b/cerometros.a
 export REFRESH_PERMISSIONS="false"  
 export REFRESH_STATIC_PROFILES="false"
 export SHOW_ZERO_METERS_VERSION="true"
-export ZERO_METERS_USER="Cero Metros"
-export ZERO_METERS_VERSION="0.1"
+export ZERO_METERS_USER="Sealed Air"
+export ZERO_METERS_VERSION="0.0.1"

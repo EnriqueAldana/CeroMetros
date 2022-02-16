@@ -8,7 +8,6 @@ export default {
         
         try {
             if (apmlog._id==null) {
-                console.log("Insertando")
                 response = APM.insert(
                     {
                         user: apmlog.user,

@@ -1,3 +1,7 @@
+import APMServ from "../../../api/AppPerformanceManagement/APMServ"
+import { APMstatus } from "../../../api/AppPerformanceManagement/APMStatus";
+import APMlog from "../../../api/AppPerformanceManagement/APMLog"
+import Utilities from "../../both/Utilities";
 /*
 *  Validar que la variable de entorno MAIL_URL este fijada
 */
@@ -17,18 +21,34 @@ if (!process.env.SENDER_EMAIL){
 }
 
 if(!process.env.LOGO_IMAGE_PATH){
-    process.env.LOGO_IMAGE_PATH="";
-    console.warn("La ruta a la imagen del LOGO no ha sido configurado -Variable de entorno LOGO_IMAGEPATH- , por lo que no se visualizará.");
+    if(Meteor.settings.private?.LOGO_IMAGE_PATH){
+        process.env.LOGO_IMAGE_PATH= Meteor.settings.private.LOGO_IMAGE_PATH;
+    }else{
+        console.warn("La ruta a la imagen del LOGO no ha sido configurado -Variable de entorno LOGO_IMAGEPATH- , por lo que no se visualizará.");
+    }
+    
+   
 }
 if(!process.env.PRODUCT_IMAGE_PATH){
-    process.env.PRODUCT_IMAGE_PATH="";
-    console.warn("La ruta a la imagen del producto que lo identificano ha sido configurado -Variable de entorno PRODUCT_IMAGE__PATH - , por lo que no se visualizará.");
-}
-console.info(" Configuracion del sistema de correo");
-console.info(" Email URL ",process.env.MAIL_URL);
-console.info(" Email sender",process.env.SENDER_EMAIL);
 
-const name = 'Sistema CeroMetros';
+    if(Meteor.settings.private?.PRODUCT_IMAGE_PATH){
+        process.env.PRODUCT_IMAGE_PATH= Meteor.settings.private.PRODUCT_IMAGE_PATH;
+    }else{
+        console.warn("La ruta a la imagen del aplicativo que lo identifica en los Correos no ha sido configurado -Variable de entorno PRODUCT_IMAGE__PATH - , por lo que no se visualizará.");
+    }
+    
+    
+}
+
+if(!process.env.ZERO_METERS_USER){
+    if(Meteor.settings.private?.ZERO_METERS_USER){
+        process.env.ZERO_METERS_USER= Meteor.settings.private.ZERO_METERS_USER;
+    }else{
+        console.warn("La identificacion de la empresa usuaria del aplicativo no se ha definido, por lo que no se visualizará.");
+    }
+   
+}
+const name = 'Sistema CeroMetros ' + process.env.ZERO_METERS_USER;
 const email = `<${process.env.SENDER_EMAIL}>`;
 const from = `${ name } ${ email}`;
 
@@ -98,4 +118,26 @@ emailTemplates.verifyEmail = {
     }
 };
 
-
+// Configuracion
+try{
+    console.info(" Configuracion del sistema de correo");
+    console.info(" Email URL ",process.env.MAIL_URL);
+    console.info(" Email sender",process.env.SENDER_EMAIL);
+    console.info(' Email LOGO IMAGE URL:'+ process.env.LOGO_IMAGE_PATH);
+    console.info(' Email  APP IMAGE PATH:'+ process.env.PRODUCT_IMAGE_PATH);
+    APMlog.view.viewComponentName ='Configuracion SMTP'
+    APMlog.view.viewComponentParameters=[
+        'Configuracion del sistema de correo',
+        ' Email URL:'+ process.env.MAIL_URL,
+        ' Email sender:'+ process.env.SENDER_EMAIL,
+        ' Email LOGO IMAGE URL:'+ process.env.LOGO_IMAGE_PATH,
+        ' Email  APP IMAGE PATH:'+ process.env.PRODUCT_IMAGE_PATH
+    ]
+    APMlog.user = name
+    APMlog.view.status = APMstatus.SUCC
+    APMlog.view.dateViewCreated = Utilities.getDateTimeNowUTC()
+    APMlog.view.msg = "Aplicacion iniciada variables para servidor de correo SMTP"
+    APMServ.loggerDB(APMlog)
+}catch(e){
+    console.error("Error inicio de la aplicaion",e)
+}

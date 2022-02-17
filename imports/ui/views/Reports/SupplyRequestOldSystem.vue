@@ -315,8 +315,9 @@
 <script>
 // es6
 import { json2excel, excel2json } from "js2excel";
-import APMlog from "../../../api/AppPerformanceManagement/APMLog";
-import { APMstatus } from "../../../api/AppPerformanceManagement/APMStatus";
+
+import { APMstatus } from "../../../startup/both/APMStatus";
+import APMTemplate from "../../../startup/both/APMTemplate"
 import { DateTime } from "luxon";
 import Utilities from "../../../startup/both/Utilities"
 
@@ -408,19 +409,14 @@ export default {
         (error, response) => {
           this.$loader.deactivate();
           if (error) {
-            this.log(['dateStart:'+ this.date, 'dateEnd:'+ this.dateEnd],
-            "No se obtuvo la lista de solicitudes",error);
+      
             this.$alert.showAlertSimple("error", error);
           } else {
-            
-            
-            
             this.$alert.showAlertSimple("success", response.message);
             this.tosolicitudes = response.data;
             this.logId=response.description
             console.log("this.logId",this.logId)
-            this.log(['dateStart:'+ this.date, 'dateEnd:'+ this.dateEnd],
-            response.message,null);
+            
           }
        
         }
@@ -428,22 +424,10 @@ export default {
     },
     log(parametersP,msgP,errorP){
       this.$loader.activate("Registrando informacion de monitoreo del aplicativo ...");
-      APMlog._id=this.logId
-      APMlog.view.viewComponentName="SupplyRequestOldSystem"
-      if(errorP!= null){
-        APMlog.view.status=APMstatus.FAIL
-      }else{
-        APMlog.view.status=APMstatus.SUCC
-      }
-
-      APMlog.view.dateViewCreated= Utilities.getDateTimeNowUTCString()
-      APMlog.view.viewComponentParameters=parametersP
-      APMlog.view.msg=msgP
-      APMlog.view.error= errorP     
-
+  
       Meteor.call(
         "apm.logger",
-          { log: {
+          { logObj: {
             _id:APMlog._id,
             viewComponentName:APMlog.view.viewComponentName,
             status: APMlog.view.status,

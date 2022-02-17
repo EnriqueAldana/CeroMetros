@@ -1,12 +1,11 @@
 import APMServ from "../../../api/AppPerformanceManagement/APMServ"
-import { APMstatus } from "../../../api/AppPerformanceManagement/APMStatus";
+import { APMstatus } from "../../both/APMStatus";
 import APMlog from "../../../api/AppPerformanceManagement/APMLog"
-import Utilities from "../../both/Utilities";
-
+import APMTemplate from "../../both/APMTemplate"
 /*
 *  Validar que la variable de entorno Globales
 */
-console.info(" Configuracion del sistema");
+console.info(" Configuracion del sistema"+ '\n');
 if(!process.env.REFRESH_PERMISSIONS){
     if(Meteor.settings.private){
         process.env.REFRESH_PERMISSIONS= Meteor.settings.private.REFRESH_PERMISSIONS;
@@ -43,28 +42,27 @@ if(!process.env.ZERO_METERS_VERSION){
     }   
 }   
 
-// Configuracion
-try{
-    console.log('REFRESH_PERMISSIONS:'+ process.env.REFRESH_PERMISSIONS);
-    console.log(   'REFRESH_STATIC_PROFILES:'+ process.env.REFRESH_STATIC_PROFILES);
-    console.log(    'SHOW_ZERO_METERS_VERSION:'+ process.env.SHOW_ZERO_METERS_VERSION);
-    console.log(    'ZERO_METERS_USER:'+ process.env.ZERO_METERS_USER);
-    console.log(   'ZERO_METERS_VERSION:'+ process.env.ZERO_METERS_VERSION);
+// Configuracion 
+let logTemplate= new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'Configuration','AppGlobalVariables',
+             'Configuracion del sistema  \n '+
+             ' REFRESH_PERMISSIONS:'+ process.env.REFRESH_PERMISSIONS + '\n' +
+             ' SHOW_ZERO_METERS_VERSION:'+ process.env.SHOW_ZERO_METERS_VERSION+ '\n' +
+             ' ZERO_METERS_USER:'+ process.env.ZERO_METERS_USER+ '\n' +
+             ' ZERO_METERS_VERSION:'+ process.env.ZERO_METERS_VERSION + '\n' 
+            , 'Fijando variables de entorno para el servicio SMTP','');
+            logTemplate.msg='Variables de entorno para el servicio SMTP'
+        let log = new APMlog('','Global Configuration',logTemplate);
 
-    APMlog.view.viewComponentName ='Configuracion variables globales'
-    APMlog.view.viewComponentParameters=[
-        'Configuracion del sistema',
-        'REFRESH_PERMISSIONS:'+ process.env.REFRESH_PERMISSIONS,
-        'REFRESH_STATIC_PROFILES:'+ process.env.REFRESH_STATIC_PROFILES,
-        'SHOW_ZERO_METERS_VERSION:'+ process.env.SHOW_ZERO_METERS_VERSION,
-        'ZERO_METERS_USER:'+ process.env.ZERO_METERS_USER,
-        'ZERO_METERS_VERSION:'+ process.env.ZERO_METERS_VERSION
-    ]
-    APMlog.user = 'Sistema CeroMetros' + process.env.ZERO_METERS_USER;
-    APMlog.view.status = APMstatus.SUCC
-    APMlog.view.dateViewCreated = Utilities.getDateTimeNowUTC()
-    APMlog.view.msg = "Aplicacion iniciada variables globales"
-    APMServ.loggerDB(APMlog)
+try{
+    log.userId='Sistema CeroMetros' + process.env.ZERO_METERS_USER;
+    // actualizamos el Id del registro del log
+    log._id=APMServ.logToDB(log)
+
+    console.log(' REFRESH_PERMISSIONS:'+ process.env.REFRESH_PERMISSIONS + '\n');
+    console.log(' SHOW_ZERO_METERS_VERSION:'+ process.env.SHOW_ZERO_METERS_VERSION+ '\n' );
+    console.log(' ZERO_METERS_USER:'+ process.env.ZERO_METERS_USER+ '\n');
+    console.log(' ZERO_METERS_VERSION:'+ process.env.ZERO_METERS_VERSION);
+
 }catch(e){
     console.error("Error inicio de la aplicación variables globales",e)
 }

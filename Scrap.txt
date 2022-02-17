@@ -1,0 +1,27 @@
+view: {
+            status: String //success / fail;
+            dateViewCreated: DateTime
+            viewComponentName: String
+            viewComponentParameters: [String]
+            msg: String // null || result
+            error: String   //error.messag
+        }
+        controller: {
+            methodName: String;
+            validate:{
+                status: String;
+                dateValidate:String;
+                msg: String; // null || result
+                error: String;  //error.message
+            },
+            run:{
+                status: String;
+                dateRunStart:String;
+                dateRunEnd:String;
+                timeUsed:String;
+                dateRunStartProcess:String;
+                dateRunEndProcess:String;
+                timeUsedOnProcess:String;
+                msg: String; // null || result
+                error: String;  //error.message
+            }

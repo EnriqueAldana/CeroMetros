@@ -1,88 +1,57 @@
 
 import { APM } from "./APM";
-import { DateTime } from "luxon";
+import APMLog from "./APMLog"
+import Utilities from "../../startup/both/Utilities"
 export default {
 
-    loggerDB(apmlog) {
+    logToDB(apmlog:APMLog) {
         let response = null;
-        
+       
         try {
-            if (apmlog._id==null) {
+            if (apmlog._id == "") {
                 response = APM.insert(
                     {
-                        user: apmlog.user,
-                        dateLogCreated: apmlog.dateLogCreated,
-                        view: {
-                            status: apmlog.view.status, //success / fail;
-                            dateViewCreated: apmlog.view.dateViewCreated,
-                            viewComponentName: apmlog.view.viewComponentName,
-                            viewComponentParameters: apmlog.view.viewComponentParameters,
-                            msg: apmlog.view.msg, // null || result
-                            error: apmlog.view.error  //error.messag
-                        },
-                        controller: {
-                            methodName: apmlog.controller.methodName,
-                            validate: {
-                                status: apmlog.controller.validate.status,
-                                dateValidate: apmlog.controller.validate.dateValidate,
-                                msg: apmlog.controller.validate.msg, // null || result
-                                error: apmlog.controller.validate.error  //error.message
-                            },
-                            run: {
-                                status: apmlog.controller.run.status,
-                                dateRunStart: apmlog.controller.run.dateRunStart,
-                                dateRunEnd: apmlog.controller.run.dateRunEnd,
-                                timeUsed: apmlog.controller.run.timeUsed,
-                                dateRunStartProcess: apmlog.controller.run.dateRunStartProcess,
-                                dateRunEndProcess: apmlog.controller.run.dateRunEndProcess,
-                                timeUsedOnProcess: apmlog.controller.run.timeUsedOnProcess,
-                                msg: apmlog.controller.run.msg, // null || result
-                                error: apmlog.controller.run.error  //error.message
-                            }
-
-                        }
+                        userId: apmlog.userId,
+                        type: apmlog.log.type,
+                        statusKeyLog: apmlog.log.statusKeyLog,
+                        dateCreated: apmlog.log.dateCreated,
+                        componentType: apmlog.log.componentType, // View, Controller, File, DataBase, etc
+                        componentName: apmlog.log.componentName,
+                        componentParameters: apmlog.log.componentParameters,
+                        msg: apmlog.log.msg, // null || result
+                        error: apmlog.log.error,   //error.messag
+                        dateRunStart: apmlog.log.dateRunStart,
+                        dateRunEnd: apmlog.log.dateRunEnd,
+                        timeUsed: Utilities.getDataTimeDiff_Seconds(apmlog.log.dateRunStart,apmlog.log.dateRunEnd), // Segundos;
+                        dateRunStartProcess: apmlog.log.dateRunStartProcess,
+                        dateRunEndProcess: apmlog.log.dateRunEndProcess,
+                        timeUsedOnProcess: Utilities.getDataTimeDiff_Seconds(apmlog.log.dateRunStartProcess,apmlog.log.dateRunEndProcess), // Segundos;
                     }
 
                 );
             } else {
-                
+
                 response = APM.update(apmlog._id, {
                     $set: {
-                        user: apmlog.user,
-                        dateLogCreated: apmlog.dateLogCreated,
-                        view: {
-                            status: apmlog.view.status, //success / fail;
-                            dateViewCreated: apmlog.view.dateViewCreated,
-                            viewComponentName: apmlog.view.viewComponentName,
-                            viewComponentParameters: apmlog.view.viewComponentParameters,
-                            msg: apmlog.view.msg, // null || result
-                            error: apmlog.view.error  //error.messag
-                        },
-                        controller: {
-                            methodName: apmlog.controller.methodName,
-                            validate: {
-                                status: apmlog.controller.validate.status,
-                                dateValidate: apmlog.controller.validate.dateValidate,
-                                msg: apmlog.controller.validate.msg, // null || result
-                                error: apmlog.controller.validate.error  //error.message
-                            },
-                            run: {
-                                status: apmlog.controller.run.status,
-                                dateRunStart: apmlog.controller.run.dateRunStart,
-                                dateRunEnd: apmlog.controller.run.dateRunEnd,
-                                timeUsed: apmlog.controller.run.timeUsed,
-                                dateRunStartProcess: apmlog.controller.run.dateRunStartProcess,
-                                dateRunEndProcess: apmlog.controller.run.dateRunEndProcess,
-                                timeUsedOnProcess: apmlog.controller.run.timeUsedOnProcess,
-                                msg: apmlog.controller.run.msg, // null || result
-                                error: apmlog.controller.run.error  //error.message
-                            }
-
-                        }
+                        userId: apmlog.userId,
+                        type: apmlog.log.type,
+                        statusKeyLog: apmlog.log.statusKeyLog,
+                        dateCreated: apmlog.log.dateCreated,
+                        componentType: apmlog.log.componentType, // View, Controller, File, DataBase, etc
+                        componentName: apmlog.log.componentName,
+                        componentParameters: apmlog.log.componentParameters,
+                        msg: apmlog.log.msg, // null || result
+                        error: apmlog.log.error,   //error.messag
+                        dateRunStart: apmlog.log.dateRunStart,
+                        dateRunEnd: apmlog.log.dateRunEnd,
+                        timeUsed: Utilities.getDataTimeDiff_Seconds(apmlog.log.dateRunStart,apmlog.log.dateRunEnd), // Segundos;
+                        dateRunStartProcess: apmlog.log.dateRunStartProcess,
+                        dateRunEndProcess: apmlog.log.dateRunEndProcess,
+                        timeUsedOnProcess: Utilities.getDataTimeDiff_Seconds(apmlog.log.dateRunStartProcess,apmlog.log.dateRunEndProcess), // Segundos;
                     }
                 });
             }
-            
+
         } catch (e) {
             console.error('APMServ.loggerDB', e);
         } finally {

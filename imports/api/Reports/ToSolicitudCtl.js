@@ -7,10 +7,9 @@ import { ToSolicitudRepository } from "./ToSolicitud"
 import toSolicitudServ from "./ToSolicitudServ"
 import  Utilities from "../../startup/both/Utilities";
 import APMServ from "../AppPerformanceManagement/APMServ"
-import { APMstatus } from "../AppPerformanceManagement/APMStatus";
+import { APMstatus } from "../../startup/both/APMStatus";
 import APMlog from "../AppPerformanceManagement/APMLog"
-import { DateTime } from "luxon";
-
+import APMTemplate from "../../startup/both/APMTemplate"
 new ValidatedMethod({
     name: 'toSolicitud.list',
     mixins: [MethodHooks],
@@ -18,43 +17,35 @@ new ValidatedMethod({
     beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
     afterHooks: [],
     validate({ dateQuery }) {
+        let logTemplate= new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'Controller','toSolicitud.list',
+             'dateStart: '+dateQuery.dateStart+' dateEnd:'+dateQuery.dateEnd, 'Obteniendo lista de solicitudes','');
+        let log = new APMlog('',Meteor.user().id,logTemplate);
         try {
-            //console.log("dateQuery", dateQuery)
-            APMlog.controller.methodName='toSolicitud.list'
-            APMlog.user=Meteor.user();
-            const logId=APMServ.loggerDB(APMlog)
-            APMlog._id=logId
+            // actualizamos el Id del registro del log
+            log._id=APMServ.logToDB(log)
             //console.log("logId de la insercion ",logId)
             check(dateQuery, 
                 {
                     dateStart: String,
                     dateEnd: String}
                 );
-            APMlog.controller.validate.status=APMstatus.SUCC
-            APMlog.controller.validate.dateValidate=Utilities.getDateTimeNowUTC();
-            APMlog.controller.validate.msg='validacion completa para parametros ' + dateQuery.dateStart + dateQuery.dateEnd 
-            APMServ.loggerDB(APMlog)
         } catch (exception) {
             console.error('toSolicitud.list', exception);
-            APMlog.controller.validate.status=APMstatus.FAIL
-            APMlog.controller.validate.dateValidate=Utilities.getDateTimeNowUTC();
-            APMlog.controller.validate.msg='validacion NO completa para parametros '+ dateQuery.dateStart + dateQuery.dateEnd 
-            APMlog.controller.validate.error=exception
-            APMServ.loggerDB(APMlog)
+            logTemplate.type='Error'
+            logTemplate.status=APMstatus.FAIL.STATUSKEY
+            logTemplate.error=exception
+            log.log=logTemplate
+            log._id=APMServ.logToDB(log)
             throw new Meteor.Error('403', 'Ocurrio un error al obtener las solicitudes',exception);
         }
     },
-    run({ dateQuery }) {
+    run({ dateQuery },logTemplate,log) {
 
         const responseMessage = new ResponseMessage();
         try {
             const dateStartISO= Utilities.dateTimeToISO(dateQuery.dateStart)
             const dateEndISO= Utilities.dateTimeToISOEndDay(dateQuery.dateEnd)
-            const dateStart=Utilities.getDateTimeNowUTC();
-            APMlog.controller.run.status=APMstatus.SUCC
-            APMlog.controller.run.dateRunStart=dateStart
-            APMlog.controller.run.msg='Parametros usados para la consulta '+ 'dateStartISO '+dateStartISO+' dateEndISO '+dateEndISO
-            APMlog.controller.run.timeUsed=0
+    
             // Si error Mongo code 96 hay que aumentar memoria para ordenamiento al servidor de 32MB a mas
             // Ejecutar en la ventana de comando de MongoDb
             // mongo -u "root" -p CeroM3tros --authenticationDatabase "admin"
@@ -62,7 +53,7 @@ new ValidatedMethod({
             // Se debe obtener algo asi
             //db.adminCommand ({setParameter: 1, internalQueryExecMaxBlockingSortBytes: 335544320})
             // { "was" : 33554432, "ok" : 1 }
-            APMServ.loggerDB(APMlog)
+            
                 const toSol = ToSolicitudRepository.find(
                     {
                         'FechaSolicitud': { $gte: new Date(dateStartISO),
@@ -99,13 +90,10 @@ new ValidatedMethod({
                         sort:{IdSolicitud: -1}
                     }
                 ).fetch();
-                const dateEnd=Utilities.getDateTimeNowUTC();
-                APMlog.controller.run.dateRunEnd=dateEnd
-                APMlog.controller.run.timeUsed=Utilities.getDataTimeDiff_Seconds(dateStart,dateEnd) // Segundos
-                APMServ.loggerDB(APMlog)
-                const dateRunStartProcess= Utilities.getDateTimeNowUTC();
-                APMlog.controller.run.dateRunStartProcess=dateRunStartProcess
-                APMlog.controller.run.timeUsedOnProcess=0
+ 
+                logTemplate.dateRunEnd=Utilities.getDateTimeNowUTC();
+                logTemplate.dateRunStartProcess=Utilities.getDateTimeNowUTC();
+
                 const respuesta= toSol.filter(sol => {
                     sol._id=sol._id._str
                     sol.FechaSolicitud = toSolicitudServ.getDateAsString(sol.FechaSolicitud)
@@ -125,18 +113,18 @@ new ValidatedMethod({
                     if(sol.Suministro == null ) sol.Suministro=''
             return true
            });
-           const dateRunEndProcess=Utilities.getDateTimeNowUTC();
-           APMlog.controller.run.dateRunEndProcess=dateRunEndProcess
-           APMlog.controller.run.timeUsedOnProcess=Utilities.getDataTimeDiff_Seconds(dateRunStartProcess,dateRunEndProcess)
-           APMServ.loggerDB(APMlog)
-            responseMessage.create('Se ha obtenido la lista de solicitudes ', APMlog._id, respuesta);
+           logTemplate.dateRunEndProcess=Utilities.getDateTimeNowUTC();
+           log.log=logTemplate
+           log._id=APMServ.logToDB(log)
+            responseMessage.create('Se ha obtenido la lista de solicitudes ', log._id, respuesta);
         } catch (exception) {
             let errorDescription=''
             if (exception.code==96)
                     errorDescription= 'MongoError: Executor error during find command :: caused by :: Sort operation used more than the maximum 33554432 bytes of RAM. Add an index, or specify a smaller limit'
-            APMlog.controller.run.status=APMstatus.FAIL
-            APMlog.controller.run.error={exception, errorDescription}
-            APMServ.loggerDB(APMlog)
+            logTemplate.status=APMstatus.FAIL.STATUSKEY
+            logTemplate.error=exception
+            log.log=logTemplate
+            log._id=APMServ.logToDB(log)
             console.error('toSolicitud.list', exception);
             throw new Meteor.Error('toSolicitud.list', 'Ocurrió un error al obtener la lista de solicitudes');
         }

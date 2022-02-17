@@ -1,7 +1,9 @@
+
+
 import APMServ from "../../../api/AppPerformanceManagement/APMServ"
-import { APMstatus } from "../../../api/AppPerformanceManagement/APMStatus";
+import { APMstatus } from "../../both/APMStatus";
 import APMlog from "../../../api/AppPerformanceManagement/APMLog"
-import Utilities from "../../both/Utilities";
+import APMTemplate from "../../both/APMTemplate"
 /*
 *  Validar que la variable de entorno MAIL_URL este fijada
 */
@@ -118,26 +120,30 @@ emailTemplates.verifyEmail = {
     }
 };
 
-// Configuracion
+// Configuracion 
+        let logTemplate= new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'Configuration','MailServ',
+             'Configuracion del sistema de correo \n '+
+             ' Email URL:'+ process.env.MAIL_URL + '\n' +
+             ' Email sender:'+ process.env.SENDER_EMAIL+ '\n' +
+             ' Email LOGO IMAGE URL:'+ process.env.LOGO_IMAGE_PATH+ '\n' +
+             ' Email  APP IMAGE PATH:'+ process.env.PRODUCT_IMAGE_PATH + '\n' 
+            , 'Fijando variables de entorno para el servicio SMTP','');
+            logTemplate.msg='Variables de entorno para el servicio SMTP'
+        let log = new APMlog('','Configuration MailServ',logTemplate);
 try{
-    console.info(" Configuracion del sistema de correo");
-    console.info(" Email URL ",process.env.MAIL_URL);
-    console.info(" Email sender",process.env.SENDER_EMAIL);
-    console.info(' Email LOGO IMAGE URL:'+ process.env.LOGO_IMAGE_PATH);
-    console.info(' Email  APP IMAGE PATH:'+ process.env.PRODUCT_IMAGE_PATH);
-    APMlog.view.viewComponentName ='Configuracion SMTP'
-    APMlog.view.viewComponentParameters=[
-        'Configuracion del sistema de correo',
-        ' Email URL:'+ process.env.MAIL_URL,
-        ' Email sender:'+ process.env.SENDER_EMAIL,
-        ' Email LOGO IMAGE URL:'+ process.env.LOGO_IMAGE_PATH,
-        ' Email  APP IMAGE PATH:'+ process.env.PRODUCT_IMAGE_PATH
-    ]
-    APMlog.user = name
-    APMlog.view.status = APMstatus.SUCC
-    APMlog.view.dateViewCreated = Utilities.getDateTimeNowUTC()
-    APMlog.view.msg = "Aplicacion iniciada variables para servidor de correo SMTP"
-    APMServ.loggerDB(APMlog)
+    log.userId='Sistema CeroMetros MailServ' 
+    log._id=APMServ.logToDB(log)
+    console.info(" Configuracion del sistema de correo"+ '\n');
+    console.info(" Email URL ",process.env.MAIL_URL+ '\n');
+    console.info(" Email sender",process.env.SENDER_EMAIL+ '\n');
+    console.info(' Email LOGO IMAGE URL:'+ process.env.LOGO_IMAGE_PATH+ '\n');
+    console.info(' Email  APP IMAGE PATH:'+ process.env.PRODUCT_IMAGE_PATH+ '\n');
+    
 }catch(e){
     console.error("Error inicio de la aplicaion",e)
+    logTemplate.type='Error'
+    logTemplate.status=APMstatus.FAIL.STATUSKEY
+    logTemplate.error=e
+    log.log=logTemplate
+    log._id=APMServ.logToDB(log)
 }

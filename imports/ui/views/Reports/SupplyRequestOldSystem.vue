@@ -318,16 +318,15 @@ import { json2excel, excel2json } from "js2excel";
 
 import { APMstatus } from "../../../startup/both/APMStatus";
 import APMTemplate from "../../../startup/both/APMTemplate"
-import { DateTime } from "luxon";
+import APMLog from '../../../startup/both/APMLog'
 import Utilities from "../../../startup/both/Utilities"
-
 
 export default {
   name: "SupplyRequestOldSystem",
   components: {},
   data() {
     return {
-      logId:null,
+     
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -381,6 +380,8 @@ export default {
     let currentDate = new Date(this.dateEnd)
     currentDate.setMonth(currentDate.getMonth()-1);
     this.date= currentDate.toISOString().substr(0, 10)
+    
+
   },
   watch: {
     date(val) {
@@ -400,9 +401,10 @@ export default {
         
     }
   },
-  methods: {
+  methods: { 
     getToSolicitud() {
       this.$loader.activate("Buscando solicitudes de suministro... ...");
+
       Meteor.call(
         "toSolicitud.list",
         { dateQuery: { dateStart: this.date, dateEnd: this.dateEnd } },
@@ -410,40 +412,27 @@ export default {
           this.$loader.deactivate();
           if (error) {
       
-            this.$alert.showAlertSimple("error", error);
+            this.$alert.showAlertSimple("error", error.reason);
+            this.$alert.showAlertSimple("error", error.details);
+            console.error("error",error)
           } else {
             this.$alert.showAlertSimple("success", response.message);
-            this.tosolicitudes = response.data;
-            this.logId=response.description
-            console.log("this.logId",this.logId)
-            
+            console.info("response", response)
+            this.tosolicitudes = response.data;  
+           
           }
-       
-        }
+        } 
       );
     },
-    log(parametersP,msgP,errorP){
-      this.$loader.activate("Registrando informacion de monitoreo del aplicativo ...");
-  
+    logger(logView){
       Meteor.call(
-        "apm.logger",
-          { logObj: {
-            _id:APMlog._id,
-            viewComponentName:APMlog.view.viewComponentName,
-            status: APMlog.view.status,
-            dateViewCreated:APMlog.view.dateViewCreated,
-            viewComponentParameters:APMlog.view.viewComponentParameters,
-            msg:APMlog.view.msg,
-            error:APMlog.view.error
-          }
-        },
-        (error, response) => {
-          this.$loader.deactivate();
+        "apm.logger",logView,
+        (error, response) => { 
           if (error) {
             this.$alert.showAlertSimple("error", error);
-          }else{
-            return response.data
+            return ""
           }
+          return response.data
         }
       );
        
@@ -467,34 +456,38 @@ export default {
     exportExcelReport(){
       // this will be export a excel and the file's name is user-info-data.xlsx
       // the default file's name is excel.xlsx
-      
+      const cdt = new Date();
+      const currentDateTime = cdt.toString().slice(0, 24);
+      const fileName="0m-Sol-"+ currentDateTime
+      let logView=new APMLog('-',Meteor.userId(),new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'View','SupplyRequestOldSystem','', 'Exportando reporte a Excel...',''))
+      logView.log.dateRunStart=Utilities.getDateTimeNowUTC()
+      this.$loader.activate("Exportando reporte a Excel...");
       new Promise((resolve) => {
+         
         try {
-          //this.$loader.activate("Exportando a Excel...");
-        const cdt = new Date();
-        //const currentDateTime= cdt.getDay().toString()+"-"+cdt.getMonth().toString()+"-"+cdt.getFullYear().toString()+"-"+cdt.getHours().toString()+":"+cdt.getMinutes().toString()
-        const currentDateTime = cdt.toString().slice(0, 24);
+        
         const data = this.tosolicitudes;
-        const fileName = "0m-Sol-" + currentDateTime;
-        this.log(['fileName'],
-            'Exportando a Excel...',null);
-
+        
         json2excel({
           data,
           name: fileName,
           formateDate: "yyyy/mm/dd",
         });
+        
+
       } catch (e) {
         console.error("export error");
-        this.log(['fileName'],
-            'Exportando a Excel...',e);
+        logView.log.error= 'Error en la Exportacion de Reporte de solicitudes sistema anterior '+fileName + e
         this.$alert.showAlertSimple("error", e);
       } finally {
         //this.$loader.deactivate();
       }
+      
         resolve(1);
       });
-      
+      this.$loader.deactivate();
+      logView.log.dateRunEnd=Utilities.getDateTimeNowUTC()
+      this.logger(logView)
     },
     msgEndExportReport(){
       new Promise((resolve) => {

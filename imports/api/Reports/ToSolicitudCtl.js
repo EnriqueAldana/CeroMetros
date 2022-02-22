@@ -8,8 +8,10 @@ import toSolicitudServ from "./ToSolicitudServ"
 import  Utilities from "../../startup/both/Utilities";
 import APMServ from "../AppPerformanceManagement/APMServ"
 import { APMstatus } from "../../startup/both/APMStatus";
-import APMlog from "../AppPerformanceManagement/APMLog"
+import APMlog from "../../startup/both/APMLog"
 import APMTemplate from "../../startup/both/APMTemplate"
+let logTemplate
+let log
 new ValidatedMethod({
     name: 'toSolicitud.list',
     mixins: [MethodHooks],
@@ -17,29 +19,34 @@ new ValidatedMethod({
     beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
     afterHooks: [],
     validate({ dateQuery }) {
-        let logTemplate= new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'Controller','toSolicitud.list',
-             'dateStart: '+dateQuery.dateStart+' dateEnd:'+dateQuery.dateEnd, 'Obteniendo lista de solicitudes','');
-        let log = new APMlog('',Meteor.user().id,logTemplate);
+        
         try {
+            logTemplate= new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'Controller','toSolicitud.list',
+             'dateStart: ', 'Obteniendo lista de solicitudes','');
+            logTemplate.componentParameters= 'dateStart: '+dateQuery.dateStart+' dateEnd:'+dateQuery.dateEnd
+            logTemplate.dateRunStart=Utilities.getDateTimeNowUTC();
+            log = new APMlog('-',this.userId,logTemplate);
+            
             // actualizamos el Id del registro del log
             log._id=APMServ.logToDB(log)
-            //console.log("logId de la insercion ",logId)
+           
             check(dateQuery, 
                 {
                     dateStart: String,
                     dateEnd: String}
                 );
+            
         } catch (exception) {
             console.error('toSolicitud.list', exception);
             logTemplate.type='Error'
-            logTemplate.status=APMstatus.FAIL.STATUSKEY
+            logTemplate.statusKeyLog=APMstatus.FAIL.STATUSKEY
             logTemplate.error=exception
             log.log=logTemplate
-            log._id=APMServ.logToDB(log)
-            throw new Meteor.Error('403', 'Ocurrio un error al obtener las solicitudes',exception);
+            APMServ.logToDB(log)
+            throw new Meteor.Error('403', 'Ocurrio un error al validar los parametros para traer la lista de solicitudes',exception);
         }
     },
-    run({ dateQuery },logTemplate,log) {
+    run({ dateQuery }) {
 
         const responseMessage = new ResponseMessage();
         try {
@@ -115,18 +122,20 @@ new ValidatedMethod({
            });
            logTemplate.dateRunEndProcess=Utilities.getDateTimeNowUTC();
            log.log=logTemplate
-           log._id=APMServ.logToDB(log)
+           
+           APMServ.logToDB(log)
+           
             responseMessage.create('Se ha obtenido la lista de solicitudes ', log._id, respuesta);
         } catch (exception) {
             let errorDescription=''
             if (exception.code==96)
                     errorDescription= 'MongoError: Executor error during find command :: caused by :: Sort operation used more than the maximum 33554432 bytes of RAM. Add an index, or specify a smaller limit'
-            logTemplate.status=APMstatus.FAIL.STATUSKEY
+            logTemplate.statusKeyLog=APMstatus.FAIL.STATUSKEY
             logTemplate.error=exception
             log.log=logTemplate
-            log._id=APMServ.logToDB(log)
+            APMServ.logToDB(log)
             console.error('toSolicitud.list', exception);
-            throw new Meteor.Error('toSolicitud.list', 'Ocurrió un error al obtener la lista de solicitudes');
+            throw new Meteor.Error('403', 'Ocurrió un error al obtener la lista de solicitudes',exception);
         }
        
         return responseMessage;

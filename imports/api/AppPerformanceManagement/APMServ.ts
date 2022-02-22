@@ -1,6 +1,6 @@
 
 import { APM } from "./APM";
-import APMLog from "./APMLog"
+import APMLog from "../../startup/both/APMLog"
 import Utilities from "../../startup/both/Utilities"
 export default {
 
@@ -8,8 +8,9 @@ export default {
         let response = null;
        
         try {
-            if (apmlog._id == "") {
-                response = APM.insert(
+            
+            if (apmlog._id=='-' || apmlog._id==undefined) {
+                response = APM.insert(  // Regresa la cadena unica del Id
                     {
                         userId: apmlog.userId,
                         type: apmlog.log.type,
@@ -31,7 +32,7 @@ export default {
                 );
             } else {
 
-                response = APM.update(apmlog._id, {
+                response = APM.update(apmlog._id, { // Regresa un numero correspondiente al numero de registros actualizados
                     $set: {
                         userId: apmlog.userId,
                         type: apmlog.log.type,

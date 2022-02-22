@@ -5,6 +5,15 @@ mongodb://localhost:27017/admin
 Conexion PRODUCCION
 mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin
 
+Fijar usuario a MongoDB
+db.createUser({ user:"admin", pwd: "CeroM3tros", 
+roles:["clusterAdmin","readAnyDatabase","readWriteAnyDatabase",
+"userAdminAnyDatabase","dbAdminAnyDatabase"] });
+
+
+Entrar a MongoDb como administradores
+mongo localhost/admin -u admin -p
+
 Script para agregar atributos a usuarios.
 
 db.getCollection('users').update({status:{$exists:false}}, { $set:{status:{online:false}}},{multi:true})

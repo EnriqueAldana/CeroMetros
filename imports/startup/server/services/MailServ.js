@@ -2,9 +2,9 @@
 
 import APMServ from "../../../api/AppPerformanceManagement/APMServ"
 import { APMstatus } from "../../both/APMStatus";
-import APMlog from "../../../api/AppPerformanceManagement/APMLog"
+import APMlog from "../../both/APMLog"
 import APMTemplate from "../../both/APMTemplate"
-/*
+/* 
 *  Validar que la variable de entorno MAIL_URL este fijada
 */
 if(!process.env.MAIL_URL){
@@ -142,7 +142,7 @@ try{
 }catch(e){
     console.error("Error inicio de la aplicaion",e)
     logTemplate.type='Error'
-    logTemplate.status=APMstatus.FAIL.STATUSKEY
+    logTemplate.statusKeyLog=APMstatus.FAIL.STATUSKEY
     logTemplate.error=e
     log.log=logTemplate
     log._id=APMServ.logToDB(log)

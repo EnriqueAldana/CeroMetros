@@ -7,55 +7,53 @@ import {check, Match} from "meteor/check";
 import  Utilities from "../../startup/both/Utilities";
 import APMServ from "../AppPerformanceManagement/APMServ"
 import { APMstatus } from "../../startup/both/APMStatus";
-import APMlog from "../AppPerformanceManagement/APMLog"
+import APMlog from "../../startup/both/APMLog"
 import APMTemplate from "../../startup/both/APMTemplate"
 
+// el valor asignado permanece la vida del servidor
+let versionRequested="Initial login at StartUp Server"
 new ValidatedMethod({
     name:'version.app',
      mixins:[MethodHooks], 
      beforeHooks: [AuthGuard.isUserLogged],
     validate(version){
         let logTemplate= new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'Controller','version.app',
-             'version: '+version.appVersion, 'Obteniendo version del aplicativo','');
-        let log = new APMlog('',Meteor.user().id,logTemplate);
+             'version: ', 'Obteniendo version del aplicativo','');
+        let log = new APMlog('-',this.userId,logTemplate);
         try {
             
-            // actualizamos el Id del registro del log
-            log._id=APMServ.logToDB(log)
+            logTemplate.dateRunStart=Utilities.getDateTimeNowUTC();
             check(version,{
                 appVersion: Match.OneOf(String, null),
             });
-            
+            logTemplate.dateRunEnd=Utilities.getDateTimeNowUTC();
+            logTemplate.componentParameters='version: ' +versionRequested
+            logTemplate.msg= "Version del aplicativo: "+versionRequested
+            log.log=logTemplate
+            APMServ.logToDB(log)
+        
         }catch ( exception){
             console.error('version.app', exception);
             logTemplate.type='Error'
-            logTemplate.status=APMstatus.FAIL.STATUSKEY
+            logTemplate.statusKeyLog=APMstatus.FAIL.STATUSKEY
             logTemplate.error=exception
             log.log=logTemplate
-            log._id=APMServ.logToDB(log)
+            APMServ.logToDB(log)
             throw new Meteor.Error('403', 'La informacion introducida no es valida para obtener la VERSION DEL APP');
         }
         
     },
-    run(version,logTemplate,log){
+    run(version){
         const responseMessage = new ResponseMessage(); 
         try {
+            //console.log("User logeed",this.userId)
+            versionRequested= Version.getAppVersion();
             
-            version.appVersion= Version.getAppVersion();
-            logTemplate.dateRunEnd=Utilities.getDateTimeNowUTC();
-            logTemplate.msg= "Version del aplicativo: "+version.appVersion
-            log.log=logTemplate
-            log._id=APMServ.logToDB(log)
-            //console.log("version.appVersion",version.appVersion)
-            responseMessage.create("Version del aplicativo","Version codigo del servidor",version.appVersion);
+            responseMessage.create("Version del aplicativo","Version codigo del servidor",versionRequested);
             
         }catch ( exception){
             console.error('version.app', exception);
-            logTemplate.status=APMstatus.FAIL.STATUSKEY
-            logTemplate.error=exception
-            log.log=logTemplate
-            log._id=APMServ.logToDB(log)
-            throw new Meteor.Error('500', 'Ha ocurrido un error al guardar la empresa');
+            throw new Meteor.Error('403', 'Ha ocurrido un error al obtener la version del Aplicativo','Valor de la variable de entorno ZERO_METERS_VERSION');
         }
         return responseMessage;
     }

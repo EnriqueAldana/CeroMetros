@@ -1,8 +1,7 @@
 
-import Utilities from "../../startup/both/Utilities"
+import Utilities from "./Utilities"
 import { DateTime } from "luxon";
-import APMTemplate from "../../startup/both/APMTemplate";
-
+import APMTemplate from "./APMTemplate";
 export default class APMlog  {
     
         _id: String;
@@ -10,10 +9,11 @@ export default class APMlog  {
         readonly dateLogCreated: DateTime;  // Solo puede ser asignada en el constructor
         log : APMTemplate    
         
-        constructor(_id?:"",userId?:"",apmTemplate?:APMTemplate) {
+        constructor(_id:string,userId:string,apmTemplate?:APMTemplate) {
             this._id=_id
             this.userId=userId
             this.log=apmTemplate;
+            apmTemplate?this.log=apmTemplate: new APMTemplate()
             this.dateLogCreated  = Utilities.getDateTimeNowUTC();
           };
     

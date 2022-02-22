@@ -1,3 +1,5 @@
+import { Zone } from "luxon";
+import { Duration } from "luxon";
 import { DateTime, Settings } from "luxon";
 
 export default {
@@ -64,8 +66,8 @@ export default {
       return dt.toISO();
     },
     todayDateTimeISOString(){
-      return dt= DateTime.now().toUTC()
-      DateTime.fromJSDate(new Date(),{ locale: 'es_MX' }).toISO.toString
+      return  DateTime.now().toUTC().toISO().toString()
+      
     },
     dateTimeToISOEndDay(strDate){
       //console.log(strDate)
@@ -106,17 +108,6 @@ export default {
     getDateTimeNowUTCString(){
       return DateTime.now().toUTC().toString();
     },
-    getDateTimeNowLocalZone(zone){
-      let ret=null
-      try{
-          ret = DateTime.fromObject({
-            zone
-          });
-      }catch(e){
-
-      }
-      return ret;
-    },
     getDateTimeLocalZone(zone,dateTime){
       let ret=null
       try{
@@ -126,29 +117,61 @@ export default {
       }
       return ret;
     },
-    getDataTimeDiff_Seconds(dateTimeStart,dateTimeEnd){
-      return dateTimeEnd.diff(dateTimeStart)/1000
+    getDataTimeDiff_Seconds(dateTimeStart:DateTime,dateTimeEnd:DateTime){
+        let ret:number=0
+        
+        try{
+            if (this.isValidDateTime(dateTimeEnd) && this.isValidDateTime(dateTimeStart))
+             ret= dateTimeEnd.diff(dateTimeStart).milliseconds/1000
+        }catch(e){
+              console.error("Error en Utilities.getDataTimeDiff_Seconds" + e )
+        }finally{
+          return ret
+        }
+      
 
     },
     getDataTimeNowDiff_Seconds(dateTimeStart){
-      return DateTime.now().toUTC().diff(dateTimeStart).seconds
+          return DateTime.now().toUTC().diff(dateTimeStart).seconds
     }
     ,
     setDefaultZone(defaultZone){
       //"America/Mexico_City";
-      Settings.defaultZoneName = defaultZone
+     // Settings.defaultZoneName = defaultZone
     },
     setDefaultLocale(defaultLocale){
       // 'es_MX'
       Settings.defaultLocale=defaultLocale
     },
-    createDateTimeLocalZone(zone,dayP,monthP,yearP,hourP=0,minuteP=0,secondP=0){
+    // Probada
+    createDateTimeUTC_from_Millis(millisecondP:number,options: {zoneP:string,localeP?:string,outputCalendarP?:string,numberingSystemP?:string}){
+        let ret:DateTime=DateTime.now()
+        try{
+          ret = DateTime.fromMillis(millisecondP,{'zone':options.zoneP,'locale':options.localeP,'outputCalendar':options.outputCalendarP,'numberingSystem':options.numberingSystemP})
+        }catch(e){
+          console.error("Error en Utilities.createDateTimeUTC_from_Millis",e)
+        }finally{
+          return ret
+        }
+    },
+    createrDateTimeUTC(yearP: number, monthP: number, dayP: number, hourP: number, minuteP: number, secondP: number, millisecondP=0, options?: {localeP:string,outputCalendarP:string,numberingSystemP:string}){
+
+        let ret: DateTime
+        try{
+          ret=DateTime.utc(
+            yearP, monthP, dayP, hourP, minuteP,secondP,millisecondP,
+             { locale: options.localeP,outputCalendar:options.outputCalendarP,numberingSystem:options.numberingSystemP })
+        }catch(e){
+
+        }
+        
+        return ret
+    },
+    createDateTimeLocalZone(dayP:number,monthP:number,yearP:number,hourP:number=0,minuteP:number=0,secondP:number=0){
       ////"America/Mexico_City";
       let ret=null
       try{
         ret =DateTime.fromObject({
-          zone
-        }).set({
           day: dayP,
           month: monthP,
           year: yearP,
@@ -161,7 +184,7 @@ export default {
       }
       return ret;
     },
-    isValidDateTime(datetime){
+    isValidDateTime(datetime:DateTime){
       return datetime.isValid; //
     }
     

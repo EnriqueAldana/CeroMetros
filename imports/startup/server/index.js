@@ -80,7 +80,7 @@ import '../../api/AppPerformanceManagement/APM';
 import '../../api/AppPerformanceManagement/APMSeeder';
 import '../../api/AppPerformanceManagement/APMServ';
 import '../../api/AppPerformanceManagement/APMCtl';
-import '../../api/AppPerformanceManagement/APMLog';
+import '../both/APMLog';
 
 
 

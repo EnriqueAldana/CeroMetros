@@ -5,7 +5,7 @@ export default class APMTemplate  {
     type: String;  // Info, Warning , Error, Performance, etc
     statusKeyLog: String //success / fail;
     dateCreated: DateTime
-    componentType: String // View, Controller, File, DataBase, etc
+    componentType: String // View, Controller, File,Export Report, DataBase, etc
     componentName: String
     componentParameters: String
     msg: String // null || result

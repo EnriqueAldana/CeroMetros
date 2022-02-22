@@ -2,54 +2,55 @@ import AuthGuard from "../../middlewares/AuthGuard";
 import { ResponseMessage } from "../../startup/server/utilities/ResponseMesssage";
 import APMServ from "../AppPerformanceManagement/APMServ"
 import { APMstatus } from "../../startup/both/APMStatus";
-import APMlog from "../AppPerformanceManagement/APMLog"
-import { DateTime } from "luxon";
-
+import APMlog from "../../startup/both/APMLog"
+import Utilities from "../../startup/both/Utilities";
+let log
 new ValidatedMethod({
     name: 'apm.logger',
     mixins: [MethodHooks],
     beforeHooks: [AuthGuard.isUserLogged],
-    validate({ logObj }) {
-        let logTemplate= new APMTemplate('Info',APMstatus.SUCC.STATUSKEY,'View','apm.logger',
-        '', 'Guardando log APM','');
-        let log = new APMlog('',Meteor.user().id,logTemplate);
+    validate(logView ) {
         try {
+            log=logView
+            
+            //check(logObj,);
+            // Ajustar objetos de fecha a tipos DataTime
+            log.dateLogCreated=Utilities.createDateTimeUTC_from_Millis(
+                logView.dateLogCreated.ts, {'zone':'default'}
+            )
+            log.log.dateCreated=Utilities.createDateTimeUTC_from_Millis(
+                logView.log.dateCreated.ts, {'zone':'default'}
+            )
+            log.log.dateRunStart=Utilities.createDateTimeUTC_from_Millis(
+                logView.log.dateRunStart.ts, {'zone':'default'}
+            )
+            log.log.dateRunEnd=Utilities.createDateTimeUTC_from_Millis(
+                logView.log.dateRunEnd.ts, {'zone':'default'}
+            )
+            log.log.dateRunStartProcess=Utilities.createDateTimeUTC_from_Millis(
+                logView.log.dateRunStartProcess.ts, {'zone':'default'}
+            )
+            log.log.dateRunEndProcess=Utilities.createDateTimeUTC_from_Millis(
+                logView.log.dateRunEndProcess.ts, {'zone':'default'}
+            )
+
             log._id=APMServ.logToDB(log)
-        
-
-            check(logObj, {
-                _id:Match.OneOf(String, null),
-                viewComponentName: String,
-                status: {
-                    STATUSKEY: String,
-                    STATUSDESCRIPTION: String
-                },
-                dateViewCreated: String,
-                viewComponentParameters: [String],
-                msg: String,
-                error: Match.OneOf({}, null)
-
-            },
-            );
-            logTemplate.componentName=logObj.viewComponentName
-            logTemplate.componentParameter=logObj.viewComponentParameters
+            
+           
         } catch (exception) {
             console.error('apm.logger', exception);
-            logTemplate.type='Error'
-            logTemplate.status=APMstatus.FAIL.STATUSKEY
-            logTemplate.error=exception
-            log.log=logTemplate
-            log._id=APMServ.logToDB(log)
+            log.log.type='Error'
+            log.log.status=APMstatus.FAIL.STATUSKEY
+            log.log.error=exception
+            APMServ.logToDB(log)
             //throw new Meteor.Error('403', 'La información introducida no es valida para apm.logger');
         }
     },
-    run(logObj,logTemplate,log) {
+    run() {
         const responseMessage = new ResponseMessage();
         try {
             
-            logTemplate.dateRunEnd=Utilities.getDateTimeNowUTC();
-            log.log=logTemplate
-            log._id=APMServ.logToDB(log)
+            APMServ.logToDB(log)
             responseMessage.create('Se guardó la informacion de un registro de monitoreo del aplicativo ', 'Log Id',log._id);
         } catch (exception) {
             console.error('apm.logger', exception);

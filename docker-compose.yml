@@ -19,12 +19,13 @@ services:
   ssl-proxy:
     container_name: ssl-proxy
     image: justsml/ssl-proxy:latest
+    restart: on-failure
     environment:
     - HTTP_PORT=443
     - SERVER_NAME=cerometros.jealdana.com
     - UPSTREAM_TARGET=app:80
-    - CERT_PUBLIC_PATH=/certs/fullchain.pem
-    - CERT_PRIVATE_PATH=/certs/privkey.pem
+    - CERT_PUBLIC_PATH=/certs/jealdana.com_ssl_certificate.cer
+    - CERT_PRIVATE_PATH=/certs/_.jealdana.com_private_key.key
     volumes:
     - /certs:/certs:ro
     depends_on:
@@ -43,7 +44,7 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: CeroM3tros
     volumes:
       - $PWD/data:/data/db
@@ -62,10 +63,14 @@ services:
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_URL: "mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin"
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_OPTIONS_EDITORTHEME: "ambiance"
+      ME_CONFIG_MONGODB_SERVER: "mongo"
+      ME_CONFIG_BASICAUTH_USERNAME: "admin"
+      ME_CONFIG_BASICAUTH_PASSWORD: "pass"
+      ME_CONFIG_MONGODB_URL: "mongodb://admin:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: CeroM3tros
- 
+
  
   crontab:
     container_name: crontab

@@ -33,3 +33,7 @@ sudo cp /etc/letsencrypt/live/cerometros.dimemex.site/fullchain.pem /certs
 sudo cp /etc/letsencrypt/live/cerometros.dimemex.site/privkey.pem /certs
 ls /certs
 fullchain.pem  privkey.pem
+
+
+
+Certificado de IONOS

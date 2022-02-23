@@ -65,11 +65,12 @@ services:
     environment:
       ME_CONFIG_OPTIONS_EDITORTHEME: "ambiance"
       ME_CONFIG_MONGODB_SERVER: "mongo"
-      ME_CONFIG_BASICAUTH_USERNAME: "admin"
-      ME_CONFIG_BASICAUTH_PASSWORD: "pass"
-      ME_CONFIG_MONGODB_URL: "mongodb://admin:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin"
-      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_BASICAUTH_USERNAME: "root"
+      ME_CONFIG_BASICAUTH_PASSWORD: "CeroM3tros"
+      ME_CONFIG_MONGODB_URL: "mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: CeroM3tros
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
 
  
   crontab:

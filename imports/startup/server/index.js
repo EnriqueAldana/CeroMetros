@@ -12,7 +12,7 @@ import '../../api/Profiles/ProfilesPubs';
 import '../../api/Permissions/PermissionCtl';
 import '../../api/Permissions/PermissionPubs';
 import '../../api/SystemOptions/SystemOptionsCtl';
-import '../server/services/FirebaseAdmin';
+import './services/FirebaseAdmin';
 import '../../api/Messages/Message';
 import '../../api/Messages/MessagesCtl';
 import '../../api/Messages/MessagePubs';

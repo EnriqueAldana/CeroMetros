@@ -3,7 +3,7 @@ docker-compose build
 sudo docker-compose build
 
 Para crear solo la imagen del aplicativo
-docker-compose -f  build app
+docker-compose -f docker-compose.yml build app
 docker-compose -f docker-compose_No_ssl-proxy.yml build app
 
 Para iniciar una instancia de una imagen

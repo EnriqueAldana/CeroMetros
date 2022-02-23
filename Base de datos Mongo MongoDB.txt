@@ -5,6 +5,11 @@ mongodb://localhost:27017/admin
 Conexion PRODUCCION
 mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin
 
+Conexion WEB mediante mongo-express
+http://jealdana.com:8081/
+Usuario: root
+Contraseña: CeroM3tros
+
 Fijar usuario a MongoDB
 db.createUser({ user:"admin", pwd: "CeroM3tros", 
 roles:["clusterAdmin","readAnyDatabase","readWriteAnyDatabase",

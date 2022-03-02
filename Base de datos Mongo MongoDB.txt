@@ -30,6 +30,13 @@ REESTABLECER BASE DE datos
 mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
 mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGOINITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
 
+En Windows
+Nos posicionamos en el directorio del dump denominado
+C:\IngeCompu\CeroMetrosWeb\CeroMetrosApp\CeroMetros\database\zmeters8Feb2022\dump>
+Luego ejecutamos
+C:\PROGRA~1\MongoDB\Tools\100\bin\mongorestore -d zmeters zmeters/
+
+
 CONTRASEÑAS
 
 Usuario root
@@ -49,7 +56,7 @@ y en Mongo de Meteor se maneja con el segundo parametro: .find({},{sort:[campo:1
 hacer un backup
 mongodump  --port 27017 --host localhost --username admin --password admin --authenticationDatabase=zmeters admin --db zmeters --out database/zmeters8Feb2022
 mongodump --host="localhost" --port=27017
-
+mongodump  --port 27017 --host localhost --username "" --password "" --authenticationDatabase=zmeters admin --db zmeters --out /
 Remoto
 mongodump --uri="mongodb://<host URL/IP>:<Port>" [additional options]
 

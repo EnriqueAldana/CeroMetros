@@ -29,8 +29,12 @@ bin/kafka-server-start.sh config/server.properties
 3.- Probar funcionalidad
     3.1 Crear un topico
     bin/kafka-topics.sh --create --partitions 1 --replication-factor 1 --topic cerometros --bootstrap-server localhost:9092
+    .\bin\windows\kafka-topics.bat --create --partitions 1 --replication-factor 1 --topic mysql-mongo-tosolicitud  --bootstrap-server localhost:9092
+    
     3.2 Listar topicos
     bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+    
     3.3 Escibir un mensaje
     bin/kafka-console-producer.sh --topic cerometros --bootstrap-server localhost:9092
     3.4 Leeer un mensaje
@@ -39,25 +43,143 @@ bin/kafka-server-start.sh config/server.properties
 4.- Levantar el componente Connect en modo distribuido
     ./bin/connect-distributed.sh  ./config/connect-distributed.properties
 
-5.- Comprobar que los conectores esten reconocidos
-    http:localhost:8083/connector-plugins
+Valiudar uso de los puertos
+
+    netstat -a en windows
+
+5.- Comprobar que los conectores a las bases de datos esten reconocidos desde los JARs
+
+   GET  http:localhost:8083/connector-plugins
+
+Algo asi:  Si no salen hay que poner los JARS con los controladores JDBC
+
+[
+    {
+        "class": "com.mongodb.kafka.connect.MongoSinkConnector",
+        "type": "sink",
+        "version": "1.6.1-dirty"
+    },
+    {
+        "class": "com.mongodb.kafka.connect.MongoSourceConnector",
+        "type": "source",
+        "version": "1.6.1-dirty"
+    },
+    {
+        "class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "type": "sink",
+        "version": "10.2.6"
+    },
+    {
+        "class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+        "type": "source",
+        "version": "10.2.6"
+    },
+    {
+        "class": "org.apache.kafka.connect.file.FileStreamSinkConnector",
+        "type": "sink",
+        "version": "2.8.0"
+    },
+    {
+        "class": "org.apache.kafka.connect.file.FileStreamSourceConnector",
+        "type": "source",
+        "version": "2.8.0"
+    },
+    {
+        "class": "org.apache.kafka.connect.mirror.MirrorCheckpointConnector",
+        "type": "source",
+        "version": "1"
+    },
+    {
+        "class": "org.apache.kafka.connect.mirror.MirrorHeartbeatConnector",
+        "type": "source",
+        "version": "1"
+    },
+    {
+        "class": "org.apache.kafka.connect.mirror.MirrorSourceConnector",
+        "type": "source",
+        "version": "1"
+    }
+]
+
+5.5 Comprobar si tenemos Skin conectores
+GET http://localhost:8083/connectors
+
+Algo asi:
+[
+    "mongoDb-jdbc-connector-skin-tosolicitud",
+    "mysql-jdbc-connector-source-tosolicitud-update",
+    "mysql-jdbc-connector-source-tosolicitud-insert"
+]
+
+http://localhost:8083/connectors/mysql-jdbc-connector-source-tosolicitud-insert
+http://localhost:8083/connectors/mysql-jdbc-connector-source-tosolicitud-update
+http://localhost:8083/connectors/mongoDb-jdbc-connector-skin-tosolicitud
+
 6.- Crear un conector mediante POSTMAN
     tipo : POST
-    URL : http://localhost:8083/connectors
+    URL : http://172.20.84.23:8083/connectors
     BODY - RAW - JSON
-    {
-    "name": "CeroMts-MySql-jdbc-connector",
-    "config":{
-        "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-        "tasks.max": "2",
-        "connection.url": "jdbc:mysql://mysql/sccsc2?user=ceromts&password=ceromts",
-        "table.whitelist":"tosolicitud",
-        "mode": "timestamp+incrementing",
-        "incrementing.column.name": "IdSolicitud",
-        "timestamp.column.name": "EstatusSolicitud",
-        "topic.prefix": "tosolicitud-"
-    }
+
+Traer registros de MySql cuando inserten
+{
+ "name":"mysql-jdbc-connector-source-tosolicitud-insert",
+ "config":{
+     "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
+     "task.max":1,
+	 "connection.user":"SCCSCDesarrollo",
+	 "connection.password":"SCCSCDesarrollo.1",
+     "connection.url":"jdbc:mysql://172.20.84.23:3306/sccsc2",
+     "query": "SELECT * FROM (SELECT * FROM sccsc2.tosolicitud SELECT * FROM sccsc2.tosolicitud where FechaSolicitud >= '2022-01-01 00:00:00';) table_tosolicitud",
+     "mode":"incrementing",
+     "incrementing.column.name":"IdSolicitud",
+     "topic.prefix":"mysql-jdbc-connector-source-",
+     "validate.non.null":false
+ }
 }
+
+Traer registros cuando actualicen en MySQL
+{
+ "name":"mysql-jdbc-connector-source-tosolicitud-update",
+ "config":{
+     "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
+     "task.max":1,
+	 "connection.user":"SCCSCDesarrollo",
+	 "connection.password":"SCCSCDesarrollo.1",
+     "connection.url":"jdbc:mysql://172.20.84.23:3306/sccsc2",
+     "table.whitelist":"tosolicitud",
+     "mode":"timestamp",
+     "timestamp.column.name":"UPDATE_TS",
+     "topic.prefix":"mysql-jdbc-connector-source-",
+     "validate.non.null":false
+ }
+}
+
+Insertar en mongo
+{
+ "name":"mongoDb-jdbc-connector-skin-tosolicitud",
+ "config": {	
+			"connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
+			"task.max":1,
+			"topics":"mysql-jdbc-connector-source-tosolicitud",
+			"connection.url":"mongodb://jealdana.com:27017",
+			"database":"zmeters",
+			"collection":"tosolicitud",
+			"connection.user":"root",
+			"connection.password":"CeroM3tros",
+			"update.mode":"update",
+			"auto.create":true,
+            "document.id.strategy":"com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy",
+            "document.id.strategy.partial.value.projection.list":"IdSolicitud",
+            "document.id.strategy.partial.value.projection.type":"AllowList",
+            "writemodel.strategy":"com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"
+			
+ }
+}
+
+5.- Si se requiere borrar un conector
+DELETE http://localhost:8083/connectors/mongoDb-jdbc-connector-skin-tosolicitud
+donde el nombre del conector es : mongoDb-jdbc-connector-skin-tosolicitud
+
 
 5.- Crear un worker utilizando conexiones
     4.1 Configuracion del worker mediante un archivo
@@ -65,3 +187,14 @@ bin/kafka-server-start.sh config/server.properties
     4.2 Arrancar el conector connect
     bin/connect-standalone.sh -daemon config/connect-standalone-mysql-cerometros.properties config/connect-mysql-bulk-source.properties
     4.3 verificar la conexion del conector
+
+
+    Archivo Windows BAT para arrancar Kafka
+cls
+ECHO OFF
+ECHO Iniciando Kafka
+cd c:\kaf
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+.\bin\connect-distributed.bat  .\config\connect-distributed.properties

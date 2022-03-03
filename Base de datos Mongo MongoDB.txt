@@ -104,6 +104,18 @@ Matches all values that are not equal to a specified value.
 $nin
 Matches none of the values specified in an array.
 
+Consulta rango de Fechas
+{FechaSolicitud: { $gte: new Date('2022-01-01T00:00:00.000Z'), 
+$lte: new Date('2022-01-31T23:59:59.000Z') } }
+
+$and:[{u1:{$gt:30}},{u1:{$lt:60}}]}
+{IdSolicitud: { $gte: 4109506, 
+$lte: 4109993 } }
+
+{$and: [{IdSolicitud:{$gte: 4109506}},{IdSolicitud:{$lte: 4109993}}]} 
+
+
+
 
 Consultas ordenadas
 db.getCollection('apm').find({}).sort( { dataCreated: -1 } )

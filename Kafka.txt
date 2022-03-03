@@ -34,7 +34,10 @@ bin/kafka-server-start.sh config/server.properties
     3.2 Listar topicos
     bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 
-    
+    3.2.1 Borrar topicos
+    Agregar en server-properties
+
+   .\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --topic text_topic --delete
     3.3 Escibir un mensaje
     bin/kafka-console-producer.sh --topic cerometros --bootstrap-server localhost:9092
     3.4 Leeer un mensaje

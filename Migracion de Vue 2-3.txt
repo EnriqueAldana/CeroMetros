@@ -1,0 +1,5 @@
+Para impementar el componente de exportacion a Excel es necesario VUE 3
+Migracion a Vue 3
+https://www.freecodecamp.org/news/migrate-from-vue2-to-vue3-with-example-project/
+
+Implementacion 

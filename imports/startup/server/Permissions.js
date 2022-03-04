@@ -121,7 +121,14 @@ const Permissions={
     REPORTS:{
         SUPPLYREQUESTSOLDSYSTEM:{VALUE:'supplyrequestsoldsystem-view',TEXT:'Reporte de solicitudes de suministro sistema antiguo'}
     
-    }
+    },
+    UPLOADEDFILES:{
+        LIST:{VALUE:'uploadedfiles-view',TEXT:'Listar archivos cargados al sistema'},
+        CREATE:{VALUE:'uploadedfiles-create',TEXT:'Cargar archivos al sistema'},
+        UPDATE:{VALUE:'uploadedfiles-edit',TEXT:'Editar archivos cargados al sistema'},
+        DELETE:{VALUE:'uploadedfiles-delete',TEXT:'Borrar archivos cargados al sistema'}
+
+    },
 
 
     

@@ -6,9 +6,10 @@
       </v-col>
       <v-col cols="2">
         <v-btn
+          v-if="file"
           block
           type="submit"
-          form="saveFileUploaded"
+          form="saveFile"
           color="primary"
           v-text="dataView.targetButton"
         >
@@ -54,7 +55,11 @@
                       v-show="false"
                       ref="docFile"
                       v-model="file"
-                      accept="excel/xls,excel/xsls,cvs/cvs,text/txt,text/rtf,image/png, image/jpeg , image/bpm"
+                      accept="application/vnd.ms-excel,
+                              application/msword,application/pdf,
+                              application/vnd.ms-powerpoint,
+                              application/zip,text/csv,application/rtf,
+                              image/png, image/jpeg , image/bpm"
                     >
                     </v-file-input>
                     <v-btn
@@ -109,13 +114,31 @@
 </template>
 
 <script>
+import { DateTime } from 'luxon';
 import uploadFile from "../../mixins/uploadFile";
 export default {
   name: "SaveFileReportSupplyRequestOldSystem",
   mixins:[uploadFile], // docFile should be teh input Id name on v-file-input directive
   data() {
     return {
-      fileComments: "",
+      fileComments: "" ,
+      docFile:{
+        _id:null,
+        name:'',
+        dataBaseName:null,
+        size:0,
+        lastModifiedDate:null,
+        storedDate: null,
+        storePath: null,
+        group:'Supply Request Monthly Report',
+        type:'',
+        data:null,
+        annotations:'',
+        extension:'',
+        extensionWithDot:''
+      },
+
+
       dataView: {
         title: "",
         targetButton: "",
@@ -131,13 +154,14 @@ export default {
   methods: {
     
     saveFileUploaded() {
-      Object.assign({fileComment:fileComments}, this.file)
-      Object.assign({fileGroup:'Report'}, this.file)
-      
-      console.log("File: ", this.file);
-      console.log("dataFile: ", this.dataFile);
-      this.$loader.activate('Guardando usuario...');
-      Meteor.call('uploadedFile.save',{fileDoc:{fileMetaData:this.file,dataFile: this.dataFile}},(error,response) => {
+      this.docFile.name=this.file.name
+      this.docFile.size= this.file.size
+      this.docFile.lastModifiedDate= this.file.lastModifiedDate
+      this.docFile.type= this.file.type
+      this.docFile.data=this.dataFile
+      this.docFile.annotations=this.fileComments
+      this.$loader.activate('Guardando archivo...');
+      Meteor.call('uploadedFile.save',this.docFile,(error,response) => {
         this.$loader.deactivate();
         if(error){
               this.$alert.showAlertSimple('error',error.reason);

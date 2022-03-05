@@ -1,37 +1,38 @@
 
 import {Meteor} from "meteor/meteor";
-import {Company} from "./Company";
-
+import Utilities from "../../startup/both/Utilities"
+/*
+Docuemntacion 
+https://nodejs.dev/learn/writing-files-with-nodejs
+Banderas para el archivo
+r+ open the file for reading and writing
+w+ open the file for reading and writing, positioning the stream at the beginning of the file. The file is created if it does not exist
+a open the file for writing, positioning the stream at the end of the file. The file is created if it does not exist
+a+ open the file for reading and writing, positioning the stream at the end of the file. The file is created if it does not exist
+*/
 export default {
 
-    validateCompanyBussinessId(newCompanyBussinesId,idCompany){
+   saveFileOnLocalFS(docFile){
+    let ret= false
+    // process.env.FILES_LOCAL_PATH
+    const fs = require('fs')
+    const path = require('path')
 
-        const existsCompany= Company.findOne({companyBussinessId:newCompanyBussinesId});
-        if(idCompany !== null){  // actualizacion de Compañia
-            const oldCompany= Company.findOne(idCompany);
-            if(oldCompany.companyBussinessId !== newCompanyBussinesId && existsCompany){
-                throw new Meteor.Error('403', 'El nuevo RFC de empresa ya esta siendo usado');
-            }
-        }else if(existsCompany){ // es compañia nuevo pero el CompanyBussinesId  ya existe.
-                throw new Meteor.Error('403', 'El nuevo RFC de empresa  ya esta siendo utilizado');
-
-        }
-
-    },
-    validateCompanyName(newCompanyName,idCompany){
-        const existsCompany= Company.findOne({name:newCompanyName});
-        if(idCompany !== null){  // actualizacion de Compañia
-            const oldCompany= Company.findOne(idCompany);
-            if(oldCompany.name !== newCompanyName && existsCompany){
-                throw new Meteor.Error('403', 'El nuevo nombre de empresa ya esta siendo usado');
-            }
-        }else if(existsCompany){ // es compañia nuevo pero el CompanyBussinesId  ya existe.
-                throw new Meteor.Error('403', 'El nuevo nombre de empresa  ya esta siendo utilizado');
+    try{
+        docFile.storedDate=Utilities.getDateTimeNowUTC();
+        docFile.storePath=process.env.FILES_LOCAL_PATH
+        docFile.extensionWithDot=require('path').extname(docFile.name) // '.txt'
+        docFile.extension=docFile.extensionWithDot.slice(1);
+        if (docFile.dataBaseName != null){
+            fs.writeFile(docFile.storePath + path.sep + docFile.dataBaseName+docFile.extensionWithDot, 
+            docFile.data, 
+            { flag: 'a+' }, err => {})
 
         }
-    },
-    getUsersBycompany(idCompany){
-        const company = Company.findOne(idCompany);
-        return Meteor.users.find({'companyName':company.name}).fetch();
+        
+    }catch(e){
+        console.error(e)
     }
+
+   },
 }

@@ -24,3 +24,14 @@
  </v-container>
 </template>
 
+
+this.$loader.activate('Guardando usuario...');
+      Meteor.call('uploadedFile.save',{fileDoc:{fileMetaData:this.file,dataFile: this.dataFile}},(error,response) => {
+        this.$loader.deactivate();
+        if(error){
+              this.$alert.showAlertSimple('error',error.reason);
+        }else{
+          this.$alert.showAlertSimple('success',response.message);
+          this.$router.push({name: 'home.users'});
+        }
+      });

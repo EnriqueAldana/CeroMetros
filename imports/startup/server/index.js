@@ -80,6 +80,10 @@ import '../../api/AppPerformanceManagement/APM';
 import '../../api/AppPerformanceManagement/APMSeeder';
 import '../../api/AppPerformanceManagement/APMServ';
 import '../../api/AppPerformanceManagement/APMCtl';
+import '../../api/FileUploaded/FileUploaded';
+import '../../api/FileUploaded/FileUploadedCtl';
+import '../../api/FileUploaded/FileUploadedPubs';
+import '../../api/FileUploaded/FileUploadedServ';
 import '../both/APMLog';
 import './StartUp';
 

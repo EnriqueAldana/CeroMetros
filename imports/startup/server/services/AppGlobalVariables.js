@@ -6,6 +6,14 @@ import APMTemplate from "../../both/APMTemplate"
 *  Validar que la variable de entorno Globales
 */
 console.info(" Configuracion del sistema"+ '\n');
+
+if(!process.env.FILES_LOCAL_PATH){
+    if(Meteor.settings.private){
+        process.env.FILES_LOCAL_PATH= Meteor.settings.private.FILES_LOCAL_PATH;
+    }else{
+        console.warn("El FILES_LOCAL_PATH no ha sido configurado ");
+    }   
+}
 if(!process.env.REFRESH_PERMISSIONS){
     if(Meteor.settings.private){
         process.env.REFRESH_PERMISSIONS= Meteor.settings.private.REFRESH_PERMISSIONS;

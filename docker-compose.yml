@@ -13,6 +13,9 @@ services:
     env_file: docker.env
     ports:
       - 80:80
+    volumes:
+      - $PWD/uploadFiles:/data/uploadFiles
+     
     networks:
       - cerometros-net
   

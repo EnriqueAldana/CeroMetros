@@ -8,4 +8,4 @@ const uploadedFilesPublication=new PublishEndpoint('uploadedFiles.list',function
         });
 });
 
-uploadedFilesPublication.use(new PermissionMiddleware(Permissions.UPLOADEDFILES.LIST.VALUE));
+//uploadedFilesPublication.use(new PermissionMiddleware(Permissions.UPLOADEDFILES.LIST.VALUE));

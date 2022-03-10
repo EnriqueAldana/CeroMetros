@@ -8,7 +8,7 @@
         <div class="d-flex flex-row-reverse mb-5">
           <v-tooltip bottom>
             <template v-slot:activator="{on}">
-              <v-btn v-can:create.hide="'workstations'" color="success" v-on="on" fab dark :to="{name:'home.report.supplyrequest.create'}">
+              <v-btn v-can:create.hide="'supplyrequestsoldsystem'" color="success" v-on="on" fab dark :to="{name:'home.report.supplyrequest.create'}">
                 <v-icon>add</v-icon>
               </v-btn>
             </template>
@@ -25,7 +25,7 @@
           <template v-slot:item.action="{item}">
             <v-tooltip bottom>
               <template v-slot:activator="{on}">
-                <v-icon v-can:edit.hide="'workstations'" color="info" v-on="on" small class="mr-2" @click="openEditReport(item)">
+                <v-icon v-can:edit.hide="'supplyrequestsoldsystem'" color="info" v-on="on" small class="mr-2" @click="openEditReport(item)">
                   edit
                 </v-icon>
               </template>
@@ -33,7 +33,7 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{on}">
-                <v-icon v-can:delete.hide="'workstations'" color="error" v-on="on" small class="mr-2" @click="openRemoveModal(item)">
+                <v-icon v-can:delete.hide="'supplyrequestsoldsystem'" color="error" v-on="on" small class="mr-2" @click="openRemoveModal(item)">
                   delete
                 </v-icon>
               </template>
@@ -42,7 +42,7 @@
             <v-tooltip bottom>
               <template v-slot:activator="{on}">
                 
-                <v-icon v-can:delete.hide="'workstations'" color="error" v-on="on" small class="mr-2" @click="gotoDownload(item)">
+                <v-icon v-can:download.hide="'supplyrequestsoldsystem'" color="error" v-on="on" small class="mr-2" @click="gotoDownload(item)">
                   download
                 </v-icon>
               </template>
@@ -73,7 +73,7 @@
      </v-col>
     </v-row>
     <modal-remove ref="refModalRemove" v-bind:modalData="reportTemp"
-                  @id_element="downloadReportFile"></modal-remove>
+                  @id_element="deleteReportFile"></modal-remove>
   </v-container>
 </template>
 
@@ -123,7 +123,7 @@ export default {
             },
             deleteReportFile(idReport) {
               this.$loader.activate("Eliminando reporte de solicitudes....");
-              Meteor.call('report.supply.request.old.system.delete',{idReport},(error,response)=>{
+              Meteor.call('uploadedFile.delete',{idReport},(error,response)=>{
                 this.$loader.deactivate();
                 if(error){
                   this.$alert.showAlertSimple('error',error.reason);
@@ -132,17 +132,6 @@ export default {
                 }
               });
             },
-            downloadReportFile(idReport){
-              this.$loader.activate("Eliminando reporte de solicitudes....");
-              Meteor.call('uploadedFile.get',{idReport},(error,response)=>{
-                this.$loader.deactivate();
-                if(error){
-                  this.$alert.showAlertSimple('error',error.reason);
-                }else{
-                  this.$alert.showAlertSimple('success',response.message);
-                }
-              });
-            }
         },
         computed: {
           headers() {

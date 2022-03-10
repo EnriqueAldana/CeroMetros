@@ -69,8 +69,8 @@ export default {
 
         let ret = false
         try {
-            fs.unlink(docFile.storePath
-                + path.sep + docFile.name
+            fs.unlinkSync(docFile.storePath
+                + path.sep + docFile.dataBaseName
                 + docFile.extensionWithDot,
                 (err) => {
                     if (err) {
@@ -81,7 +81,8 @@ export default {
                 })
             ret = true
         } catch (e) {
-
+            console.error('removeFileOnLocalFS(docFile)', e);
+            throw new Meteor.Error('500', 'Ocurrio un error al eliminar el archivo del sistema');
         }
         return ret
 

@@ -122,19 +122,9 @@ const Permissions={
         SUPPLYREQUESTSOLDSYSTEM_LIST:{VALUE:'supplyrequestsoldsystem-view',TEXT:'Reporte de solicitudes de suministro sistema antiguo'},
         SUPPLYREQUESTSOLDSYSTEM_CREATE:{VALUE:'supplyrequestsoldsystem-create',TEXT:'Cargar Reporte de sol. de sum. sistema antiguo'},
         SUPPLYREQUESTSOLDSYSTEM_UPDATE:{VALUE:'supplyrequestsoldsystem-edit',TEXT:'Editar Reporte de sol. de sum. sistema antiguo'},
-        SUPPLYREQUESTSOLDSYSTEM_DELETE:{VALUE:'supplyrequestsoldsystem-delete',TEXT:'Borrar Reporte de sol. de sum. sistema antiguo'}
+        SUPPLYREQUESTSOLDSYSTEM_DELETE:{VALUE:'supplyrequestsoldsystem-delete',TEXT:'Borrar Reporte de sol. de sum. sistema antiguo'},
+        SUPPLYREQUESTSOLDSYSTEM_DOWNLOAD:{VALUE:'supplyrequestsoldsystem-download',TEXT:'Descargar Reporte de sol. de sum. sistema antiguo'}
     },
-    UPLOADEDFILES:{
-        LIST:{VALUE:'uploadedfiles-view',TEXT:'Listar archivos cargados al sistema'},
-        CREATE:{VALUE:'uploadedfiles-create',TEXT:'Cargar archivos al sistema'},
-        UPDATE:{VALUE:'uploadedfiles-edit',TEXT:'Editar archivos cargados al sistema'},
-        DELETE:{VALUE:'uploadedfiles-delete',TEXT:'Borrar archivos cargados al sistema'}
-        
-    },
-
-
-    
-
 };
 
 export const permissionsArray= Object.keys(Permissions).reduce((accumulator, systemModuleName)=>{

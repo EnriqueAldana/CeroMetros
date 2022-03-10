@@ -228,7 +228,7 @@ export default {
       this.dataView.targetButton="Actualizar";
       this.nuevo=false
       const tempRepor = this.$store.state.temporal.element;
-      console.info("Edit report",tempRepor)
+     // console.info("Edit report",tempRepor)
       this.docFile={
        _id:tempRepor._id,
         name:tempRepor.name,
@@ -259,10 +259,7 @@ export default {
       this.dateFormatted = this.formatDate(this.date);
       // Fijar fecha inicial permitida en calendario
     },
-    file(val){
-      console.info("Archivo:" , val)
-      console.info("Contenido:", this.dataFile)
-    }
+
   },
   methods: {
     saveFileUploaded() {

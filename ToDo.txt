@@ -101,6 +101,10 @@ OK 19 Enero 2022
     Implementar LOG del lado del FRONT
     15 Feb 2022
     21 Feb
+9 Marzo 2022
+La solucion fue crear una lista de archivos de CSV para descargar.
+Pendiente empacar la nueva solucion en Docker y desplegarla de manera de que coincidan los directorios de carga y descargar
+Revision de Permisos para reporte. OK 10 Marzo 2022
 
 
 FechaSolicitud:{ $gte:ISODate("2021-06-05T16:33:00.000Z"), $lte:ISODate("2021-06-05T16:33:00.000Z")}

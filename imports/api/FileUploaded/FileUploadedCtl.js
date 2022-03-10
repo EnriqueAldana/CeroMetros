@@ -10,12 +10,10 @@ import Utilities from '../../startup/both/Utilities'
 
 new ValidatedMethod({
     name:'uploadedFile.save',
-     mixins:[MethodHooks],
-     permissions: [Permissions.UPLOADEDFILES.CREATE.VALUE,Permissions.UPLOADEDFILES.UPDATE.VALUE],  
-     beforeHooks: [AuthGuard.checkPermission],
+    mixins:[MethodHooks],
+    beforeHooks: [AuthGuard.isUserLogged],
     validate(docFile){
         try {
-            console.log("Archivo a cargar ",docFile);
             check(docFile,{
                 _id: Match.OneOf(String, null),
                 name: String,
@@ -38,7 +36,7 @@ new ValidatedMethod({
             console.error('uploadedFile.save', exception);
             throw new Meteor.Error('403', 'La informacion introducida no es valida');
         }
-        // Validar que no haya compañias con el mismo nombre y BussinesID
+       
         
     },
     run(docFile){
@@ -94,12 +92,11 @@ new ValidatedMethod({
 new ValidatedMethod({
     name: 'uploadedFile.delete',
     mixins: [MethodHooks],
-    permissions: [Permissions.UPLOADEDFILES.DELETE.VALUE],
-    beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
+    beforeHooks: [AuthGuard.isUserLogged],
     afterHooks: [],
-    validate({ idUploadedFile }){
+    validate({ idReport }){
         try {
-            check(idUploadedFile, String);
+            check(idReport, String);
         }catch (exception) {
             console.error('uploadedFile.delete', exception);
             throw new Meteor.Error('403', 'Ocurrio un error al eliminar el archivo cargado');
@@ -107,47 +104,20 @@ new ValidatedMethod({
         // validar que no sea posible eliminar una empresa si hay un usuario utilizandolo.
        
     },
-    run({ idUploadedFile }){
+    run({ idReport }){
         const responseMessage = new ResponseMessage();
+        console.log("id de archivo a borrar",idReport)
         try {
-            UploadedFiles.remove(idUploadedFile);
+            // Traer el registro de la base de datos
+            const docFile=UploadedFiles.findOne(idReport)
+            const isDeleted=FileUploadedServ.removeFileOnLocalFS(docFile)
+            if(isDeleted){
+                UploadedFiles.remove(idReport);
+            }
                 responseMessage.create('Archivo eliminado exitosamente');
         }catch (exception) {
             console.error('uploadedFile.delete', exception);
             throw new Meteor.Error('500', 'Ocurrio un error al eliminar el archivo');
-        }
-
-        return responseMessage;
-    }
-});
-
-new ValidatedMethod({
-    name: 'uploadedFile.get',
-    mixins: [MethodHooks],
-    beforeHooks: [AuthGuard.isUserLogged],
-    afterHooks: [],
-    validate({ idUploadedFile }){
-        try {
-            console.log("idUploadedFile : ",idUploadedFile)
-            check(idUploadedFile, String);
-        }catch (exception) {
-            console.error('uploadedFile.get', exception);
-            throw new Meteor.Error('403', 'Ocurrio un error al obtener el archivo cargado');
-        }
-        // validar que no sea posible eliminar una empresa si hay un usuario utilizandolo.
-       
-    },
-    run({ idUploadedFile }){
-        const responseMessage = new ResponseMessage();
-        try {
-            const fileMetaData= UploadedFiles.findOne({"_id":idUploadedFile})
-            console.info("MetaDatos del archivo",fileMetaData)
-            const fileData= FileUploadedServ.getFileOnLocalFS(fileMetaData)
-            console.info("Datos del archivo",fileData)
-            responseMessage.create('Archivo obtenido exitosamente','se descargó archivo'+fileMetaData.name, fileData);
-        }catch (exception) {
-            console.error('uploadedFile.get', exception);
-            throw new Meteor.Error('500', 'Ocurrio un error al obtener el archivo');
         }
 
         return responseMessage;

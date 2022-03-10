@@ -7,7 +7,7 @@
       "SALES": "cerometros@jealdana.com"
     },
     "REFRESH_PERMISSIONS": false,   
-    "REFRESH_STATIC_PROFILES": false,
+    "REFRESH_STATIC_PROFILES": true,
     "SHOW_ZERO_METERS_VERSION":true,
     "ZERO_METERS_USER":"Mi empresa",
     "ZERO_METERS_VERSION":"0.0.1",

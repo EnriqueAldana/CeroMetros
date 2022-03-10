@@ -25,8 +25,15 @@ function commentNode(el, vnode) {
 
 Vue.directive('can', function(el, binding, vnode) {
     const behaviour = binding.modifiers.disable ? 'disable' : 'hide';
+   /* const profile=Meteor.user().profile.profile;
+    console.log("Perfil Ususario",profile)
+    console.log("Usuario",Meteor.userId())
+    console.log("Valor a buscar", binding.value )
+    console.log("Argumento a buscar", binding.arg )
+    */
     const ok = Roles.userIsInRole(Meteor.userId(), `${ binding.value }-${ binding.arg }`,
         Meteor.user().profile.profile);
+   // console.log("Esta permiso:",ok)
     if (!ok) {
         if (behaviour === 'hide') {
             commentNode(el, vnode);

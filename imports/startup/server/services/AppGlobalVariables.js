@@ -14,6 +14,14 @@ if(!process.env.FILES_LOCAL_PATH){
         console.warn("El FILES_LOCAL_PATH no ha sido configurado ");
     }   
 }
+if(!process.env.URL_REMOTE_FILE_SERVER){
+    if(Meteor.settings.public){
+        process.env.URL_REMOTE_FILE_SERVER= Meteor.settings.public.URL_REMOTE_FILE_SERVER;
+    }else{
+        console.warn("El URL_REMOTE_FILE_SERVER no ha sido configurado ");
+    }   
+}
+
 if(!process.env.REFRESH_PERMISSIONS){
     if(Meteor.settings.private){
         process.env.REFRESH_PERMISSIONS= Meteor.settings.private.REFRESH_PERMISSIONS;

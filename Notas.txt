@@ -131,3 +131,9 @@ local.valueOf() === rezoned.valueOf(); //=> true
 
 Para ejercitar
 https://codesandbox.io/s/typescript-luxon-9tq27?from-embed
+
+
+Manejo de archivos 
+
+Para generacion de archivos en el lado del cliente:
+https://github.com/eligrey/FileSaver.js/

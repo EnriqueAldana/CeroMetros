@@ -7,6 +7,7 @@ import FileUploadedServ from "./FileUploadedServ";
 import {check, Match} from "meteor/check";
 import Utilities from '../../startup/both/Utilities'
 
+
 new ValidatedMethod({
     name:'uploadedFile.save',
      mixins:[MethodHooks],
@@ -19,16 +20,17 @@ new ValidatedMethod({
                 _id: Match.OneOf(String, null),
                 name: String,
                 dataBaseName:Match.OneOf(String, null),
-                size: Match.Integer,
-                lastModifiedDate: Date,
-                storedDate: Match.OneOf(Date, null),
+                size: Match.OneOf(Match.Integer, String),
+                lastModifiedDate: Match.OneOf(Date,String),
+                storedDate: Match.OneOf(Date, null,String),
                 storePath: Match.OneOf(String, null),
                 group: String,
                 type: String,
-                data: String,
+                data: Match.OneOf(String, null),
                 annotations: Match.OneOf(String, null),
                 extension: Match.OneOf(String, null),
-                extensionWithDot: Match.OneOf(String, null)
+                extensionWithDot: Match.OneOf(String, null),
+                expireDate: String
 
             });
 
@@ -43,11 +45,18 @@ new ValidatedMethod({
         const responseMessage = new ResponseMessage(); 
         try {
             if(docFile._id !== null){
-                
+                const expD = Utilities.dateTimeFrom_yyyy_MM_ddTo_UTC(docFile.expireDate)
+                UploadedFiles.update(docFile._id,{
+                    $set: {
+                    annotations: docFile.annotations,
+                    expireDate:expD
+                    }
+                });
                 responseMessage.create('Se actualizó el archivo exitosamente');
             }else{
                 // Guardar en disco el archivo de acuerdo a : process.env.FILES_LOCAL_PATH
-                
+
+                let expDate = Utilities.dateTimeFrom_yyyy_MM_ddTo_UTC(docFile.expireDate)
                 let insertKey=''
                 insertKey=UploadedFiles.insert({
                     name: docFile.name,
@@ -60,8 +69,8 @@ new ValidatedMethod({
                     type: docFile.type,
                     annotations: docFile.annotations,
                     extension:require('path').extname(docFile.name).slice(1),
-                    extensionWithDot: require('path').extname(docFile.name)
-                    
+                    extensionWithDot: require('path').extname(docFile.name),
+                    expireDate: expDate
                 });
                 if(insertKey.length>0){
                     docFile.dataBaseName=insertKey
@@ -101,11 +110,44 @@ new ValidatedMethod({
     run({ idUploadedFile }){
         const responseMessage = new ResponseMessage();
         try {
-            FileUploaded.remove(idUploadedFile);
+            UploadedFiles.remove(idUploadedFile);
                 responseMessage.create('Archivo eliminado exitosamente');
         }catch (exception) {
             console.error('uploadedFile.delete', exception);
             throw new Meteor.Error('500', 'Ocurrio un error al eliminar el archivo');
+        }
+
+        return responseMessage;
+    }
+});
+
+new ValidatedMethod({
+    name: 'uploadedFile.get',
+    mixins: [MethodHooks],
+    beforeHooks: [AuthGuard.isUserLogged],
+    afterHooks: [],
+    validate({ idUploadedFile }){
+        try {
+            console.log("idUploadedFile : ",idUploadedFile)
+            check(idUploadedFile, String);
+        }catch (exception) {
+            console.error('uploadedFile.get', exception);
+            throw new Meteor.Error('403', 'Ocurrio un error al obtener el archivo cargado');
+        }
+        // validar que no sea posible eliminar una empresa si hay un usuario utilizandolo.
+       
+    },
+    run({ idUploadedFile }){
+        const responseMessage = new ResponseMessage();
+        try {
+            const fileMetaData= UploadedFiles.findOne({"_id":idUploadedFile})
+            console.info("MetaDatos del archivo",fileMetaData)
+            const fileData= FileUploadedServ.getFileOnLocalFS(fileMetaData)
+            console.info("Datos del archivo",fileData)
+            responseMessage.create('Archivo obtenido exitosamente','se descargó archivo'+fileMetaData.name, fileData);
+        }catch (exception) {
+            console.error('uploadedFile.get', exception);
+            throw new Meteor.Error('500', 'Ocurrio un error al obtener el archivo');
         }
 
         return responseMessage;

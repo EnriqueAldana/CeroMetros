@@ -60,10 +60,24 @@ export default {
 
     },
     dateTimeToISO(strDate){
-      //console.log(strDate)
-      var dt = DateTime.fromFormat(strDate, "yyyy-MM-dd", { locale: 'es_MX' })
-      //console.log(dt.toISO())
+      console.log(strDate)
+      let dt
+      if (strDate){
+       // dt= DateTime.fromFormat(strDate, 'yyyy-MM-dd')
+        dt = DateTime.fromFormat(strDate, "yyyy-MM-dd", { locale: 'es_MX' })
+      }
+      console.log(dt.toISO())
       return dt.toISO();
+    },
+    dateTimeFrom_yyyy_MM_ddTo_UTC(strDate){
+      console.log(strDate)
+      let dt
+      if (strDate){
+       // dt= DateTime.fromFormat(strDate, 'yyyy-MM-dd')
+        dt = DateTime.fromFormat(strDate, "yyyy-MM-dd",  {zone: 'America/Mexico_City'})
+      }
+      console.log(dt.toUTC())
+      return dt.toUTC();
     },
     todayDateTimeISOString(){
       return  DateTime.now().toUTC().toISO().toString()
@@ -101,6 +115,10 @@ export default {
       const dateFolio =DateTime.now().toISO({ format: 'basic' }) //=> '20210923T175537.004-0500'
       return dateFolio.substr(6, 2)+dateFolio.substr(4, 2)+dateFolio.substr(0, 4)+dateFolio.substr(9, 6)
      
+    },
+    getDateDayMonthYear_from_UTC(dateTimeP:DateTime){
+      if(this.isValidDateTime(dateTimeP))
+        return dateTimeP.get('day')+"-"+dateTimeP.get('month')+"-"+dateTimeP.get('year')
     },
     getDateTimeNowUTC(){
       return DateTime.now().toUTC();

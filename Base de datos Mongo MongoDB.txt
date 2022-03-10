@@ -1,5 +1,29 @@
 Base de datos Mongo MongoDB
 
+Importacion mediante Mongo Tools
+
+mongoimport --username root --password CeroM3tros --url=mongodb://jealdana.com:27017/zmeters?authSource=admin --collection=tosolicitud --type=csv --file=./Solicitudes_Enero2022.csv --mode=insert --ignoreBlanks
+  
+mongoimport --username root  \
+            --password CeroM3tros  \
+            --db tosolicitud \
+            --collection tosolicitud \
+            --type csv \ 
+            --ignoreBlanks \
+            --host jealdana.com  \
+            --port 27017  \
+            --columnsHaveTypes \
+            --fields ["IdSolicitud.int32()","IdMaquina.int32()","IdUsuario.int32()","IdCaja.int32()","CantidadCaja.decimal()","CantidadTapa.decimal()","FechaSolicitud.date(2022-01-31 11:58:42)","FechaDespachoTotal.date(2022-01-31 11:58:42)","FechaDespachoParcial.date(2022-01-31 11:58:42)","FechaEspectativaDespacho.date(2022-01-31 11:58:42)","EstatusSolicitud.int32()","SurtidoEnDucto.string()","GrupoOperador.int32()","numordprod.int32()","TipoSolicitud.int32()","Medida.string()","Resistencia.string()","Borde.string()","Suministro.string()","SumTipo.string()","Actividad.string()","FechaPreSolicitud.date(2022-01-31 11:58:42)","UPDATE_TS.date(2022-01-31 11:58:42)"] \
+            --file /Users/enrique/DiscoDeEnrique/2021/Proyectos/CeroMetros/database/CVS/Solicitudes_Enero2022.csv 
+ 
+          
+
+mongoimport --db=users --collection=contacts --type=csv \
+   --columnsHaveTypes \
+   --fields="name.string(),birthdate.date(2006-01-02),contacted.boolean(),followerCount.int32(),thumbnail.binary(base64)" \
+   --file=/example/file.csv
+
+
 Conexion Local
 mongodb://localhost:27017/admin
 Conexion PRODUCCION

@@ -1,37 +1,5 @@
-<template>
-<v-container>
-<v-row>
-      <v-col>
-        <div class="headline">Reporte de solicitudes de suministros mensuales</div>
-      </v-col>
-      
-      <v-col cols="2">
-        
-      </v-col>
-      
-</v-row>
-<v-row>
-  <v-card
-    class="d-flex pa-2"
-    outlined
-    tile
-  >
-    <div>
-      <iframe src="http://localhost:8080" height="900" width="900" title="Reportes mensuales"></iframe>
-    </div>
-  </v-card>
-</v-row>
- </v-container>
-</template>
+{group: 'SupplyRequestMonthlyReportOldsystem'},
+                                        {_id:1,name:1,size:1,annotations:1,expireDate:1}
 
 
-this.$loader.activate('Guardando usuario...');
-      Meteor.call('uploadedFile.save',{fileDoc:{fileMetaData:this.file,dataFile: this.dataFile}},(error,response) => {
-        this.$loader.deactivate();
-        if(error){
-              this.$alert.showAlertSimple('error',error.reason);
-        }else{
-          this.$alert.showAlertSimple('success',response.message);
-          this.$router.push({name: 'home.users'});
-        }
-      });
+                          fields:{_id:1,name:1,size:1,annotations:1,expireDate:1}

@@ -15,7 +15,7 @@ let log
 new ValidatedMethod({
     name: 'toSolicitud.list',
     mixins: [MethodHooks],
-    permissions: [Permissions.REPORTS.SUPPLYREQUESTSOLDSYSTEM.VALUE],
+    permissions: [Permissions.REPORTS.SUPPLYREQUESTSOLDSYSTEM_LIST.VALUE],
     beforeHooks: [AuthGuard.checkPermission],  // Aqui se verifica si los permisos de usuario son adecuados para esta accion
     afterHooks: [],
     validate({ dateQuery }) {

@@ -91,9 +91,9 @@ export default [
                 routeName:'home.estacionoperacion'
             },
             {
-                title:'Reporte de solicitudes de suministro sistema antiguo',
-                permission: Permissions.REPORTS.SUPPLYREQUESTSOLDSYSTEM.VALUE,
-                routeName:'home.reports.supplyRequestOldSystem'
+                title:'Reportes solicitudes de suministro',
+                permission: Permissions.REPORTS.SUPPLYREQUESTSOLDSYSTEM_LIST.VALUE,
+                routeName:'home.report.supplyrequest'
             },
 
     ]

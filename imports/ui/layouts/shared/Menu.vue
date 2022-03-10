@@ -191,12 +191,12 @@
                   </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                      <v-list-item v-if="validatePermission('supplyrequestsoldsystem-view')" :to="{name:'home.reports.supplyRequestOldSystem'}">                                   
+                      <v-list-item v-if="validatePermission('supplyrequestsoldsystem-view')" :to="{name:'home.report.supplyrequest'}">                                   
                         <v-list-item-icon>
                           <v-icon >mdi-notebook</v-icon>
                         </v-list-item-icon>
                         <v-list-item-content>
-                          <v-list-item-title >Reporte sol. sum. Escritorio</v-list-item-title>
+                          <v-list-item-title >Reporte solicitudes sum.</v-list-item-title>
                         </v-list-item-content>
                       </v-list-item>
                 </v-expansion-panel-content>

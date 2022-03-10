@@ -18,7 +18,7 @@
     
   },
   "public":{
-    "URL_REMOTE_FILE_SERVER":"http://localhost:8080/descargar/"
+    "URL_REMOTE_FILE_SERVER":"http://jealdana.com:8080/descargar/"
   }
 
 }

@@ -23,6 +23,7 @@ hacer un backup
         git clone https://github.com/EnriqueAldana/CeroMetros.git   
 3.- Crear directorio para persistir datos
     /data/db   con privilegios para el grupo cerometros
+    /data/uploadFiles
     /opt/database
     /opt/backups
 4.- Fijar variables de entorno 

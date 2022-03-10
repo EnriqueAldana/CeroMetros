@@ -21,7 +21,7 @@ hacer un backup
         sudo usermod -a -G docker cerometros
 2.- Bajar el codigo de GitHub
         git clone https://github.com/EnriqueAldana/CeroMetros.git   
-3.- Crear directorio para persistir datos
+3.- Crear directorio para persistir datos. SE PERSISTE EN $PWD
     /data/db   con privilegios para el grupo cerometros
     /data/uploadFiles
     /opt/database
@@ -95,3 +95,8 @@ docker-compose down
         docker exec -ti cerometros-web bash
         Ejecutar env y revisar variables de entorno
         Revisar envio de correos e imagenes en catalogo de usuarios
+
+
+Agustar permisos a Directorio
+chown cerometros ./CeroMetrosFileServer/
+chgrp cerometros ./CeroMetrosFileServer/

@@ -275,7 +275,7 @@ export default {
         this.docFile.annotations=this.fileComments
         this.docFile.expireDate= this.date
       }
-      console.info("Archivo x guardar: ", this.docFile.data)
+
       this.$loader.activate('Guardando archivo...');
       Meteor.call('uploadedFile.save',this.docFile,(error,response) => {
         this.$loader.deactivate();

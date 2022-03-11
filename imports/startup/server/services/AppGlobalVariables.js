@@ -96,6 +96,9 @@ try{
     console.log(' ZERO_METERS_USER:'+ process.env.ZERO_METERS_USER+ '\n');
     console.log(' ZERO_METERS_VERSION:'+ process.env.ZERO_METERS_VERSION);
     console.log(' MONGO_URL:'+ process.env.MONGO_URL);
+    console.log(' FILES_LOCAL_PATH:',process.env.FILES_LOCAL_PATH)
+    console.log(' URL_REMOTE_FILE_SERVER:',process.env.URL_REMOTE_FILE_SERVER)
+    
 }catch(e){
     console.error("Error inicio de la aplicación variables globales",e)
 }

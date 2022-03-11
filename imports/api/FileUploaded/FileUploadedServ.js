@@ -18,11 +18,7 @@ const nativeB64 = new Base64({ useNative: true });
 export default {
 
     saveFileOnLocalFS(docFile) {
-        let ret = false
-        // process.env.FILES_LOCAL_PATH
-
-
-        try {
+        if (docFile.dataBaseName != null) {
             docFile.storedDate = Utilities.getDateTimeNowUTC();
             docFile.storePath = process.env.FILES_LOCAL_PATH
             docFile.extensionWithDot = require('path').extname(docFile.name) // '.txt'
@@ -34,18 +30,26 @@ export default {
             const datafileToDecode = docFile.data.substring(i + 1);
             //Now, that we have just the Base64 encoded String, we can decode it
             const dataFile=nativeB64.decode(datafileToDecode);
-            if (docFile.dataBaseName != null) {
-                fs.writeFile(docFile.storePath + path.sep + docFile.dataBaseName + docFile.extensionWithDot,
-                    dataFile,
-                    { flag: 'a+' }, err => { })
-
+            
+                const fileNameWithPath=docFile.storePath + path.sep + docFile.dataBaseName + docFile.extensionWithDot
+                /*fs.writeFile(fileNameWithPath,dataFile,{ flag: 'a+' }, 
+                    err => { 
+                        if(err){
+                            console.error("Error al gurdar el archivo:" + fileNameWithPath)
+                            console.error("error trace:" + err)
+                            return false
+                        }   
+                    }) 
+                */
+                    try {
+                        fs.writeFileSync(fileNameWithPath, dataFile)
+                        //file written successfully
+                        return true
+                      } catch (err) {
+                        console.error("Error al escribir el archivo en el sistema",err)
+                        return false
+                      }   
             }
-
-        } catch (e) {
-            console.error(e)
-        }
-
-
     },
     getFileOnLocalFS(fileMetaData) {
         let data

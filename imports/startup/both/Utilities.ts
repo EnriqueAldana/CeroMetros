@@ -70,13 +70,13 @@ export default {
       return dt.toISO();
     },
     dateTimeFrom_yyyy_MM_ddTo_UTC(strDate){
-      console.log(strDate)
+    
       let dt
       if (strDate){
        // dt= DateTime.fromFormat(strDate, 'yyyy-MM-dd')
         dt = DateTime.fromFormat(strDate, "yyyy-MM-dd",  {zone: 'America/Mexico_City'})
       }
-      console.log(dt.toUTC())
+     //console.log(dt.toUTC())
       return dt.toUTC();
     },
     todayDateTimeISOString(){

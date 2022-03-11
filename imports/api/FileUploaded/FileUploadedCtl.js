@@ -72,13 +72,18 @@ new ValidatedMethod({
                 });
                 if(insertKey.length>0){
                     docFile.dataBaseName=insertKey
-                    UploadedFiles.update(insertKey,{
+                    const isUpdated=UploadedFiles.update(insertKey,{
                         $set: {
                         dataBaseName: insertKey
                         }
                     });
+                   // console.info("isUpdated "+ insertKey + " num "+isUpdated)
                 }
-                FileUploadedServ.saveFileOnLocalFS(docFile)
+                if(!FileUploadedServ.saveFileOnLocalFS(docFile)){
+                    const isDeleted=UploadedFiles.remove(insertKey)
+                    //console.info("Se borro el archivo?:" +insertKey + " num"+isDeleted)
+                    throw new Meteor.Error('403', 'Ha ocurrido un error al guardar el archivo en el sistema: ');
+                 }
                 responseMessage.create('Se cargó el archivo exitosamente');
             }
         }catch ( exception){

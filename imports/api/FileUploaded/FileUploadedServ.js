@@ -2,6 +2,8 @@
 import { Meteor } from "meteor/meteor";
 import { Base64 } from 'meteor/ostrio:base64';
 import Utilities from "../../startup/both/Utilities"
+import FileOperations from "../../startup/server/utilities/FileOperations";
+import { UploadedFiles } from "./FileUploaded";
 /*
 Docuemntacion 
 https://nodejs.dev/learn/writing-files-with-nodejs
@@ -15,7 +17,7 @@ const fs = require('fs')
 import { mkdir } from 'fs';
 const path = require('path')
 const nativeB64 = new Base64({ useNative: true });
-
+const PATH_UPLOADED_FILES = 'uploadedFiles/';
 export default {
 
     saveFileOnLocalFS(docFile) {
@@ -30,12 +32,12 @@ export default {
             const i = docFile.data.indexOf(",");
             const datafileToDecode = docFile.data.substring(i + 1);
             //Now, that we have just the Base64 encoded String, we can decode it
-            const dataFile=nativeB64.decode(datafileToDecode);
-                const nameFileWithExt=docFile.dataBaseName+docFile.extensionWithDot
-                const fileNameWithPath=path.join(docFile.storePath,nameFileWithExt )
-                const fileNamePath=path.join(docFile.storePath)
-                const fileComponents= path.parse(fileNameWithPath);
-                console.info("Componentes del archivo y ruta: ", fileComponents)
+            const dataFile = nativeB64.decode(datafileToDecode);
+            const nameFileWithExt = docFile.dataBaseName + docFile.extensionWithDot
+            const fileNameWithPath = path.join(docFile.storePath, nameFileWithExt)
+            const fileNamePath = path.join(docFile.storePath)
+            const fileComponents = path.parse(fileNameWithPath);
+            console.info("Componentes del archivo y ruta: ", fileComponents)
                 /*fs.writeFile(fileNameWithPath,dataFile,{ flag: 'a+' }, 
                     err => { 
                         if(err){
@@ -45,68 +47,68 @@ export default {
                         }   
                     }) 
                 */  console.info("fileNamePath:", fileNamePath)
-                    console.info("fileNameWithPath:",fileNameWithPath)
-                    const dir = fs.statSync('fileNamePath');
-                    let isDirectory=false
-                    let isFile=false
-                    let isThereDirectrory= false
-                    try{
-                        isDirectory=dir.isDirectory()
-                        isFile=dir.isFile
-        
-                        if(isDirectory){
-                            console.info("El path " + fileNamePath + " es un direcrorio")
-                        }else{
-                            console.info("El path " + fileNamePath + " NO es un direcrorio")
-                        }
-                        
-                    }catch(r){
-                        console.error(r)
-                    }
-                    // To check file path exist
-                        try{
-                            isThereDirectrory= fs.existsSync(dir)
-                            if (!isThereDirectrory) {
-                                console.warn("No existe el directorio:" + fileNamePath + " será creado...")
-                                mkdir(fileNamePath, { recursive: true }, (err) => {
-                                    if (err) {
-                                        throw err;
-                                    }else{
-                                        console.info("El directorio "+ fileNamePath+ " fué creado")
-                                    }
-                                  });
-                                
-                            }else{
-                                console.warn("El directorio:" + fileNamePath + " existe.")
-                            }
-                        }catch(er){
-                            console.error("No se ha conseguido crear el directorio:", dir)
-                        }
-                    try {
-                        // Si el directorio existe
-                        const existDir= fs.statSync('fileNamePath');
-                        if(existDir.isDirectory()){
-                            fs.writeFileSync(fileNameWithPath, dataFile)
-                            console.info("El archivo "+ fileNameWithPath + " ha sido guardado...")
-                        }else{
-                            console.info("El archivo "+ fileNameWithPath + " NO ha sido guardado porque no existe el directorio o no se tienen permisos")
-                        }
-                        
-                        //file written successfully
-                        return true
-                      } catch (err) {
-                        console.error("Error al escribir el archivo en el sistema",err)
-                        return false
-                      }   
+            console.info("fileNameWithPath:", fileNameWithPath)
+            const dir = fs.statSync('fileNamePath');
+            let isDirectory = false
+            let isFile = false
+            let isThereDirectrory = false
+            try {
+                isDirectory = dir.isDirectory()
+                isFile = dir.isFile
+
+                if (isDirectory) {
+                    console.info("El path " + fileNamePath + " es un direcrorio")
+                } else {
+                    console.info("El path " + fileNamePath + " NO es un direcrorio")
+                }
+
+            } catch (r) {
+                console.error(r)
             }
+            // To check file path exist
+            try {
+                isThereDirectrory = fs.existsSync(dir)
+                if (!isThereDirectrory) {
+                    console.warn("No existe el directorio:" + fileNamePath + " será creado...")
+                    mkdir(fileNamePath, { recursive: true }, (err) => {
+                        if (err) {
+                            throw err;
+                        } else {
+                            console.info("El directorio " + fileNamePath + " fué creado")
+                        }
+                    });
+
+                } else {
+                    console.warn("El directorio:" + fileNamePath + " existe.")
+                }
+            } catch (er) {
+                console.error("No se ha conseguido crear el directorio:", dir)
+            }
+            try {
+                // Si el directorio existe
+                const existDir = fs.statSync('fileNamePath');
+                if (existDir.isDirectory()) {
+                    fs.writeFileSync(fileNameWithPath, dataFile)
+                    console.info("El archivo " + fileNameWithPath + " ha sido guardado...")
+                } else {
+                    console.info("El archivo " + fileNameWithPath + " NO ha sido guardado porque no existe el directorio o no se tienen permisos")
+                }
+
+                //file written successfully
+                return true
+            } catch (err) {
+                console.error("Error al escribir el archivo en el sistema", err)
+                return false
+            }
+        }
     },
     getFileOnLocalFS(fileMetaData) {
         let data
         // process.env.FILES_LOCAL_PATH
         try {
-            let pathFull=fileMetaData.storePath + path.sep + fileMetaData.dataBaseName + fileMetaData.extensionWithDot
+            let pathFull = fileMetaData.storePath + path.sep + fileMetaData.dataBaseName + fileMetaData.extensionWithDot
             console.info("pathFull", pathFull)
-            fs.readFileSync(pathFull,'utf8', (err, data) => {
+            fs.readFileSync(pathFull, 'utf8', (err, data) => {
                 if (err) {
                     console.error(err)
                     return
@@ -139,6 +141,56 @@ export default {
         }
         return ret
 
+    },
+    async deleteFileOnGoogleStorage(dataBaseName) {
+        if (dataBaseName) {
+            try {
+                await FileOperations.deleteFilesOfFolderFromGoogleStorage(PATH_UPLOADED_FILES + dataBaseName);
+            } catch (err) {
+                throw new Meteor.Error('403', 'Error al borrar el archivo en google Store');
+            }
+            try {
+                UploadedFiles.remove(dataBaseName);
+            } catch (err) {
+                throw new Meteor.Error('403', 'Ha ocurrido un error al actualizar el path del archivo : ' + retUrl + " En el registro " + dataBaseName)
+            }
+
+
+        }
+
+
+    },
+    async saveFileOnGoogleStorage(file, dataBaseName) {
+        let retUrl = null;
+        if (file) {
+            try {
+                const response = await FileOperations.saveFileFromBase64ToGoogleStorage(file, dataBaseName,
+                    PATH_UPLOADED_FILES + dataBaseName);
+                if (!response.data.success) {
+                    throw new Meteor.Error('403', 'Error al subir el archivo a google Store');
+                } else {
+                    retUrl = response.data.fileUrl;
+                }
+            } catch (e) {
+                throw new Meteor.Error('403', 'Ha ocurrido un error al guardar el archivo en Google Store: ')
+            }
+            try {
+                // Actualizar BD con el path
+                //console.info("Url del archivo:",retUrl )
+                UploadedFiles.update(dataBaseName, {
+                    $set: {
+                        'storePath': retUrl
+                    }
+                });
+            } catch (err) {
+                throw new Meteor.Error('403', 'Ha ocurrido un error al actualizar el path del archivo : ' + retUrl + " En el registro " + dataBaseName)
+            }
+
+
+
+        }
+
     }
+
 
 }

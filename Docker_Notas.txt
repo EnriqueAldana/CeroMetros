@@ -42,6 +42,7 @@ docker images
 
 Para ejecutar un COMPOUSE
 docker-compose up -d nombre_imagen
+docker-compose up -d app
 
 Para Listar Imegenes corriendo
 docker ps

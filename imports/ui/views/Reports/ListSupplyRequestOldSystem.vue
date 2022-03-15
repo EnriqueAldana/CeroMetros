@@ -106,9 +106,7 @@ export default {
         methods: {
           ...mapMutations('temporal',['setElement']),
             gotoDownload(item) {
-             
-              window.open(Meteor.settings.public.URL_REMOTE_FILE_SERVER+item.dataBaseName+item.extensionWithDot+"/"+item.name,'_blank');
-              
+              window.open(item.storePath,'_blank'); 
             },
             openEditReport(report) {
               //Guardar en Vuex para recuperar en la vistad de company.save

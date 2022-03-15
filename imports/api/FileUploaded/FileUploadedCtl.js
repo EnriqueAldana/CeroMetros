@@ -1,7 +1,6 @@
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
 import {ResponseMessage} from "../../startup/server/utilities/ResponseMesssage";
 import AuthGuard from "../../middlewares/AuthGuard";
-import Permissions from "../../startup/server/Permissions";
 import {UploadedFiles} from "./FileUploaded";
 import FileUploadedServ from "./FileUploadedServ";
 import {check, Match} from "meteor/check";
@@ -14,6 +13,7 @@ new ValidatedMethod({
     beforeHooks: [AuthGuard.isUserLogged],
     validate(docFile){
         try {
+           
             check(docFile,{
                 _id: Match.OneOf(String, null),
                 name: String,
@@ -39,7 +39,7 @@ new ValidatedMethod({
        
         
     },
-    run(docFile){
+    async run(docFile){
         const responseMessage = new ResponseMessage(); 
         try {
             if(docFile._id !== null){
@@ -79,11 +79,21 @@ new ValidatedMethod({
                     });
                    // console.info("isUpdated "+ insertKey + " num "+isUpdated)
                 }
+                try{
+                    await FileUploadedServ.saveFileOnGoogleStorage(docFile.data,docFile.dataBaseName)
+                    
+                }catch(errr){
+                    UploadedFiles.remove(insertKey)
+                    throw new Meteor.Error('403', 'Ha ocurrido un error al guardar el archivo en el sistema: ')
+                }
+                
+                /*
                 if(!FileUploadedServ.saveFileOnLocalFS(docFile)){
                     const isDeleted=UploadedFiles.remove(insertKey)
                     //console.info("Se borro el archivo?:" +insertKey + " num"+isDeleted)
                     throw new Meteor.Error('403', 'Ha ocurrido un error al guardar el archivo en el sistema: ');
                  }
+                 */
                 responseMessage.create('Se cargó el archivo exitosamente');
             }
         }catch ( exception){
@@ -109,16 +119,18 @@ new ValidatedMethod({
         // validar que no sea posible eliminar una empresa si hay un usuario utilizandolo.
        
     },
-    run({ idReport }){
+     async run({ idReport }){
         const responseMessage = new ResponseMessage();
         console.log("id de archivo a borrar",idReport)
         try {
+            await FileUploadedServ.deleteFileOnGoogleStorage(idReport)
             // Traer el registro de la base de datos
-            const docFile=UploadedFiles.findOne(idReport)
+            /*const docFile=UploadedFiles.findOne(idReport)
             const isDeleted=FileUploadedServ.removeFileOnLocalFS(docFile)
             if(isDeleted){
                 UploadedFiles.remove(idReport);
             }
+            */
                 responseMessage.create('Archivo eliminado exitosamente');
         }catch (exception) {
             console.error('uploadedFile.delete', exception);

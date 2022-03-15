@@ -259,6 +259,9 @@ export default {
       this.dateFormatted = this.formatDate(this.date);
       // Fijar fecha inicial permitida en calendario
     },
+    file(val){
+      //console.info("Archivo por subir" , val)
+    }
 
   },
   methods: {

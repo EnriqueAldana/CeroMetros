@@ -31,8 +31,8 @@ export default {
             const datafileToDecode = docFile.data.substring(i + 1);
             //Now, that we have just the Base64 encoded String, we can decode it
             const dataFile=nativeB64.decode(datafileToDecode);
-            
-                const fileNameWithPath=path.join(docFile.storePath, docFile.name)
+                const nameFileWithExt=docFile.dataBaseName+docFile.extensionWithDot
+                const fileNameWithPath=path.join(docFile.storePath,nameFileWithExt )
                 const fileNamePath=path.join(docFile.storePath)
                 const fileComponents= path.parse(fileNameWithPath);
                 console.info("Componentes del archivo y ruta: ", fileComponents)

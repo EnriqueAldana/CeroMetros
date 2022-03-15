@@ -134,3 +134,7 @@ These clients, from other containers on the same Docker network, will use the ka
 kafka-console-producer.sh --broker-list kafka:9092 --topic test
 kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic test --from-beginning
 Similarly, application code will need to use bootstrap.servers=kafka:9092
+
+
+INICIAR UN Docker image con un bash
+docker run --entrypoint sh app_file_server_image

@@ -14,8 +14,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - $PWD/uploadFiles:/data/uploadFiles
-     
+      - $PWD/uploadFiles:/uploadFiles
     networks:
       - cerometros-net
   

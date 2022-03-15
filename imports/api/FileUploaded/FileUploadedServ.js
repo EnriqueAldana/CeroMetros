@@ -12,6 +12,7 @@ a open the file for writing, positioning the stream at the end of the file. The 
 a+ open the file for reading and writing, positioning the stream at the end of the file. The file is created if it does not exist
 */
 const fs = require('fs')
+import { mkdir } from 'fs';
 const path = require('path')
 const nativeB64 = new Base64({ useNative: true });
 
@@ -31,7 +32,10 @@ export default {
             //Now, that we have just the Base64 encoded String, we can decode it
             const dataFile=nativeB64.decode(datafileToDecode);
             
-                const fileNameWithPath=docFile.storePath + path.sep + docFile.dataBaseName + docFile.extensionWithDot
+                const fileNameWithPath=path.join(docFile.storePath, docFile.name)
+                const fileNamePath=path.join(docFile.storePath)
+                const fileComponents= path.parse(fileNameWithPath);
+                console.info("Componentes del archivo y ruta: ", fileComponents)
                 /*fs.writeFile(fileNameWithPath,dataFile,{ flag: 'a+' }, 
                     err => { 
                         if(err){
@@ -40,9 +44,54 @@ export default {
                             return false
                         }   
                     }) 
-                */
+                */  console.info("fileNamePath:", fileNamePath)
+                    console.info("fileNameWithPath:",fileNameWithPath)
+                    const dir = fs.statSync('fileNamePath');
+                    let isDirectory=false
+                    let isFile=false
+                    let isThereDirectrory= false
+                    try{
+                        isDirectory=dir.isDirectory()
+                        isFile=dir.isFile
+        
+                        if(isDirectory){
+                            console.info("El path " + fileNamePath + " es un direcrorio")
+                        }else{
+                            console.info("El path " + fileNamePath + " NO es un direcrorio")
+                        }
+                        
+                    }catch(r){
+                        console.error(r)
+                    }
+                    // To check file path exist
+                        try{
+                            isThereDirectrory= fs.existsSync(dir)
+                            if (!isThereDirectrory) {
+                                console.warn("No existe el directorio:" + fileNamePath + " será creado...")
+                                mkdir(fileNamePath, { recursive: true }, (err) => {
+                                    if (err) {
+                                        throw err;
+                                    }else{
+                                        console.info("El directorio "+ fileNamePath+ " fué creado")
+                                    }
+                                  });
+                                
+                            }else{
+                                console.warn("El directorio:" + fileNamePath + " existe.")
+                            }
+                        }catch(er){
+                            console.error("No se ha conseguido crear el directorio:", dir)
+                        }
                     try {
-                        fs.writeFileSync(fileNameWithPath, dataFile)
+                        // Si el directorio existe
+                        const existDir= fs.statSync('fileNamePath');
+                        if(existDir.isDirectory()){
+                            fs.writeFileSync(fileNameWithPath, dataFile)
+                            console.info("El archivo "+ fileNameWithPath + " ha sido guardado...")
+                        }else{
+                            console.info("El archivo "+ fileNameWithPath + " NO ha sido guardado porque no existe el directorio o no se tienen permisos")
+                        }
+                        
                         //file written successfully
                         return true
                       } catch (err) {

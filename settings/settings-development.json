@@ -1,6 +1,6 @@
 {
   "private":{
-    "MAIL_URL": "smtp://cerometros@jealdana.com:cerometros2022$@smtp.ionos.mx:587",
+    "MAIL_URL": "smtp://cerometros@jealdana.com:Cero_M3tros1937$_2022@smtp.ionos.mx:587",
     "SENDER_EMAILS":{
       "CONTACT": "cerometros@jealdana.com",
       "SUPPORT": "cerometros@jealdana.com",

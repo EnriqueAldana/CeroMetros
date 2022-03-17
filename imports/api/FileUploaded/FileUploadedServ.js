@@ -23,7 +23,7 @@ export default {
     saveFileOnLocalFS(docFile) {
         if (docFile.dataBaseName != null) {
             docFile.storedDate = Utilities.getDateTimeNowUTC();
-            docFile.storePath = process.env.FILES_LOCAL_PATH
+            docFile.storePath = ""
             docFile.extensionWithDot = require('path').extname(docFile.name) // '.txt'
             docFile.extension = docFile.extensionWithDot.slice(1);
             // Decodificar docFile.data
@@ -104,7 +104,7 @@ export default {
     },
     getFileOnLocalFS(fileMetaData) {
         let data
-        // process.env.FILES_LOCAL_PATH
+        
         try {
             let pathFull = fileMetaData.storePath + path.sep + fileMetaData.dataBaseName + fileMetaData.extensionWithDot
             console.info("pathFull", pathFull)

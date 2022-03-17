@@ -4,10 +4,14 @@ import serviceAccount from '../../../../settings/cerometros-firebase-adminsdk-ub
 
 firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert(serviceAccount),
-    storageBucket: 'gs://cerometros.appspot.com'
+    storageBucket: Meteor.settings.private.STORAGE_BUCKET
 });
 
-export const firebaseAdminsStorage = firebaseAdmin.storage().bucket('gs://cerometros.appspot.com');
-export const BASE_URL_STORAGE='http://storage.googleapis.com';
+export const firebaseAdminsStorage = firebaseAdmin.storage().bucket(Meteor.settings.private.STORAGE_BUCKET);
+
+// Depende del valor de la variable de ambiente
+//
+export const BASE_URL_STORAGE= Meteor.settings.private.BASE_URL_STORAGE
+//'http://storage.googleapis.com';
 
 

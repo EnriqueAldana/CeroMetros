@@ -52,7 +52,7 @@ new ValidatedMethod({
                 });
                 responseMessage.create('Se actualizó el archivo exitosamente');
             }else{
-                // Guardar en disco el archivo de acuerdo a : process.env.FILES_LOCAL_PATH
+            
 
                 let expDate = Utilities.dateTimeFrom_yyyy_MM_ddTo_UTC(docFile.expireDate)
                 let insertKey=''
@@ -62,7 +62,7 @@ new ValidatedMethod({
                     size: docFile.size,
                     lastModifiedDate: docFile.lastModifiedDate,
                     storedDate: Utilities.getDateTimeNowUTC(),
-                    storePath: process.env.FILES_LOCAL_PATH,
+                    storePath: "",
                     group: docFile.group,
                     type: docFile.type,
                     annotations: docFile.annotations,

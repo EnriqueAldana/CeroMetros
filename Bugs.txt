@@ -1,0 +1,27 @@
+Defectos
+
+================= Defectos Urgentes
+1.- El componenete de subir archivos devuelve el path NO Seguro
+http://storage.googleapis.com/cerometros.appspot.com/uploadedFiles/qy2Zm6vvRoN5hiS2Z/qy2Zm6vvRoN5hiS2Z48.csv
+
+Y debe regresarlo
+https://storage.googleapis.com/cerometros.appspot.com/uploadedFiles/qy2Zm6vvRoN5hiS2Z/qy2Zm6vvRoN5hiS2Z48.csv
+
+Por lo tanto en desarrollo la descarga funciona bien, en PRODUCTIVO con SSL obliga a ponerle una s al path directo en la BD
+
+Solucion ajustar export const BASE_URL_STORAGE
+que a su vez depende del ambiente de despliegue
+process.env.METEOR_SETTINGS
+
+2.- El usuario reporta que no recibe los correos.
+ProSe soluciona dando de alta un buzon en nuestro dominio jealdana.com y agregando un forward a sus correos
+
+
+
+============= Defectos deseables
+1.- En el componente de subir archivos la imagen que se sube no se despliega y no baja del repositorio.
+Ocurre solo con algunas imagenes
+
+
+
+

@@ -47,7 +47,7 @@ new ValidatedMethod({
         const responseMessage = new ResponseMessage(); 
         try {
             //console.log("User logeed",this.userId)
-            versionRequested= Version.getAppVersion();
+            versionRequested= Version.getAppVersion() + " - " +Version.getAppEnvironment()
             
             responseMessage.create("Version del aplicativo","Version codigo del servidor",versionRequested);
             
@@ -58,5 +58,3 @@ new ValidatedMethod({
         return responseMessage;
     }
  });
-
-

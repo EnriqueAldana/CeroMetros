@@ -53,14 +53,18 @@ db.getCollection('messages').update({read: {$exists: false}},{$set:{read: false}
 REESTABLECER BASE DE datos
 mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
 mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGOINITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
+Desde PRODUCCION
+1.- Traer los Backups a local
+2.- Colocarse en el directorio
+/Users/enrique/DiscoDeEnrique/2022/Proyectos/CeroMetros/Dump/backup-20220316_010001
+mongorestore --db zmeters zmeters
 
 En Windows
 Nos posicionamos en el directorio del dump denominado
 C:\IngeCompu\CeroMetrosWeb\CeroMetrosApp\CeroMetros\database\zmeters8Feb2022\dump>
 Luego ejecutamos
 C:\PROGRA~1\MongoDB\Tools\100\bin\mongorestore -d zmeters zmeters/
-
-
+ 
 CONTRASEÑAS
 
 Usuario root

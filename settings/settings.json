@@ -9,12 +9,14 @@
     "REFRESH_PERMISSIONS": false,
     "REFRESH_STATIC_PROFILES": false,
     "SHOW_ZERO_METERS_VERSION": true,
-    "ZERO_METERS_USER": "Mi empresa",
-    "ZERO_METERS_VERSION": "0.0.1",
+    "ZERO_METERS_USER": "Mi empresa en DEV",
+    "ZERO_METERS_VERSION": "0.0.2",
     "PRODUCT_IMAGE_PATH": "https://firebasestorage.googleapis.com/v0/b/cerometros.appspot.com/o/ZeroMts_Product.png?alt=media&token=084767d8-190f-4fb6-8cab-ee1a40f2c00d",
     "LOGO_IMAGE_PATH": "https://firebasestorage.googleapis.com/v0/b/cerometros.appspot.com/o/Logo.png?alt=media&token=0a923e0e-df2f-4201-a910-0d5a7ad735f2'",
-    "BASE_URL_STORAGE": "http: //storage.googleapis.com",
+    "BASE_URL_STORAGE": "http://storage.googleapis.com",
     "STORAGE_BUCKET": "gs://cerometros.appspot.com",
-    "MONGO_URL": "mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin"
+    "MONGO_URL": "mongodb://localhost:27017/zmeters?authSource=admin",
+    "ROOT_URL":"http://localhost:3000",
+    "METEOR_ENV":"development"
   }
 }

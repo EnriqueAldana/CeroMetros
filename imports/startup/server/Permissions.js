@@ -172,18 +172,13 @@ if(Meteor.settings.private && Meteor.settings.private.REFRESH_PERMISSIONS){
                 });
             }catch{
                 console.log('El permiso'+ permission.VALUE+' NO se actualizo en la tabla roles');
-            }
-            
-        }
-        
+            }          
+        }  
     }
     const updatedRoles= Roles.getAllRoles().fetch();
     console.log('updatedRoles en la coleccion roles', updatedRoles);
     
-}else{
-    console.log('Not Updating permissions...');
 }
-
 export default Permissions;
 
 // https://github.com/Meteor-Community-Packages/meteor-roles

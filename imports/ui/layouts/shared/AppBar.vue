@@ -12,7 +12,7 @@
   
     <v-toolbar-title>
     <p class="font-weight-black">
-      Sistema Cero Metros Version - {{this.version.appVersion}}
+      Sistema Cero Metros Version - {{this.version.appVersion}} - 
     </p>
     
     </v-toolbar-title>
@@ -69,7 +69,7 @@
                 }
                 return this.version.appVersion;
               });
-            }
+            },
     },
 
   }

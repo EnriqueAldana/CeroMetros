@@ -22,4 +22,4 @@ Meteor.release
 
 Ejecutar meteor desde las fuentes
 
- meteor run --settings settings/settings-development.json --port 3000
+ meteor run --settings settings/settings.json --port 3000

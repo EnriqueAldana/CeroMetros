@@ -1,7 +1,6 @@
 import './Permissions';
 import './Version';
 import './services/MailServ';
-import './services/AppGlobalVariables';
 import '../../api/Users/UsersCtrl';
 import '../../api/Users/User';
 import '../../api/Users/UsersPubs';

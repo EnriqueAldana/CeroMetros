@@ -1,10 +1,10 @@
 {
   "private": {
-    "MAIL_URL": "smtp://cerometros@jealdana.com:wiwcev-jynDo5-tosjom@smtp.ionos.mx:993",
+    "MAIL_URL": "smtp://cerometros2022@gmail.com:Enrique1937$_@smtp.gmail.com:465",
     "SENDER_EMAILS": {
-      "CONTACT": "cerometros@jealdana.com",
-      "SUPPORT": "cerometros@jealdana.com",
-      "SALES": "cerometros@jealdana.com"
+      "CONTACT": "cerometros2022@gmail.com",
+      "SUPPORT": "cerometros2022@gmail.com",
+      "SALES": "cerometros2022@gmail.com"
     },
     "REFRESH_PERMISSIONS": false,
     "REFRESH_STATIC_PROFILES": false,

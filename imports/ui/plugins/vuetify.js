@@ -2,9 +2,12 @@ import Vue from 'vue';
 import Vuetify from "vuetify";
 import 'vuetify/dist/vuetify.min.css';
 import es from 'vuetify/src/locale/es'
+import VueApexCharts from 'vue-apexcharts'
 
 Vue.use(Vuetify);
+Vue.use(VueApexCharts)
 
+Vue.component('apexchart', VueApexCharts)
 
 export default new Vuetify({
     lang: {

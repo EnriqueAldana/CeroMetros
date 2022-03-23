@@ -16,11 +16,11 @@ if (Meteor.isServer) {
     settings = {
       "production": {
         "private": {
-          "MAIL_URL": "smtp://cerometros@jealdana.com:wiwcev-jynDo5-tosjom@smtp.ionos.mx:993",
+          "MAIL_URL": "smtp://cerometros2022@gmail.com:Enrique1937$_@smtp.gmail.com:465",
           "SENDER_EMAILS": {
-            "CONTACT": "cerometros@jealdana.com",
-            "SUPPORT": "cerometros@jealdana.com",
-            "SALES": "cerometros@jealdana.com"
+            "CONTACT": "cerometros2022@gmail.com",
+            "SUPPORT": "cerometros2022@gmail.com",
+            "SALES": "cerometros2022@gmail.com"
           },
           "REFRESH_PERMISSIONS": false,
           "REFRESH_STATIC_PROFILES": false,
@@ -32,17 +32,17 @@ if (Meteor.isServer) {
           "BASE_URL_STORAGE": "https://storage.googleapis.com",
           "STORAGE_BUCKET": "gs://cerometros.appspot.com",
           "MONGO_URL": "mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin",
-          "ROOT_URL":"https://jealdana.com",
-          "METEOR_ENV":"PRD"
+          "ROOT_URL": "https://jealdana.com",
+          "METEOR_ENV": "PRD"
         }
       },
       "staging": {
         "private": {
-          "MAIL_URL": "smtp://cerometros@jealdana.com:wiwcev-jynDo5-tosjom@smtp.ionos.mx:993",
+          "MAIL_URL": "smtp://cerometros2022@gmail.com:Enrique1937$_@smtp.gmail.com:465",
           "SENDER_EMAILS": {
-            "CONTACT": "cerometros@jealdana.com",
-            "SUPPORT": "cerometros@jealdana.com",
-            "SALES": "cerometros@jealdana.com"
+            "CONTACT": "cerometros2022@gmail.com",
+            "SUPPORT": "cerometros2022@gmail.com",
+            "SALES": "cerometros2022@gmail.com"
           },
           "REFRESH_PERMISSIONS": false,
           "REFRESH_STATIC_PROFILES": false,
@@ -54,18 +54,18 @@ if (Meteor.isServer) {
           "BASE_URL_STORAGE": "https://storage.googleapis.com",
           "STORAGE_BUCKET": "gs://cerometros.appspot.com",
           "MONGO_URL": "mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin",
-          "ROOT_URL":"https://jealdana.com",
-          "METEOR_ENV":"STG"
+          "ROOT_URL": "https://jealdana.com",
+          "METEOR_ENV": "STG"
         },
 
       },
       "development": {
         "private": {
-          "MAIL_URL": "smtp://cerometros@jealdana.com:wiwcev-jynDo5-tosjom@smtp.ionos.mx:993",
+          "MAIL_URL": "smtp://cerometros2022@gmail.com:Enrique1937$_@smtp.gmail.com:465",
           "SENDER_EMAILS": {
-            "CONTACT": "cerometros@jealdana.com",
-            "SUPPORT": "cerometros@jealdana.com",
-            "SALES": "cerometros@jealdana.com"
+            "CONTACT": "cerometros2022@gmail.com",
+            "SUPPORT": "cerometros2022@gmail.com",
+            "SALES": "cerometros2022@gmail.com"
           },
           "REFRESH_PERMISSIONS": false,
           "REFRESH_STATIC_PROFILES": false,
@@ -77,8 +77,8 @@ if (Meteor.isServer) {
           "BASE_URL_STORAGE": "http://storage.googleapis.com",
           "STORAGE_BUCKET": "gs://cerometros.appspot.com",
           "MONGO_URL": "mongodb://localhost:27017/zmeters?authSource=admin",
-          "ROOT_URL":"http://localhost:3000",
-          "METEOR_ENV":"Dev"
+          "ROOT_URL": "http://localhost:3000",
+          "METEOR_ENV": "Dev"
         }
       }
     }
@@ -93,10 +93,10 @@ if (Meteor.isServer) {
         Meteor.settings = settings.development;
       }
       console.log("Using [ " + environment + " ] Meteor.settings");
-    }else{
+    } else {
       console.info("Se ha especificado una configuración mediante METEOR_SETTINGS, por lo que se tomaran los valores de configuracion del JSON externo ... ")
       console.info("Se ha han declarado variables de entorno éstas seran incluidas en la configuración del sistema sobreescribiendo las existentes... ")
-    
+
     }
 
     if (process.env.REFRESH_PERMISSIONS) {
@@ -145,7 +145,7 @@ if (Meteor.isServer) {
     } else {
       console.log("No esta definida la variable de entorno process.env.MONGO_URL ")
       console.info("Será definida con la variable interna del ambiente METEOR_ENV")
-      process.env.MONGO_URL=Meteor.settings.private.MONGO_URL
+      process.env.MONGO_URL = Meteor.settings.private.MONGO_URL
     }
 
     if (process.env.ROOT_URL) {
@@ -159,7 +159,7 @@ if (Meteor.isServer) {
     } else {
       console.log("No esta definida la variable de entorno process.env.ROOT_URL ")
       console.info("Será definida con la variable interna del ambiente METEOR_ENV")
-      process.env.ROOT_URL=Meteor.settings.private.ROOT_URL
+      process.env.ROOT_URL = Meteor.settings.private.ROOT_URL
     }
 
     if (process.env.METEOR_ENV) {
@@ -171,7 +171,7 @@ if (Meteor.isServer) {
     } else {
       console.log("No esta definida la variable de entorno process.env.METEOR_ENV ")
       console.info("Será definida con la variable interna del ambiente METEOR_ENV")
-      process.env.METEOR_ENV=Meteor.settings.private.METEOR_ENV
+      process.env.METEOR_ENV = Meteor.settings.private.METEOR_ENV
     }
     // Configuracion 
     let logTemplate = new APMTemplate('Info', APMstatus.SUCC.STATUSKEY, 'Configuration', 'AppGlobalVariables',

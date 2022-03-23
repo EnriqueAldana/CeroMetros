@@ -8,7 +8,7 @@
         <div class="d-flex flex-row-reverse mb-5">
           <v-tooltip bottom>
             <template v-slot:activator="{on}">
-              <v-btn v-can:create.hide="'products'" color="success" v-on="on" fab dark :to="{name:'home.supplies.create'}">
+              <v-btn v-can:create.hide="'supplies'" color="success" v-on="on" fab dark :to="{name:'home.supplies.create'}">
                 <v-icon>add</v-icon>
               </v-btn>
             </template>
@@ -32,7 +32,7 @@
           <template v-slot:item.action="{item}">
             <v-tooltip bottom>
               <template v-slot:activator="{on}">
-                <v-icon v-can:edit.hide="'products'" color="info" v-on="on" small class="mr-2" @click="openEditSupply(item)">
+                <v-icon v-can:edit.hide="'supplies'" color="info" v-on="on" small class="mr-2" @click="openEditSupply(item)">
                   edit
                 </v-icon>
               </template>
@@ -40,7 +40,7 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{on}">
-                <v-icon v-can:delete.hide="'products'" color="error" v-on="on" small class="mr-2" @click="openRemoveModal(item)">
+                <v-icon v-can:delete.hide="'supplies'" color="error" v-on="on" small class="mr-2" @click="openRemoveModal(item)">
                   delete
                 </v-icon>
               </template>

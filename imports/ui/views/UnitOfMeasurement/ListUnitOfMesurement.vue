@@ -8,7 +8,7 @@
         <div class="d-flex flex-row-reverse mb-5">
           <v-tooltip bottom>
             <template v-slot:activator="{on}">
-              <v-btn v-can:create.hide="'users'" color="success" v-on="on" fab dark :to="{name:'home.unitsofmeasurement.create'}">
+              <v-btn v-can:create.hide="'unitofmeasurement'" color="success" v-on="on" fab dark :to="{name:'home.unitsofmeasurement.create'}">
                 <v-icon>add</v-icon>
               </v-btn>
             </template>
@@ -27,7 +27,7 @@
           <template v-slot:item.action="{item}">
             <v-tooltip bottom>
               <template v-slot:activator="{on}">
-                <v-icon v-can:edit.hide="'providers'" color="info" v-on="on" small class="mr-2" @click="openEditUnitOfMeasurement(item)">
+                <v-icon v-can:edit.hide="'unitofmeasurement'" color="info" v-on="on" small class="mr-2" @click="openEditUnitOfMeasurement(item)">
                   edit
                 </v-icon>
               </template>
@@ -35,7 +35,7 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template v-slot:activator="{on}">
-                <v-icon v-can:delete.hide="'providers'" color="error" v-on="on" small class="mr-2" @click="openRemoveModal(item)">
+                <v-icon v-can:delete.hide="'unitofmeasurement'" color="error" v-on="on" small class="mr-2" @click="openRemoveModal(item)">
                   delete
                 </v-icon>
               </template>

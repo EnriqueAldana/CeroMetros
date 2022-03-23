@@ -1,0 +1,18 @@
+KPIs solicitados por usuarios.
+
+Num. 1 Linea de produccion , maquina , Prodcuto y solicitudes de un material por periodo semana del año, mes del año, año.
+Cesar Alejandro Martinez
+Ejemplo. Linea de produccion , maquina y solicitudes de un material.
+
+Rechazo de calidad de Julio del 2021 
+por cintas Boston de 6mm naranja sin suficiente adherencia, 
+todo el lote está mal.
+A nosotros nos gustaría saber que maquinas pidieron ese tipo de cinta a 
+partir de esa fecha y unos 5 meses mas
+
+Num. 2
+Solicitudes de suministro por periodo semana del año, mes del año, año.
+    Numero de solicitudes . TENDENCIA
+    Distribucion de solictudes por linea de produccion o maquina por periodo. Donut
+    Porcentaje de cumplimiento de despacho con respecto a la expectativa
+    Promedio de tiempo de despacho de solicitudes 

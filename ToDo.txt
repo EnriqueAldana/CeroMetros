@@ -110,7 +110,10 @@ Revision de Permisos para reporte. OK 10 Marzo 2022
 FechaSolicitud:{ $gte:ISODate("2021-06-05T16:33:00.000Z"), $lte:ISODate("2021-06-05T16:33:00.000Z")}
 
 12.3.1  Ajustar mediante directivas seguridad a botones de todas las pantallas
-
+Ok 22 Marzo 2022
+12.3.2 Implementar Dashboard
+      Implica graficas en pantalla home y la importacion a la coleccion de to_Solicitud desde MYSQl a Mongo.
+      22 Marzo 2022
 12.4 Implementar notificaciones a usuarios en el componente de AppBar. 
       12.4.1 Catalogo de notificaciones a usuarios
               Propiedades del mensaje

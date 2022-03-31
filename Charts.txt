@@ -1,0 +1,6 @@
+Utilizaremos 
+
+https://apexcharts.com/
+
+Detalles de API
+https://apexcharts.com/docs/options/datalabels/

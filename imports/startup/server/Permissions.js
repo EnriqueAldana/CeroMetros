@@ -125,6 +125,7 @@ const Permissions={
         SUPPLYREQUESTSOLDSYSTEM_DELETE:{VALUE:'supplyrequestsoldsystem-delete',TEXT:'Borrar Reporte de sol. de sum. sistema antiguo'},
         SUPPLYREQUESTSOLDSYSTEM_DOWNLOAD:{VALUE:'supplyrequestsoldsystem-download',TEXT:'Descargar Reporte de sol. de sum. sistema antiguo'}
     },
+    
 };
 
 export const permissionsArray= Object.keys(Permissions).reduce((accumulator, systemModuleName)=>{

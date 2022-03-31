@@ -14,7 +14,7 @@ que a su vez depende del ambiente de despliegue
 process.env.METEOR_SETTINGS
 
 2.- El usuario reporta que no recibe los correos.
-ProSe soluciona dando de alta un buzon en nuestro dominio jealdana.com y agregando un forward a sus correos
+Se soluciona dando de alta un buzon en nuestro dominio jealdana.com y agregando un forward a sus correos
 
 
 
@@ -25,3 +25,4 @@ Ocurre solo con algunas imagenes
 
 
 
+ 

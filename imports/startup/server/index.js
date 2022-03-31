@@ -84,7 +84,8 @@ import '../../api/FileUploaded/FileUploadedCtl';
 import '../../api/FileUploaded/FileUploadedPubs';
 import '../../api/FileUploaded/FileUploadedServ';
 import '../../api/Reports/SupplyRequestOldSystem/SupplyRequestOldSystemCtl'
-
+import '../../api/Charts/RequestsChartCtl'
+//import '../../api/Charts/RequestsChart'
 import '../both/APMLog';
 import './StartUp';
 

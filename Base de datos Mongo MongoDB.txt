@@ -30,6 +30,7 @@ Conexion PRODUCCION
 mongodb://root:CeroM3tros@jealdana.com:27017/zmeters?authSource=admin
 
 Conexion WEB mediante mongo-express
+
 http://jealdana.com:8081/
 Usuario: root
 Contraseña: CeroM3tros
@@ -136,7 +137,7 @@ Consulta rango de Fechas
 {FechaSolicitud: { $gte: new Date('2022-01-01T00:00:00.000Z'), 
 $lte: new Date('2022-01-31T23:59:59.000Z') } }
 
-$and:[{u1:{$gt:30}},{u1:{$lt:60}}]}
+$and:[{u1:{$gt:30}},{u1:{$lt:60}}] 
 {IdSolicitud: { $gte: 4109506, 
 $lte: 4109993 } }
 
@@ -147,3 +148,16 @@ $lte: 4109993 } }
 
 Consultas ordenadas
 db.getCollection('apm').find({}).sort( { dataCreated: -1 } )
+
+Consultas para reportes
+db.getCollection('tosolicitud_sealedair').distinct("TipoSol")
+
+db.getCollection('tosolicitud_sealedair').distinct( "SumTipo", { "Suministro": $ne{"Etiqueta de Pallet"}} )
+
+Cuenta las solicitudes en un dia determinado y x tipo de solicitudes
+
+db.getCollection('tosolicitud_sealedair').find( { 
+    $and: [ 
+    {FechaSolicitud: { $gte: new Date('2022-03-23T00:00:00.000Z'), $lte: new Date('2022-03-23T23:59:59.000Z') }}, 
+    {TipoSol:0} ] 
+       } ).count()

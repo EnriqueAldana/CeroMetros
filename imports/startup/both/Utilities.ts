@@ -88,6 +88,35 @@ export default {
       var dt = DateTime.fromISO(strDate+"T23:59:59")
       //console.log(dt.toISO())
       return dt.toISO();
+    },
+    dateTimeToISOIniDay(strDate){
+      //console.log(strDate)
+      var dt = DateTime.fromISO(strDate+"T23:59:59")
+      //console.log(dt.toISO())
+      return dt.toISO();
+    },
+    dateTimeEndDay(){
+      const dt = DateTime.now()
+      const dtObj =  this.createrDateTimeUTC(dt.get("year"), dt.get("month"), dt.get("day"), 23, 59)
+      return dtObj;
+    },
+    dateTimeIniDay(){
+      const dt = DateTime.now()
+      const dtObj =  this.createrDateTimeUTC(dt.get("year"), dt.get("month"), dt.get("day"), 0, 0)
+      
+      return dtObj;
+    },
+    dateTimeToISOWithParameter(dateTimeP:DateTime){
+
+      return dateTimeP.toISO();
+
+    },
+    datetimeToISOAddDay(dateTimeP:DateTime, dayNumber: number){
+
+      if(this.isValidDateTime(dateTimeP)){
+        return dateTimeP.plus({ days: dayNumber }) //~> this time yesterday
+      }
+      return dateTimeP
     }
     ,
     dateTimeFromString_dd_MM_YYYY(strDate){
@@ -172,17 +201,15 @@ export default {
           return ret
         }
     },
-    createrDateTimeUTC(yearP: number, monthP: number, dayP: number, hourP: number, minuteP: number, secondP: number, millisecondP=0, options?: {localeP:string,outputCalendarP:string,numberingSystemP:string}){
+    createrDateTimeUTC(yearP: number, monthP: number, dayP: number, hourP: number, minuteP: number){
 
         let ret: DateTime
         try{
           ret=DateTime.utc(
-            yearP, monthP, dayP, hourP, minuteP,secondP,millisecondP,
-             { locale: options.localeP,outputCalendar:options.outputCalendarP,numberingSystem:options.numberingSystemP })
+            yearP, monthP, dayP, hourP, minuteP)
         }catch(e){
 
         }
-        
         return ret
     },
     createDateTimeLocalZone(dayP:number,monthP:number,yearP:number,hourP:number=0,minuteP:number=0,secondP:number=0){

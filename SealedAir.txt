@@ -20,3 +20,8 @@ sonia.martinez@jealdana.com
 sonia.martinz@sealedair.com
 sonia_martinez2022
 
+
+
+Solicitudes por tipo.
+find( { $and: [ {FechaSolicitud: { $gte: new Date('2022-03-24T00:00:00.000Z'), $lte: new Date('2022-03-24T23:59:59.000Z')}}, {TipoSol:0} ] } )
+

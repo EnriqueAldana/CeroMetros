@@ -1,3 +1,8 @@
+
+Administradores de Docker 
+
+https://www.portainer.io
+
 Para creaar una imagen
 docker-compose build
 sudo docker-compose build
@@ -139,3 +144,15 @@ Similarly, application code will need to use bootstrap.servers=kafka:9092
 
 INICIAR UN Docker image con un bash
 docker run --entrypoint sh app_file_server_image
+
+
+DOCKER MOSQUITO
+https://techoverflow.net/2021/11/25/how-to-setup-standalone-mosquitto-mqtt-broker-using-docker-compose/
+
+Una vez que este corriendo hay que crear un usuario y fijar su contraseña
+
+
+
+
+Usuario tagtemporal
+Contraseña Enrique1937$

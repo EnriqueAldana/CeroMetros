@@ -26,8 +26,8 @@ services:
     - HTTP_PORT=443
     - SERVER_NAME=cerometros.jealdana.com
     - UPSTREAM_TARGET=app:80
-    - CERT_PUBLIC_PATH=/certs/jealdana.com_ssl_certificate.cer
-    - CERT_PRIVATE_PATH=/certs/_.jealdana.com_private_key.key
+    - CERT_PUBLIC_PATH=/certs/cerometros.com_ssl_certificate.cer
+    - CERT_PRIVATE_PATH=/certs/_.cerometros.com_private_key.key
     volumes:
     - /certs:/certs:ro
     depends_on:

@@ -137,3 +137,7 @@ Manejo de archivos
 
 Para generacion de archivos en el lado del cliente:
 https://github.com/eligrey/FileSaver.js/
+
+Copiar archivos de servidor remoto
+
+scp cerometros@10.8.0.1:/home/cerometros/MQTT/mosquito.7z ./mosquitto.7z

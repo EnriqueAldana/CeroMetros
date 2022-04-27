@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../../../2022/Proyectos/IONOS/MQTT/mosquitto"
+		},
+		{
+			"path": "../../../2022/Proyectos/IoT/EntornoArduino/tagTemporalWiFiAutoconectMqttJson"
 		}
 	]
 }

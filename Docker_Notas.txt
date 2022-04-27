@@ -41,6 +41,8 @@ docker image rm cerometros-web
 Para acceder dentro de una imagen con SSH
 
 docker exec -ti nombre_imagen bash
+docker exec -it mosquitto sh
+
 
 Para listar imagenes
 docker images

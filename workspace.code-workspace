@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../../../2022/Proyectos/IoT/EntornoArduino/tagTemporalWiFiAutoconectMqttJson"
+		},
+		{
+			"path": "../../../2022/Proyectos/tagTemporal/tagTemporalPlataforma"
 		}
 	]
 }

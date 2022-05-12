@@ -11,6 +11,15 @@
 		},
 		{
 			"path": "../../../2022/Proyectos/tagTemporal/tagTemporalPlataforma"
+		},
+		{
+			"path": "../../../2022/Proyectos/CeroMetrosTagTemporal"
 		}
-	]
+	],
+	"settings": {
+		"conf.settingsEditor.meteorToolbox": {
+			"port": "3000",
+			"auto": false
+		}
+	}
 }

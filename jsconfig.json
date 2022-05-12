@@ -1,10 +1,176 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "paths": {
+      "meteor/mongo": [
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/local_collection_driver.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/collection.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/connection_options.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/doc_fetcher.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/mongo_driver.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/observe_multiplex.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/oplog_observe_driver.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/oplog_tailing.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/polling_observe_driver.js",
+        "/Users/enrique/.meteor/packages/mongo/1.10.1/web.browser/remote_collection_driver.js"
+      ],
+      "meteor/es5-shim": [
+        "/Users/enrique/.meteor/packages/es5-shim/4.8.0/web.browser/client.js",
+        "/Users/enrique/.meteor/packages/es5-shim/4.8.0/web.browser/console.js",
+        "/Users/enrique/.meteor/packages/es5-shim/4.8.0/web.browser/cordova.js",
+        "/Users/enrique/.meteor/packages/es5-shim/4.8.0/web.browser/export_globals.js",
+        "/Users/enrique/.meteor/packages/es5-shim/4.8.0/web.browser/import_globals.js"
+      ],
+      "meteor/ecmascript": [
+        "/Users/enrique/.meteor/packages/ecmascript/0.15.0/web.browser/ecmascript.js"
+      ],
+      "meteor/shell-server": [
+        "/Users/enrique/.meteor/packages/shell-server/0.5.0/web.browser/main.js",
+        "/Users/enrique/.meteor/packages/shell-server/0.5.0/web.browser/shell-server.js"
+      ],
+      "meteor/tracker": [
+        "/Users/enrique/.meteor/packages/tracker/1.2.0/web.browser/tracker.js"
+      ],
+      "meteor/meteortesting:mocha": [
+        "/Users/enrique/.meteor/packages/meteortesting_mocha/2.0.3/web.browser/client.js",
+        "/Users/enrique/.meteor/packages/meteortesting_mocha/2.0.3/web.browser/browser-shim.js",
+        "/Users/enrique/.meteor/packages/meteortesting_mocha/2.0.3/web.browser/prepForHTMLReporter.js",
+        "/Users/enrique/.meteor/packages/meteortesting_mocha/2.0.3/web.browser/runtimeArgs.js",
+        "/Users/enrique/.meteor/packages/meteortesting_mocha/2.0.3/web.browser/server.handleCoverage.js",
+        "/Users/enrique/.meteor/packages/meteortesting_mocha/2.0.3/web.browser/server.js"
+      ],
+      "meteor/johanbrook:publication-collector": [
+        "/Users/enrique/.meteor/packages/johanbrook_publication-collector/1.1.0/web.browser/publication-collector.js"
+      ],
+      "meteor/akryum:vue": [
+        "/Users/enrique/.meteor/packages/akryum_vue/1.2.3/web.browser/index.js"
+      ],
+      "meteor/mdg:validated-method": [
+        "/Users/enrique/.meteor/packages/mdg_validated-method/1.2.0/web.browser/validated-method.js"
+      ],
+      "meteor/check": [
+        "/Users/enrique/.meteor/packages/check/1.3.1/web.browser/match.js",
+        "/Users/enrique/.meteor/packages/check/1.3.1/web.browser/isPlainObject.js"
+      ],
+      "meteor/accounts-base": [
+        "/Users/enrique/.meteor/packages/accounts-base/1.8.0/web.browser/client_main.js",
+        "/Users/enrique/.meteor/packages/accounts-base/1.8.0/web.browser/accounts_client.js",
+        "/Users/enrique/.meteor/packages/accounts-base/1.8.0/web.browser/accounts_common.js",
+        "/Users/enrique/.meteor/packages/accounts-base/1.8.0/web.browser/accounts_server.js",
+        "/Users/enrique/.meteor/packages/accounts-base/1.8.0/web.browser/server_main.js"
+      ],
+      "meteor/accounts-password": [
+        "/Users/enrique/.meteor/packages/accounts-password/1.7.0/web.browser/password_client.js",
+        "/Users/enrique/.meteor/packages/accounts-password/1.7.0/web.browser/email_templates.js",
+        "/Users/enrique/.meteor/packages/accounts-password/1.7.0/web.browser/password_server.js"
+      ],
+      "meteor/alanning:roles": [
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/roles/roles_common.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/roles/client/debug.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/roles/client/uiHelpers.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/roles/client/subscriptions.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/header.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/layouts.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/noteOfTheDay.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/routing.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/signin.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/lib/app.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/lib/patches.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/client/lib/polyfills.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/server/startup/fixtures.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/server/startup/publish.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/main/server/startup/validateNewUser.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/manageUsers/client/manage-users.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/manageUsers/client/manageController.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/manageUsers/client/routing.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/manageUsers/server/manageUsers.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/secrets/model.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/secrets/client/routing.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/secrets/client/secrets.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/secrets/client/secretsController.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/secrets/server/fixtures.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router-advanced/secrets/server/secrets.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/model.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/client/client.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/client/layouts.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/client/manage-users.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/client/routing.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/client/secrets.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/client/lib/globals.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/flow-router/server/server.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/iron-router/model.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/iron-router/client/client.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/iron-router/client/manage-users.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/iron-router/client/routing.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/iron-router/client/secrets.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/iron-router/client/lib/globals.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/examples/iron-router/server/server.js",
+        "/Users/enrique/.meteor/packages/alanning_roles/3.2.3/web.browser/roles/roles_server.js"
+      ],
+      "meteor/socialize:user-model": [
+        "/Users/enrique/.meteor/packages/socialize_user-model/1.0.5/web.browser/common/common.js",
+        "/Users/enrique/.meteor/packages/socialize_user-model/1.0.5/web.browser/entry-rn.js",
+        "/Users/enrique/.meteor/packages/socialize_user-model/1.0.5/web.browser/common/user-model.js"
+      ],
+      "meteor/socialize:user-presence": [
+        "/Users/enrique/.meteor/packages/socialize_user-presence/1.0.3/web.browser/common/common.js",
+        "/Users/enrique/.meteor/packages/socialize_user-presence/1.0.3/web.browser/entry-rn.js",
+        "/Users/enrique/.meteor/packages/socialize_user-presence/1.0.3/web.browser/common/collection.js",
+        "/Users/enrique/.meteor/packages/socialize_user-presence/1.0.3/web.browser/common/user-extensions.js",
+        "/Users/enrique/.meteor/packages/socialize_user-presence/1.0.3/web.browser/server/publications.js",
+        "/Users/enrique/.meteor/packages/socialize_user-presence/1.0.3/web.browser/server/server.js",
+        "/Users/enrique/.meteor/packages/socialize_user-presence/1.0.3/web.browser/server/user-presence.js"
+      ],
+      "meteor/seba:method-hooks": [
+        "/Users/enrique/.meteor/packages/seba_method-hooks/3.0.2/web.browser/client.js",
+        "/Users/enrique/.meteor/packages/seba_method-hooks/3.0.2/web.browser/common.js",
+        "/Users/enrique/.meteor/packages/seba_method-hooks/3.0.2/web.browser/server.js"
+      ],
+      "meteor/lacosta:method-hooks": [
+        "/Users/enrique/.meteor/packages/lacosta_method-hooks/1.5.4/web.browser/src/method-hooks-mixin.js"
+      ],
+      "/*": [
+        "./*"
+      ],
+      "meteor/jquery": [
+        "/Users/enrique/.meteor/packages/jquery/3.0.0/web.browser/main.js"
+      ],
+      "meteor/meteorhacks:ssr": [
+        "/Users/enrique/.meteor/packages/meteorhacks_ssr/2.2.0/web.browser/lib/overrides.js",
+        "/Users/enrique/.meteor/packages/meteorhacks_ssr/2.2.0/web.browser/lib/template.js",
+        "/Users/enrique/.meteor/packages/meteorhacks_ssr/2.2.0/web.browser/lib/dynamic.js",
+        "/Users/enrique/.meteor/packages/meteorhacks_ssr/2.2.0/web.browser/lib/api.js"
+      ],
+      "meteor/ostrio:files": [
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/client.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/core.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/cursor.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/lib.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/server.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/upload.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/worker.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/worker.min.js",
+        "/Users/enrique/.meteor/packages/ostrio_files/2.0.1/web.browser/write-stream.js"
+      ],
+      "meteor/ostrio:base64": [
+        "/Users/enrique/.meteor/packages/ostrio_base64/3.0.0/web.browser/base64.js",
+        "/Users/enrique/.meteor/packages/ostrio_base64/3.0.0/web.browser/worker-create.js",
+        "/Users/enrique/.meteor/packages/ostrio_base64/3.0.0/web.browser/worker-node.js",
+        "/Users/enrique/.meteor/packages/ostrio_base64/3.0.0/web.browser/worker.js",
+        "/Users/enrique/.meteor/packages/ostrio_base64/3.0.0/web.browser/worker.min.js"
+      ]
     },
-    "exclude": [
-        "node_modules",
-        "bower_components"
+    "baseUrl": "."
+  },
+  "exclude": [
+    "node_modules",
+    "bower_components",
+    ".meteor"
+  ],
+  "typeAcquisition": {
+    "include": [
+      "meteor"
     ]
+  }
 }

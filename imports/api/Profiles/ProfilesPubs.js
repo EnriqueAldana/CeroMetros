@@ -9,6 +9,5 @@ const notStaticProfilePublication=new PublishEndpoint('notStaticProfile.list', f
 const profilePublication=new PublishEndpoint('profile.listAll', function(param1) {
     return Profile.find();
 });
-
 notStaticProfilePublication.use(new PermissionMiddleware(Permissions.PROFILES.LIST.VALUE));
 profilePublication.use(new PermissionMiddleware(Permissions.PROFILES.LIST.VALUE));

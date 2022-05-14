@@ -168,6 +168,7 @@ export default {
       'user.list':[]
     },
     users(){
+      // Que no esté el usuario logeado.
       return Meteor.users.find({_id:{$ne:Meteor.userId()}}).fetch();
     }
   }

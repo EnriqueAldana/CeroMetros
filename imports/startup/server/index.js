@@ -87,9 +87,15 @@ import '../../api/Reports/SupplyRequestOldSystem/SupplyRequestOldSystemCtl'
 import '../../api/Charts/RequestsChartCtl'
 //import '../../api/Charts/RequestsChart'
 import '../both/APMLog';
-import './StartUp';
+import '../../api/suscriber/suscriber'
+import '../../api/publisher/publisher'
+import '../../api/tagTemporal/TagTemporalCtl'
 
 
+
+if (Meteor.isServer) {
+    process.env.MONGO_URL = Meteor.settings.MONGO_URL;
+}
 // Ejemplos de creacion de metodos o End Points
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
 import {check} from 'meteor/check';

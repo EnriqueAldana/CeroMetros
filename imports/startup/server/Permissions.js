@@ -41,6 +41,32 @@ const Permissions={
         DELETE:{VALUE:'companies-delete',TEXT:'Borrar compañias'}
 
     },
+    COMPANYADMIN:{
+        LIST:{VALUE:'companyuser-view',TEXT:'Listar usuarios de la empresa'},
+        CREATE:{VALUE:'companyuser-create',TEXT:'Crear Usuario de la empresa'},
+        UPDATE:{VALUE:'companyuser-edit',TEXT:'Editar Usuario de la empresa'},
+        DELETE:{VALUE:'companyuser-delete',TEXT:'Borrar Usuario de la empresa'},
+        LISTROLES:{VALUE:'companyuser-view',TEXT:'Listar roles de usuarios de la empresa'},
+    
+    },
+    COMPANYUSER:{
+        LIST:{VALUE:'companyvisitor-view',TEXT:'Listar visitantes de la empresa'},
+        CREATE:{VALUE:'companyvisitor-create',TEXT:'Crear visitantes de la empresa'},
+        UPDATE:{VALUE:'companyvisitor-edit',TEXT:'Editar visitantes de la empresa'},
+        DELETE:{VALUE:'companyvisitor-delete',TEXT:'Borrar visitantes de la empresa'}
+    },
+    COMPANYVISITOR:{
+        LIST:{VALUE:'companyvisitortag-view',TEXT:'Listar tag de la empresa , usuario y acceso'},
+        CREATE:{VALUE:'companyvisitortag-create',TEXT:'Crear tag de la empresa , usuario y acceso'},
+        UPDATE:{VALUE:'companyvisitortag-edit',TEXT:'Editar tag de la empresa , usuario y acceso'},
+        DELETE:{VALUE:'companyvisitortag-delete',TEXT:'Borrar tag de la empresa , usuario y acceso'}
+    },
+    COMPANYBARRIER:{
+        LIST:{VALUE:'companybarrier-view',TEXT:'Listar barreras de la empresa'},
+        CREATE:{VALUE:'companybarrier-create',TEXT:'Crear barreras de la empresa'},
+        UPDATE:{VALUE:'companybarrier-edit',TEXT:'Editar barreras de la empresa'},
+        DELETE:{VALUE:'companybarrier-delete',TEXT:'Borrar barreras de la empresa'}
+    },
     CUSTOMERS:{
         LIST:{VALUE:'customers-view',TEXT:'Listar clientes'},
         CREATE:{VALUE:'customers-create',TEXT:'Crear clientes'},
@@ -147,7 +173,7 @@ Devuelve esto:
 ]
 
  */
-if(Meteor.settings.private && Meteor.settings.private.REFRESH_PERMISSIONS){
+if( Meteor.settings.private.REFRESH_PERMISSIONS){
     console.log(' Updating permissions...en la tabla roles');
     const currentRoles= Roles.getAllRoles().fetch();
     console.log('currentRoles en la coleccion roles', currentRoles);

@@ -22,7 +22,9 @@
       <v-col xs="16" sm="16" md="14" lg="12" xl="9">
         
         <v-data-table :headers="headers" :items="companies" @dblclick:row="(event,{item})=>openEditCompany(item)"
+                      show-expand
                       sort-by="name" class="elevation-1">
+        
         <template v-slot:item.isAvailable="{item}">
             <div class="d-flex align-center pt-5 pb-5">
               <v-icon :color="item.isAvailable?'green' : 'red'">
@@ -82,6 +84,11 @@
               </td>
             </tr>
           </template>
+          <template #expanded-item="{headers,item}">
+          <td :colspan="headers.length">
+            <ListUsersVue></ListUsersVue>
+          </td>        
+        </template>
         </v-data-table>
      </v-col>
     </v-row>
@@ -93,11 +100,13 @@
 <script>
 import ModalRemove from "../../components/Utilities/Modals/ModalRemove";
 import {Company} from "../../../api/Companies/Company";
+import ListUsersVue from "../Users/ListUsers.vue";
 import {mapMutations} from "vuex";
 export default {
         name: 'ListCompanies',
         components: {
-          ModalRemove
+          ModalRemove,
+          ListUsersVue
         },
         data() {
           return {

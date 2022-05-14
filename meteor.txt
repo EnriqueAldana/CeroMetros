@@ -1,4 +1,22 @@
-Instalacion de meteorSe debe tener Node JS instalado
+Configurar IDE
+Atom
+https://atom.io/packages/meteor-api
+Video de uso
+https://www.youtube.com/watch?v=QSg3mKjhiws&t=101s
+
+Arrancar aplicacion.
+Configuracion Meteor Helper
+PAth a meteor
+/usr/local/bin/meteor
+Meteor port3000
+Path relativo
+/Users/enrique/DiscoDeEnrique/2022/Proyectos/CeroMetrosTagTemporal/settings/settings.json
+
+meteor run --settings ./settings/settings.json --port 3000' 
+with environment variables 
+'MONGO_URL=mongodb://localhost:27017/zmeters?authSource=admin'
+
+Instalacion de meteor Se debe tener Node JS instalado
 
 Ejecutar en una consola
 Windows mediante Power Shell
@@ -20,6 +38,10 @@ Meteor.release
 
 
 
-Ejecutar meteor desde las fuentes
+Ejecutar meteor desde las fuentes y fijando la variable de entorno para conectar la BD
+export MONGO_URL="mongodb://tagTemporal:tagTemporal@localhost:27017/tagTemporal?authSource=tagTemporal"
+meteor run --settings settings/settings.json --port 3000
 
- meteor run --settings settings/settings.json --port 3000
+ Configurar Visual Studio 
+ https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
+ 

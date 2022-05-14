@@ -1,10 +1,11 @@
 
-
+import logger from '../../../../imports/api/logger/logger'
 import APMServ from "../../../api/AppPerformanceManagement/APMServ"
 import { APMstatus } from "../../both/APMStatus";
 import APMlog from "../../both/APMLog"
 import APMTemplate from "../../both/APMTemplate"
 
+logger=logger.logger()
 const name = 'Sistema CeroMetros ' + Meteor.settings.private.ZERO_METERS_USER;
 const email = `<${Meteor.settings.private.SENDER_EMAIL}>`;
 const from = `${ name } ${ email}`;
@@ -27,6 +28,7 @@ emailTemplates.enrollAccount = {
     html(user,url) {
         const urlWithoutHash = url.replace('#/','');
         if(Meteor.isDevelopment) {
+            logger.log('Link para fijar contraseña',urlWithoutHash);
             console.info('Link para fijar contraseña',urlWithoutHash);
         }
         SSR.compileTemplate('emailEnrollAccount',Assets.getText(emailEnrollAccount));
@@ -46,6 +48,7 @@ emailTemplates.resetPassword = {
     html(user,url) {
         const urlWithoutHash = url.replace('#/','');
         if(Meteor.isDevelopment) {
+            logger.log('Link para reestablecer contraseña',urlWithoutHash);
             console.info('Link para reestablecer contraseña',urlWithoutHash);
         }
         SSR.compileTemplate('emailResetPassword',Assets.getText(emailResetPassword));
@@ -64,6 +67,7 @@ emailTemplates.verifyEmail = {
     html(user,url) {
         const urlWithoutHash = url.replace('#/','');
         if(Meteor.isDevelopment) {
+            logger.log('Liga para validar correo electronico',urlWithoutHash)
             console.info('Liga para validar correo electronico',urlWithoutHash);
         }
         SSR.compileTemplate('emailVerifyEmail',Assets.getText(emailVerifyEmail));

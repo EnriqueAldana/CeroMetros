@@ -32,10 +32,12 @@ export default {
         }
     },
     async createUser(user,photoFileUser){
+        console.log("Usuario por crear",user);
         const idUser= Accounts.createUser({
             username: user.username,
             email: user.emails[0].address,
-            profile: user.profile
+            profile: user.profile,
+            
             //,  AL CREAR USUARIO no se fija el password porque se implementara un envio de una URL para que el usuario lo fije
             //password: user.password
         });
@@ -56,7 +58,8 @@ export default {
         }
         Meteor.users.update(idUser,{
             $set: {
-                'profile.path': avatarSrc
+                'profile.path': avatarSrc,
+                'profile.company' : user.profile.company
             }
         });
 
@@ -79,8 +82,10 @@ export default {
                     profile:{
                         profile: user.profile.profile,
                         name: user.profile.name,
-                        path: currentUser.profile.path
-                    }
+                        path: currentUser.profile.path,
+                        company: user.profile.company
+                    },
+                    
                 }
             });
             ProfilesServ.setUsersRoles(user._id,user.profile.profile);
@@ -96,7 +101,7 @@ export default {
                 }else{
                     Meteor.users.update(user._id,{
                         $set: {
-                            'profile.path': response.data.fileUrl
+                            'profile.path': response.data.fileUrl,
                         }
                     });
 

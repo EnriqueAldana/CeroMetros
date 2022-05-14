@@ -23,6 +23,9 @@ mongoimport --db=users --collection=contacts --type=csv \
    --fields="name.string(),birthdate.date(2006-01-02),contacted.boolean(),followerCount.int32(),thumbnail.binary(base64)" \
    --file=/example/file.csv
 
+Restaurar un dump
+
+mongorestore --db tagTemporal --drop ./database/zmeters8Feb2022/dump/zmeters
 
 Conexion Local
 mongodb://localhost:27017/admin
@@ -53,7 +56,7 @@ db.getCollection('messages').update({read: {$exists: false}},{$set:{read: false}
 
 REESTABLECER BASE DE datos
 mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
-mongorestore -u $MONGO_INITDB_ROOT_USERNAME -p $MONGOINITDB_ROOT_PASSWORD --authenticationDatabase admin --db zmeters zmeters
+mongorestore -u root -p CeroM3tros --authenticationDatabase admin --db zmeters tagTemporal
 Desde PRODUCCION
 1.- Traer los Backups a local
 2.- Colocarse en el directorio

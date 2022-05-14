@@ -13,7 +13,7 @@ export const StaticProfiles={
 };
 
 if(Meteor.isDevelopment){
-    if(Meteor.settings.private && Meteor.settings.private.REFRESH_STATIC_PROFILES){
+    if( Meteor.settings.private.REFRESH_STATIC_PROFILES){
         console.log('Actualizando la coleccion de profile')
         Object.keys(StaticProfiles).forEach(staticprofileName => {
             // Actualiza la coleccion de Profile con los perfiles estaticos 

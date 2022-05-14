@@ -15,7 +15,7 @@
     "LOGO_IMAGE_PATH": "https://firebasestorage.googleapis.com/v0/b/cerometros.appspot.com/o/Logo.png?alt=media&token=0a923e0e-df2f-4201-a910-0d5a7ad735f2'",
     "BASE_URL_STORAGE": "http://storage.googleapis.com",
     "STORAGE_BUCKET": "gs://cerometros.appspot.com",
-    "MONGO_URL": "mongodb://localhost:27017/zmeters?authSource=admin",
+    "MONGO_URL": "mongodb://tagTemporal:tagTemporal@localhost:27017/tagTemporal?authSource=tagTemporal",
     "ROOT_URL":"http://localhost:3000",
     "METEOR_ENV":"development"
   }

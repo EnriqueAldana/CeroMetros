@@ -8,8 +8,8 @@
     >
       <div class="text-center">
         <img
-          src="/img/LogoCeroMts.png"
-          alt="Logo Cero Mts"
+          src="/img/LogoCeroMtsTagTemporal.png"
+          alt="Logo Cero Mts TagTemporal"
           id="Logo0Mts"
           height="180px"
         />

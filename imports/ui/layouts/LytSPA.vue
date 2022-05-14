@@ -1,14 +1,15 @@
 <template>
 <v-app>
+
     <default-bar />
     <default-drawer /> 
-         
+
         <v-main id="main_section">
             <v-container fluid>
             <router-view name="sectionView" v-if="loggedUser"></router-view>
             </v-container>
         </v-main>
-    
+
     <default-footer/>
 
  </v-app>

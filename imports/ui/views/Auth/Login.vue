@@ -4,7 +4,7 @@
         <div class="display-1 mb-0 secondary--text">Iniciar sesión</div>
         <v-form @submit.prevent="login" autocomplete="nope">
             <v-text-field id="inputUser" v-model="user.userOrEmail" autocomplete="off"
-                          label="Usuario" name="email" prepend-icon="person" color="primary" type="text">
+                          label="Numero tel celular" name="email" prepend-icon="person" color="primary" type="text">
             </v-text-field>
             <v-text-field id="inputPassword" label="Contraseña" name="password" prepend-icon="lock"
                           v-model="user.password" type="password">

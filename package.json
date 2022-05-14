@@ -1,5 +1,5 @@
 {
-  "name": "zmeters",
+  "name": "tagtemporal",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -20,6 +20,7 @@
     "luxon": "^2.3.1",
     "meteor-node-stubs": "^1.2.1",
     "mimetypes": "^0.1.1",
+    "mqtt": "^4.3.7",
     "sass": "^1.49.9",
     "sass-loader": "^11.1.1",
     "simpl-schema": "^1.12.0",

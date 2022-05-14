@@ -1,4 +1,4 @@
 
 Accounts.config({
-    loginExpirationInDays:1  // Numero de dias para expirar el token
+    loginExpirationInDays:365  // Numero de dias para expirar el token
 });

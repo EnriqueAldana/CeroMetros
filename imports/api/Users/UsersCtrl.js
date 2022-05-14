@@ -62,10 +62,22 @@ new ValidatedMethod({
                 profile: {
                     profile: String,
                     name: String,
-                    path: Match.OneOf(String, null)
-                }
-                //,
-                //password:String
+                    path: Match.OneOf(String, null),
+                    company: {
+                        _id: Match.OneOf(String, null),
+                        name: String,
+                        name_full: String,
+                        companyBussinessId: String,
+                        address: String,
+                        phones: String,
+                        web: String,
+                        email: String,
+                        isAvailable: Boolean
+                      }
+                },
+                
+                
+            
             });
         } catch (exception) {
             console.error('user.save', exception);

@@ -1,7 +1,6 @@
 //publisher.js
-import logger from '../logger/logger'
 import { DateTime } from "luxon";
-import { pendingMsgToPublish } from '../tagTemporal/pendingMsgToPublishRepository';
+import logger from '../logger/logger'
 logger=logger.logger()
 
 const mqtt = require('mqtt')
@@ -43,7 +42,7 @@ clientPub.on("connect",function(connack){
     //assuming messages comes in every 3 seconds to our server and we need to publish or process these messages
     setInterval(() => {
         // Leer de la base de datos los mensajes pendientes por publicar
-        let pendigMsg=pendingMsgToPublish.find({isPublished:false}).fetch();
+       // no funciono.  let pendigMsg=pendingMsgToPublish.find({isPublished:false}).fetch();
         /*pendingMsgToPublish.forEach(item =>{
             logger.log("Mensaje x publicar " + JSON.stringify(item.deviceMsg))
         });

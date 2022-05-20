@@ -1,8 +1,9 @@
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
 import {ResponseMessage} from "../../startup/server/utilities/ResponseMesssage";
 import AuthGuard from "../../middlewares/AuthGuard";
-import {pendingMsgToPublish} from "../../api/tagTemporal/pendingMsgToPublishRepository"
+import {sendDeviceMsgs} from "./sendDeviceMsgsRepository"
 import {DateTime} from 'luxon'
+import toPublish from './TagTemporalServ'
 new ValidatedMethod({
     name:'tagTemporal.geoPosition',
     mixins:[MethodHooks], 
@@ -41,13 +42,15 @@ new ValidatedMethod({
                 iDCommand: DateTime.utc().toISO(),
                 command:["VehicularAccessBarrier","UP"]
             }
-            let id= pendingMsgToPublish.insert({
+            let id= sendDeviceMsgs.insert({
                 userId: Meteor.userId(),
                 geoPosition: geoPosition,
                 insertedAt: DateTime.utc(),
                 isPublished:false,
                 deviceMsg:pendingMsg
             });
+            const topic="4c00:7500:2500:b00:6f00:7700"
+            toPublish.publishMsg(topic,pendingMsg)
             responseMessage.create('Se tomó la posicion GPS exitosamente','Se tomó la posicion GPS exitosamente y se configuro la accion del mensaje respectivo',id);
 
         }catch ( exception){

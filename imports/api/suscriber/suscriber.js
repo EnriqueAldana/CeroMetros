@@ -1,49 +1,50 @@
 import recivedMsgToDB from './recivedMsgToDB'
+import {DateTime} from 'luxon'
 import logger from '../logger/logger'
-import {pendingMsgToPublish} from "../../api/tagTemporal/pendingMsgToPublishRepository"
 logger=logger.logger()
-logger.log('Inicio aplicacion tagTemporal plataforma componente sucriptor');
+logger.log(DateTime.utc().toISO() + ' Inicio aplicacion tagTemporal plataforma componente sucriptor');
 const mqtt = require('mqtt')
 
 
-const host = 'cerometros.com'
-const port = '1883'
-//const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
-const clientId = `tagTemporalServer Suscriptor`
+const host = Meteor.settings.private.HOST_MQTT
+const port = Meteor.settings.private.PORT_MQTT
+const clientId = Meteor.settings.private.CLIENT_ID_MQTT
 
 const connectUrl = `mqtt://${host}:${port}`
 const client = mqtt.connect(connectUrl, {
     clientId,
     clean: true,
     connectTimeout: 4000,
-    username: 'tagtemporal',
-    password: 'Enrique1937$',
+    username: Meteor.settings.private.USER_NAME_MQTT,
+    password: Meteor.settings.private.USER_PASSWORD_MQTT,
     reconnectPeriod: 1000,
 })
 
-const topic = 'tagTemporal'
+const topic = Meteor.settings.private.MAIN_TOPIC
 const sendKeepMsg= {
-    device_name: "tagTemporalServer Suscriptor",
-    iDCommand: "12345678",
+    device_name: Meteor.settings.private.CLIENT_ID_MQTT + " Suscriptor",
+    iDCommand: DateTime.utc().toISO(),
     command:["KeepAliveKeep","UP"]
    }
 client.on('connect', () => {
-    logger.log('Conectado al servicor de mensajes...')
+    logger.log(DateTime.utc().toISO() + ' Conectado al servidor de mensajes...')
     client.subscribe([topic], () => {
-        logger.log(`Suscripcion al topico:  '${topic}'`)
+        logger.log(DateTime.utc().toISO() + ` Suscripcion al topico:  '${topic}'`)
     })
     client.publish(topic, JSON.stringify(sendKeepMsg), { qos: 0, retain: false }, (error) => {
         if (error) {
-            logger.error(error)
+            logger.error(DateTime.utc().toISO() + " Error al publicar KeepAlive desde el suscriptor" +error)
         }else{
-            logger.log('Publicacion exitosa desde el servidor de la plataforma tagTemporal')
-            logger.log('Mensaje enviado al topico ' + topic + ' ' + JSON.stringify(sendKeepMsg))
+            logger.log(DateTime.utc().toISO() +' KeepAlive desde el suscriptor del servidor de la plataforma tagTemporal')
+            logger.log(DateTime.utc().toISO() +' Mensaje enviado al topico ' + topic + ' ' + JSON.stringify(sendKeepMsg))
         }
     })
 })
 client.on('message', (topic, payload) => {
     //logger.log('Recibiendo mensajes:', topic, payload.toString())
     // Aqui actualizar la base de datos sobre eventos recibidos
+    logger.log(DateTime.utc().toISO() +' Recibiendo mensaje desde el servidor de mensajes')
+    logger.log(DateTime.utc().toISO() +payload.toString())
     recivedMsgToDB.saveRecivedMsgToDB(payload.toString());
 
 })

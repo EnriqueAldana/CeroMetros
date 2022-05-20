@@ -17,6 +17,14 @@
     "STORAGE_BUCKET": "gs://cerometros.appspot.com",
     "MONGO_URL": "mongodb://tagTemporal:tagTemporal@localhost:27017/tagTemporal?authSource=tagTemporal",
     "ROOT_URL":"http://localhost:3000",
-    "METEOR_ENV":"development"
+    "METEOR_ENV":"development",
+    "HOST_MQTT" : "cerometros.com",
+    "PORT_MQTT" : "1883",
+    "MAIN_TOPIC" : "tagTemporal",
+    "CLIENT_ID_MQTT": "tagTemporalServer",
+    "USER_NAME_MQTT": "tagtemporal",
+    "USER_PASSWORD_MQTT": "Enrique1937$",
+    "STD_OUT_FILE" : "/Users/enrique/DiscoDeEnrique/2022/Proyectos/CeroMetrosTagTemporal/imports/logs/stdout.log",
+    "STD_ERR_FILE" : "/Users/enrique/DiscoDeEnrique/2022/Proyectos/CeroMetrosTagTemporal/imports/logs/stderr.log"
   }
 }

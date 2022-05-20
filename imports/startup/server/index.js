@@ -88,7 +88,6 @@ import '../../api/Charts/RequestsChartCtl'
 //import '../../api/Charts/RequestsChart'
 import '../both/APMLog';
 import '../../api/suscriber/suscriber'
-import '../../api/publisher/publisher'
 import '../../api/tagTemporal/TagTemporalCtl'
 
 

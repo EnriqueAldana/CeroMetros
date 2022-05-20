@@ -1,28 +1,21 @@
-Inicio aplicacion tagTemporal plataforma componente sucriptor
-client connected to publish Packet {
-  cmd: 'connack',
-  retain: false,
-  qos: 0,
-  dup: false,
-  length: 2,
-  topic: null,
-  payload: null,
-  sessionPresent: true,
-  returnCode: 0
-}
-Mensajes publicados   desde la conexion Welcome to the test connection
-Conectado al servicor de mensajes...
-Publicacion exitosa desde el servidor de la plataforma tagTemporal
-Mensaje enviado al topico tagTemporal {"device_name":"tagTemporalServer Suscriptor","iDCommand":"12345678","command":["KeepAliveKeep","UP"]}
-Suscripcion al topico:  'tagTemporal'
-Mensaje por guardar:  {
+2022-05-14T19:11:38.486Z Inicio aplicacion tagTemporal plataforma componente sucriptor
+2022-05-14T19:11:38.830Z Conectado al servidor de mensajes...
+2022-05-14T19:11:38.831Z KeepAlive desde el suscriptor del servidor de la plataforma tagTemporal
+2022-05-14T19:11:38.831Z Mensaje enviado al topico tagTemporal {"device_name":"tagTemporalServer Suscriptor","iDCommand":"2022-05-14T19:11:38.569Z","command":["KeepAliveKeep","UP"]}
+2022-05-14T19:11:38.832Z Conectado con la cola de mensajes para publicar: true
+2022-05-14T19:11:38.931Z Suscripcion al topico:  'tagTemporal'
+2022-05-14T19:11:39.028Z Recibiendo mensaje desde el servidor de mensajes
+2022-05-14T19:11:39.028Z{"device_name":"4c00:7500:2500:b00:6f00:7700","currentIdCommand":"2022-05-14T18:49:49.217Z","command":["VehicularAccessBarrier","UP"],"currentAccessPosition":"UP"}
+2022-05-14T19:11:39.028Z Mensaje por guardar a la BD:  {
   device_name: '4c00:7500:2500:b00:6f00:7700',
-  currentIdCommand: '2022-05-14T02:09:24.098Z',
-  command: [ 'VehicularAccessBarrier', 'DOWN' ],
+  currentIdCommand: '2022-05-14T18:49:49.217Z',
+  command: [ 'VehicularAccessBarrier', 'UP' ],
   currentAccessPosition: 'UP'
 }
-Mensaje por guardar:  {
+2022-05-14T19:11:39.031Z Recibiendo mensaje desde el servidor de mensajes
+2022-05-14T19:11:39.031Z{"device_name":"tagTemporalServer Suscriptor","iDCommand":"2022-05-14T19:11:38.569Z","command":["KeepAliveKeep","UP"]}
+2022-05-14T19:11:39.031Z Mensaje por guardar a la BD:  {
   device_name: 'tagTemporalServer Suscriptor',
-  iDCommand: '12345678',
+  iDCommand: '2022-05-14T19:11:38.569Z',
   command: [ 'KeepAliveKeep', 'UP' ]
 }
